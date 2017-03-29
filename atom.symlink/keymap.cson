@@ -1,0 +1,91 @@
+# Your keymap
+#
+# Atom keymaps work similarly to style sheets. Just as style sheets use
+# selectors to apply styles to elements, Atom keymaps use selectors to associate
+# keystrokes with events in specific contexts. Unlike style sheets however,
+# each selector can only be declared once.
+#
+# You can create a new keybinding in this file by typing "key" and then hitting
+# tab.
+#
+# Here's an example taken from Atom's built-in keymap:
+#
+# 'atom-text-editor':
+#   'enter': 'editor:newline'
+#
+# 'atom-workspace':
+#   'ctrl-shift-p': 'core:move-up'
+#   'ctrl-p': 'core:move-down'
+#
+# You can find more information about keymaps in these guides:
+# * http://flight-manual.atom.io/using-atom/sections/basic-customization/#_customizing_keybindings
+# * http://flight-manual.atom.io/behind-atom/sections/keymaps-in-depth/
+#
+# If you're having trouble with your keybindings not working, try the
+# Keybinding Resolver: `Cmd+.` on macOS and `Ctrl+.` on other platforms. See the
+# Debugging Guide for more information:
+# * http://flight-manual.atom.io/hacking-atom/sections/debugging/#check-the-keybindings
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# http://flight-manual.atom.io/using-atom/sections/basic-customization/#_cson
+'body':
+  'ctrl-=': 'window:increase-font-size'
+  'ctrl-+': 'window:increase-font-size'
+  'ctrl--': 'window:decrease-font-size'
+  'ctrl-0': 'reset-font-size'
+  'ctrl-shift-I': 'window:toggle-invisibles'
+  'f9': 'sort-lines:sort' # Need to install sort-lines: apm install sort-lines
+  # Cycle through tabs in display order instead of MRU
+  'ctrl-tab': 'pane:show-next-item'
+  'ctrl-tab ^ctrl': 'unset!'
+  'ctrl-shift-tab': 'pane:show-previous-item'
+  'ctrl-shift-tab ^ctrl': 'unset!'
+  # End Cycle through tabs
+
+'atom-workspace atom-text-editor:not([mini])':
+  'ctrl-shift-up': 'editor:move-line-up'
+  'ctrl-shift-down': 'editor:move-line-down'
+
+'.editor':
+  'ctrl-home': 'core:move-to-top'
+  'ctrl-end': 'core:move-to-bottom'
+
+'.platform-darwin':
+  'alt-pageup': 'core:page-up'
+  'alt-pagedown': 'core:page-down'
+  'cmd-!': 'pane-layout:column-1' # alt-shift-1
+  'cmd-@': 'pane-layout:column-2' # alt-shift-2
+  'ctrl-shift-3': 'pane-layout:column-3'
+  'ctrl-shift-4': 'pane-layout:column-4'
+  'ctrl-shift-5': 'pane-layout:square'
+  'cmd-shift-down': 'editor:add-selection-below'
+  'cmd-shift-up': 'editor:add-selection-above'
+  'cmd-t': 'application:new-file'
+  'ctrl-,': 'settings-view:open'
+  'ctrl-.': 'key-binding-resolver:toggle'
+  'ctrl-/': 'editor:toggle-line-comments'
+  'ctrl-\\': 'tree-view:toggle'
+  'ctrl-|': 'tree-view:reveal-active-file'
+  'ctrl-d': 'find-and-replace:select-next'
+  'ctrl-delete': 'editor:delete-to-end-of-word'
+  'ctrl-p': 'fuzzy-finder:toggle-file-finder'
+  'ctrl-shift-delete': 'editor:delete-to-end-of-line'
+  'ctrl-shift-M': 'markdown-preview:toggle'
+  'ctrl-shift-P': 'command-palette:toggle'
+  'cmd-z': 'core:undo'
+  'cmd-y': 'core:redo'
+
+'.platform-darwin .find-and-replace':
+  'cmd-enter': 'find-and-replace:find-all'
+
+'.platform-win32, .platform-linux':
+  'alt-shift-down': 'editor:add-selection-below'
+  'alt-shift-up': 'editor:add-selection-above'
+  'alt-shift-1': 'pane-layout:column-1' # default ?
+  'alt-shift-2': 'pane-layout:column-2' # default ?
+  'alt-shift-3': 'pane-layout:column-3' # default ?
+  'alt-shift-4': 'pane-layout:column-4' # default ?
+  'alt-shift-5': 'pane-layout:square' # default ?
+  'ctrl-t': 'application:new-file'

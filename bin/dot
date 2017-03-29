@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# dot
+#
+# `dot` handles installation, updates, things like that. Run it periodically
+# to make sure you're on the latest and greatest.
+export DOTFILES=$HOME/.dotfiles
+
+if [ "$(uname -s)" = "Darwin" ]
+then
+  # Set macOS defaults
+  echo "› OSX defaults"
+  "$DOTFILES/macos/set-defaults.sh"
+
+  # Install homebrew
+  "$DOTFILES/homebrew/install.sh" 2>&1
+
+  # Upgrade homebrew
+  echo "› Brew"
+  brew update
+  brew upgrade
+  "$DOTFILES/homebrew/links.sh" 2>&1
+fi
+
+# Install software
+echo "› $DOTFILES/script/install"
+"$DOTFILES/script/install"

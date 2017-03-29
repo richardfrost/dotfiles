@@ -1,0 +1,13 @@
+ForwardAgent yes
+User richard.frost
+
+IdentityFile ~/.ssh/id_rsa
+IdentityFile ~/.ssh/id_rsa_2017
+AddKeysToAgent yes
+
+Host *.moneydesktop.com 10.* hq-misc-* po-dev-* po-misc-* po-qa* sa-dev-* sa-sand-* sc-prod-* sd-corp-* sd-prod-* se-int-* se-prod-*
+	# Don't automatically add to known_hosts
+	StrictHostKeyChecking no
+	# Custom known_hosts file
+	UserKnownHostsFile /dev/null
+	UseKeychain yes

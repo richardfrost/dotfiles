@@ -1,0 +1,87 @@
+"*":
+  "activate-power-mode":
+    autoToggle: false
+  "atom-beautify":
+    general:
+      _analyticsUserId: "89748c97-dd75-4a66-8e03-b6d72619f6b0"
+  "atom-material-ui":
+    tabs:
+      compactTabs: true
+    treeView:
+      compactList: true
+    ui:
+      panelContrast: true
+      panelShadows: true
+  core:
+    ignoredNames: [
+      ".bundle"
+      ".git"
+      "log"
+      "repositories"
+      "tmp"
+      "vendor"
+      ".DS_Store"
+      "thumbs.db"
+    ]
+    telemetryConsent: "no"
+    themes: [
+      "atom-material-ui"
+      "one-dark-syntax"
+    ]
+  "custom-title":
+    template: "<% if (fileInProject) { %><%= projectName %> - <%= relativeFilePath %><% } else { %><%= filePath %><% } %>"
+  editor:
+    fontFamily: "Menlo"
+    fontSize: 13
+    invisibles:
+      tab: "-"
+    scrollPastEnd: true
+    showIndentGuide: true
+    softWrapAtPreferredLineLength: false
+  "exception-reporting":
+    userId: "3a02b761-61a3-b87d-8e92-617d38efeb84"
+  "file-icons": {}
+  "git-plus":
+    general:
+      _analyticsUserId: "bb9905bc-ab93-4d6b-abb0-0491ce246766"
+  "go-plus":
+    panelDisplayMode: "closed"
+  linter: {}
+  "linter-eslint":
+    useGlobalEslint: true
+  "linter-puppet-lint":
+    oldVersion: false
+  "linter-shellcheck":
+    enableNotice: true
+  "linter-ui-default": {}
+  "markdown-preview":
+    breakOnSingleNewline: true
+  minimap:
+    plugins:
+      "split-diff": true
+      "split-diffDecorationsZIndex": 0
+  pigments:
+    markerType: "square-dot"
+  "release-notes":
+    viewedVersion: "0.89.0"
+  "spell-check":
+    grammars: [
+      "text.plain"
+      "source.gfm"
+      "text.git-commit"
+      "text.html.basic"
+    ]
+  "split-diff":
+    ignoreWhitespace: true
+  "sync-settings":
+    _analyticsUserId: "9c248b53-73d5-4f56-99d3-315e1049be8e"
+    _lastBackupHash: "911b681c438047c2107cba0fc290c49dbdc489d9"
+    analytics: false
+    gistId: "c4336c419d6cefdee697878f5f829bde"
+  tabs:
+    addNewTabsAtEnd: true
+    enableVcsColoring: true
+  "tree-view":
+    hideIgnoredNames: true
+  welcome:
+    showOnStartup: false

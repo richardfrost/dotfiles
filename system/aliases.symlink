@@ -1,0 +1,118 @@
+#============================
+# Aliases
+#============================
+# Git
+function current_branch { git symbolic-ref --short HEAD; }
+alias g='git'
+alias cb="current_branch"
+alias gs="git status"
+alias gb="git branch"
+alias gp="git pull"
+alias gcob="git checkout -b"
+alias gco="git checkout"
+alias gcom="git checkout master"
+alias gpo="git pull origin"
+alias gpom="git pull origin master"
+alias gd="git diff"
+alias gc="git commit -v"
+alias gcn='git commit -v --no-verify'
+alias ga="git add"
+alias gadd="git add ."
+alias gr="git reset"
+alias gpusho='git push origin'
+alias gpushb='git push origin $(current_branch)'
+alias gpushu='git push -u origin $(current_branch)'
+alias gpubb='git-publish-branch'
+alias git_protect_master='ln -s $HOME/.dotfiles/git/hooks/pre-commit ./.git/hooks'
+alias gundo='git reset --soft HEAD~1'
+alias gredo='git commit -c ORIG_HEAD'
+
+# System
+alias cleardns="sudo killall -HUP mDNSResponder"
+
+#============================
+# MX Specific
+#============================
+alias up="bin/up"
+alias down="bin/down"
+alias sc="bin/syntaxcheck"
+
+alias ssht="echo ssh -TL 127.0.0.1:9200:127.0.0.1:9200 sa-sand-logmill1"
+alias pts="echo 'sudo puppet agent —enable; sudo puppet agent —test —environment=branch; sudo puppet agent —disable testing_initials'"
+
+# Deployment
+alias pushall="git push origin master:sa-sand master:po-misc master:sc-prod master:sd-prod master:sd-corp master:se-prod"
+alias pushsp="git push origin master:sa-sand master:po-misc"
+alias dsa="./bin/deploy --limit=sa-sand-puppetmaster1"
+alias dpo="./bin/deploy --limit=po-misc-puppetmaster1"
+alias dsp="./bin/deploy --limit=sa-sand-puppetmaster1,po-misc-puppetmaster1"
+alias dsc="./bin/deploy --limit=sc-prod-puppetmaster1"
+alias dsd="./bin/deploy --limit=sd-prod-puppetmaster1"
+alias dsdc="./bin/deploy --limit=sd-corp-puppetmaster1"
+alias dse="./bin/deploy --limit=se-prod-puppetmaster1"
+alias dsei="./bin/deploy --limit=se-int-puppetmaster1"
+alias daa="./bin/deploy"
+
+alias b='bundle'
+alias be='bundle exec'
+alias bx='bundle exec'
+alias irbl="irb -I . -r"
+alias ssha="ssh-add && ssh-add ~/.ssh/provisioner_rsa"
+alias unseal="mx_vault_unseal"
+
+function dev { git clone "git@git.moneydesktop.com:dev/$1" "$PROJECTS/$1"; }
+function ops { git clone "git@git.moneydesktop.com:it-infrastructure/$1" "$PROJECTS/$1"; }
+
+#============================
+# System
+#============================
+alias dmesgw='watch -n 0.1 "dmesg | tail -n $((LINES-6))"'
+alias readlink=greadlink
+
+#============================
+# macOS Aliases
+#============================
+alias mac_flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; echo DNS cache flushed'
+
+#============================
+# Thor Wrappers
+#============================
+function provision_vms { ~/code/puppet/bin/csv_to_provision provision --site="$1" --env="$2" --rebuild; }
+
+#============================
+# Richard's Aliases
+#============================
+# Applications/Misc
+alias aliases='cat "$HOME"/.aliases'
+alias a.='atom .'
+alias bash='exec bash -l'
+alias dbin='ls "$HOME"/.dotfiles/bin'
+alias dotfiles='cd "$HOME"/.dotfiles'
+alias e.='open .' # macOS
+alias myip='curl ifconfig.co'
+alias sshfp='ssh_fingerprints'
+alias sshpub='head "$HOME"/.ssh/*.pub'
+alias zsh='exec zsh -l'
+
+#============================
+# Other functions
+#============================
+# List all local branches and their last revision date in order
+function git_branch_revisions {
+  for k in $(git branch | sed s/^..//); \
+    do echo -e "$(git log -1 --pretty=format:'%Cgreen%ci %Cblue%cr%Creset' $k --)" \
+    \\t"$k";done | sort
+}
+
+# Run a simple python http server
+function httpd { python -m SimpleHTTPServer "$1"; }
+
+# Generate Password
+# alias pwgen="date | md5"
+function pwgen { if [[ $1 ]]; then length=$1; else length=32; fi; date +%s | sha256sum | base64 | head -c $length; echo; }
+
+function ssh_fingerprints {
+  find "$HOME/.ssh" -name "*.pub" -print0 \
+    | xargs -0 -I file sh -c \
+    'echo --- file ---; ssh-keygen -lf file; ssh-keygen -E md5 -lf file; echo'
+}

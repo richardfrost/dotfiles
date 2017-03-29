@@ -1,0 +1,75 @@
+# export PS1="\h \W \$ "
+export PS1='\[\033[1;42m\]\h\[\033[0m\] \W \$ '
+export RBENV_ROOT=/usr/local/var/rbenv
+export HISTTIMEFORMAT="%s "
+export HISTCONTROL=ignoredups:ignorespace
+
+if [ "$(uname -s)" == "Darwin" ]
+then
+  PATH="$HOME/.dotfiles/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+fi
+
+# PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER \ "$(history 1)" >> ~/.bash_permanent_history'
+
+#============================
+# Functions
+#============================
+# rbenv
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+if [ "$(uname -s)" == "Darwin" ]
+then
+  # Bash completion
+  if [ -f `brew --prefix`/etc/bash_completion ]; then
+      . `brew --prefix`/etc/bash_completion
+  fi
+
+  # Git prompt
+  if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
+    GIT_PROMPT_THEME=Default
+    source "$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
+  fi
+fi
+
+# Git completion
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
+#============================
+# SSH Autocompletion
+#============================
+# Gather hosts from history and config
+# complete -W "
+#   $(echo $(grep '^\s*ssh ' ~/.bash_history | sort -u | sed 's/^ssh //' | awk '{print $1}'))
+#   $(echo $(history | awk '{print $3 " " $4}' | grep 'ssh ' | awk '{print $2}' | sort -u))
+#   $(sed 's/#.*//;' ~/.ssh/config | awk ' /^Host (.+)$/ {$1 = "";print tolower($0)}')
+# " ssh
+
+# Completion from custom_hosts list: "$HOME/.ssh/custom_hosts"
+[[ -r $HOME/.ssh/custom_hosts ]] && complete -W "$(cat $HOME/.ssh/custom_hosts))" ssh scp sftp sshmux
+
+#============================
+# Richard's Aliases
+#============================
+# Aliases
+alias aliases="less ~/.bash_profile"
+alias reload_aliases="source ~/.bash_profile"
+
+# Go to code folder
+export PROJECTS=~/code
+function c { cd "$PROJECTS/$1"; }
+
+_c() {
+  local cur opts
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  opts=$(cd "$PROJECTS"; ls -d */ | sed 's|/./||')
+  COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+}
+complete -F _c c
+
+# load ssh agent
+ssh-add -K ~/.ssh/id_rsa 2>/dev/null
+
+# Import common aliases
+. ~/.aliases

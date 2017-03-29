@@ -1,0 +1,20 @@
+#!/bin/bash
+# Quickly connect to a vagrant node through ssh
+dir=$(pwd)
+ssh_config="$dir/.ssh_config"
+vagrant_dir="$dir/.vagrant"
+
+if [[ -d "$vagrant_dir" ]]; then
+  # Ensure we have ssh_config
+  if [[ ! -e "$ssh_config" ]]; then
+    vagrant ssh-config > "$ssh_config"
+  fi
+
+  # Get host name
+  read -r line < ./.ssh_config; hostarr=($line);  host=${hostarr[1]}
+
+  # Connect to app using pre-generated ssh-config
+  ssh -F "$ssh_config" "$host"
+else
+  echo "Couldn't find $vagrant_dir directory"
+fi

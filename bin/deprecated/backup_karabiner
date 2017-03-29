@@ -1,0 +1,34 @@
+#!/bin/bash
+# https://pqrs.org/osx/karabiner/document.html.en#commandlineinterface
+
+dotfile_prefs="$HOME/.dotfiles/macos_prefs"
+karabiner='/Applications/Karabiner.app/Contents/Library/bin/karabiner'
+active_profile=$($karabiner selected)
+profiles=("Macbook" "External" "Disabled")
+profile_len="${#profiles[@]}"
+
+case $1 in
+  import )
+    # TODO: Use temp profile to handle deleting?
+    # temp_profile='ztemp'
+    # $($karabiner append $temp_profile)
+    # $($karabiner select_by_name $temp_profile)
+    for (( i=0; i<${profile_len}; i++ )); do
+      $($karabiner select $i)
+      # TODO: Work on cleanup/deleting before importing?
+      # $($karabiner be_careful_to_use__clear_all_values_by_name ${profiles[$i]})
+      # $($karabiner delete $i)
+      # $($karabiner append ${profiles[$i]})
+      sh $dotfile_prefs/karabiner_${profiles[$i]}
+    done ;;
+  export )
+    for (( i=0; i<${profile_len}; i++ )); do
+      $karabiner select $i
+      $karabiner export > "$dotfile_prefs/karabiner_${profiles[$i]}"
+    done ;;
+  *)
+    echo "Usage: '$0 [import|export]'" ;;
+esac
+
+# Restore active profile
+$karabiner select $active_profile

@@ -1,0 +1,9 @@
+if [[ -e ./Puppetfile ]]; then
+  bin/up
+else
+  git remote update --prune > /dev/null 2>&1
+  echo '[master > qa]'
+  git cherry -v origin/qa origin/master
+  echo '[qa     > stable]'
+  git cherry -v origin/stable origin/qa
+fi

@@ -1,0 +1,41 @@
+###########################
+# 1.1.4.1
+###########################
+bin\agent.cmd
+config\.history
+config\aliases
+config\ConEmu.xml
+config\startup.bat
+vendor\init.bat
+Add-Cmder.reg
+Remove-Cmder.reg
+
+
+###########################
+# 1.2.9
+###########################
+Copy:
+_Add-Cmder.reg
+_Remove-Cmder.reg
+config\.history
+config\aliases
+
+Add:
+config\user-startup.cmd
+
+Redo:
+config\ConEmu.xml
+
+#############################
+# Clink Settings
+config/settings
+
+
+###########################
+# 1.3.1
+###########################
+_Add-Cmder.reg
+_Remove-Cmder.reg
+config\user-aliases.cmd
+config\ConEmu.xml
+config\settings

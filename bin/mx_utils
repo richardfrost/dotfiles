@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'thor'
+require "#{Dir.home}/code/puppet/modules/mx/lib/mx"
+
+class MXUtils < Thor
+  include Thor::Actions
+
+  desc "host_completion", "Create/update list of host completions"
+  def host_completion
+    list = Array.new
+    MX.each_hiera_node do |node|
+      list.push(node.hostname)
+    end
+
+    File.open("#{Dir.home}/.ssh/custom_hosts", "w+") do |f|
+      f.puts(list)
+    end
+  end
+end
+
+MXUtils.start

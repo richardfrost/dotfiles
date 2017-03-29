@@ -1,0 +1,73 @@
+#!/bin/sh
+
+cli=/Applications/Karabiner.app/Contents/Library/bin/karabiner
+
+$cli set private.chrome_bookmark_page 1
+/bin/echo -n .
+$cli set private.chrome_new_incognito_window 1
+/bin/echo -n .
+$cli set private.chrome_new_window 1
+/bin/echo -n .
+$cli set private.chrome_numbered_tabs 1
+/bin/echo -n .
+$cli set private.chrome_open_location 1
+/bin/echo -n .
+$cli set private.chrome_print 1
+/bin/echo -n .
+$cli set private.chrome_reload_page 1
+/bin/echo -n .
+$cli set private.chrome_reopen_closed_tab 1
+/bin/echo -n .
+$cli set private.chrome_show_bookmarks_bar 1
+/bin/echo -n .
+$cli set private.chrome_show_downloads 1
+/bin/echo -n .
+$cli set private.chrome_show_history 1
+/bin/echo -n .
+$cli set remap.app_finder_f2_to_return 1
+/bin/echo -n .
+$cli set remap.app_finder_forwarddelete2commandLdelete 1
+/bin/echo -n .
+$cli set remap.app_finder_switch_new_folder_window 1
+/bin/echo -n .
+$cli set remap.control_delete_to_option_delete_winstyle 1
+/bin/echo -n .
+$cli set remap.copy_paste_winstyle_new_tab 1
+/bin/echo -n .
+$cli set remap.copy_paste_winstyle_reload 1
+/bin/echo -n .
+$cli set remap.find_winstyle_no_term 1
+/bin/echo -n .
+$cli set remap.KPReturn_to_Ctrl_O 1
+/bin/echo -n .
+$cli set remap.new_winstyle_no_term 1
+/bin/echo -n .
+$cli set remap.pc_style_copy_paste 1
+/bin/echo -n .
+$cli set remap.pc_style_open 1
+/bin/echo -n .
+$cli set remap.pclikecontrolarrow_except_vm 1
+/bin/echo -n .
+$cli set remap.pclikehomeend 1
+/bin/echo -n .
+$cli set remap.pclikepageupdown_except_emacs 1
+/bin/echo -n .
+$cli set remap.pcstyle_altf4 1
+/bin/echo -n .
+$cli set remap.pcstyle_close 1
+/bin/echo -n .
+$cli set remap.pointing_controlLeftclick2commandLeftclick 1
+/bin/echo -n .
+$cli set remap.redo_winstyle_no_term 1
+/bin/echo -n .
+$cli set remap.save_winstyle_no_term 1
+/bin/echo -n .
+$cli set remap.select_all_winstyle_no_term 1
+/bin/echo -n .
+$cli set remap.undo_winstyle_no_term 1
+/bin/echo -n .
+$cli set repeat.initial_wait 350
+/bin/echo -n .
+$cli set repeat.wait 25
+/bin/echo -n .
+/bin/echo

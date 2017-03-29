@@ -1,0 +1,2 @@
+cd "$HOME/code/puppet"
+./bin/vault_unseal $1

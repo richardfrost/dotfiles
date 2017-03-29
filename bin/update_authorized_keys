@@ -1,0 +1,30 @@
+#!/bin/bash
+# Script to download authorized_keys file remotely
+# echo "your-remote-url" > "$HOME/.remote_authorized_keys"
+# Optional: Run as a cron job to automatically stay up-to-date
+
+if [[ -f "$HOME/.remote_authorized_keys" ]]; then
+  remote_authorized_keys="$(cat "$HOME/.remote_authorized_keys")"
+
+  if [[ -f "$HOME/.ssh/authorized_keys" ]]; then
+    downloaded=$(curl --fail --silent "$remote_authorized_keys" -H "Cache-Control: no-cache"; echo)
+
+    if [[ -z "$downloaded" ]]; then
+      echo "Error! Failed to download file: $remote_authorized_keys"
+    else
+      current_md5="$(md5sum "$HOME/.ssh/authorized_keys" | awk '{print $1}')"
+      new_md5="$(echo "$downloaded" | md5sum | awk '{print $1}')"
+      if [[ "$current_md5" != "$new_md5" ]]; then
+        cp "$HOME/.ssh/authorized_keys" "$HOME/.ssh/authorized_keys.bak"
+        echo "$downloaded" > "$HOME/.ssh/authorized_keys"
+        echo "INFO: Updated authorized_keys"
+      else
+        echo "INFO: MD5s match; nothing to update."
+      fi
+    fi
+  else
+    echo "Error: $HOME/.ssh/authorized_keys does not exists."
+  fi
+else
+  echo "Error: Missing $HOME/.remote_authorized_keys file."
+fi

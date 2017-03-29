@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cli=/Applications/Karabiner.app/Contents/Library/bin/karabiner
+
+/bin/echo

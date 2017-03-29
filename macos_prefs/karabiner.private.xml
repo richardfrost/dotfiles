@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<root>
+  <item>
+    <name>Richard's Shortcuts</name>
+    <item>
+      <name>Google Chrome</name>
+      <item>
+        <name>Ctrl + Numbered Tab</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_numbered_tabs</identifier>
+        <autogen>__KeyToKey__ KeyCode::1, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::1, ModifierFlag::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::2, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::2, ModifierFlag::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::3, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::3, ModifierFlag::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::4, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::4, ModifierFlag::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::5, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::5, ModifierFlag::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::6, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::6, ModifierFlag::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::7, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::7, ModifierFlag::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::8, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::8, ModifierFlag::COMMAND_L</autogen>
+        <autogen>__KeyToKey__ KeyCode::9, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::9, ModifierFlag::COMMAND_L</autogen>
+      </item>
+      <item>
+        <name>New Window (CTRL+N)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_new_window</identifier>
+        <autogen>__KeyToKey__ KeyCode::N, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::N, ModifierFlag::COMMAND_L</autogen>
+      </item>
+      <item>
+        <name>New Incognito Window (CTRL+SHIFT+N)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_new_incognito_window</identifier>
+        <autogen>__KeyToKey__ KeyCode::N, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL | MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::N, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L</autogen>
+      </item>
+      <item>
+        <name>Reopen Closed Tab (CTRL+SHIFT+T)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_reopen_closed_tab</identifier>
+        <autogen>__KeyToKey__ KeyCode::T, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL | MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::T, ModifierFlag::COMMAND_L | ModifierFlag::SHIFT_L</autogen>
+      </item>
+      <item>
+        <name>Open Location... (ALT+D)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_open_location</identifier>
+        <autogen>__KeyToKey__ KeyCode::D, ModifierFlag::COMMAND_L, KeyCode::L, ModifierFlag::COMMAND_L</autogen>
+      </item>
+      <item>
+        <name>Print... (CTRL+P)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_print</identifier>
+        <autogen>__KeyToKey__ KeyCode::P, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::P, ModifierFlag::COMMAND_L</autogen>
+      </item>
+      <item>
+        <name>Reload This Page (F5)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_reload_page</identifier>
+        <autogen>__KeyToKey__ KeyCode::F5, KeyCode::R, ModifierFlag::CONTROL_L</autogen>
+      </item>
+      <item>
+        <name>Show History (CTRL+H)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_show_history</identifier>
+        <autogen>__KeyToKey__ KeyCode::H, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::Y, ModifierFlag::COMMAND_L</autogen>
+      </item>
+      <item>
+        <name>Always Show Bookmarks Bar (CTRL+SHIFT+B)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_show_bookmarks_bar</identifier>
+        <autogen>__KeyToKey__ KeyCode::B, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL | MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::B, ModifierFlag::COMMAND_L | MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT</autogen>
+      </item>
+      <item>
+        <name>Bookmark This Page... (CTRL+D)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_bookmark_page</identifier>
+        <autogen>__KeyToKey__ KeyCode::D, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::D, ModifierFlag::COMMAND_L</autogen>
+      </item>
+      <item>
+        <name>Show Downloads (CTRL+J)</name>
+        <only>GOOGLE_CHROME</only>
+        <identifier>private.chrome_show_downloads</identifier>
+        <autogen>__KeyToKey__ KeyCode::J, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::J, ModifierFlag::COMMAND_L</autogen>
+      </item>
+    </item>
+    <item>
+      <name>Miscellaneous</name>
+      <item>
+        <name>Win+L Lock</name>
+        <identifier>private.richard_lock</identifier>
+        <autogen>
+          __KeyToKey__
+          KeyCode::L, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_OPTION | ModifierFlag::NONE,
+          KeyCode::VK_OPEN_URL_SHELL_sleep_with_delay,
+        </autogen>
+      </item>
+    </item>
+  </item>
+</root>

@@ -1,0 +1,104 @@
+#!/bin/bash
+scriptname=$0     # $0 is the name of the program
+root="$HOME/code" # Update this to point to your code directory
+dev_apps=(abacus alfred amigo atlas ballista batcave bob bullseye bunyan datastream dispatch dunaway firefly grunt hulk longbow monty newman persona raja ranger relay sherlock synchronicity wormhole)
+it_apps=(bind dev_web_proxy nurse public-dns) # leonard puppet
+orgs=(dev IT-Infrastructure change-control)
+bundle=false
+
+# Print usage help
+function usage() {
+   cat <<EOF
+Usage: $scriptname [-a] [-b] [-s app1] [-s app2] [-h]
+  -a  All apps
+  -b  Run bundle after cloning/updating
+  -s  Single app (can specify multiple times)
+  -h  Displays basic help
+EOF
+   exit 0
+}
+
+# Get arguments
+while getopts "s:abh" opt; do
+   case $opt in
+   a )  apps=( "${dev_apps[@]}" "${it_apps[@]}" ) ;;
+   b )  bundle=true ;;
+   s )  apps+=( "$OPTARG" ) ;;
+   h )  usage ;;
+   \?)  usage ;;
+   esac
+done
+if [ ${#apps[@]} == 0 ]; then usage; fi
+
+fix_rbenv() {
+  # https://stackoverflow.com/questions/17550903/why-do-i-get-a-permission-denied-error-while-installing-a-gem
+  # brew update && upgrade
+  # brew doctor
+  # brew uninstall ruby
+  # brew uninstall rbenv
+  # brew install rbenv
+  # rbenv install 2.3.1
+  # sudo chown -R richardfrost ~/.rbenv
+  cd "$root/$app" || exit
+  rbenv local
+  gem install bundler
+  rbenv rehash
+  bundle
+}
+
+clone_app_repo() {
+  if [ -d "$root" ]; then
+    cd "$root" || exit
+    if [ -d "$app" ]; then
+      cd "$app" || exit
+      git remote update
+    else
+      for i in "${orgs[@]}"; do
+        git clone "git@git.moneydesktop.com:${i}/${app}.git"
+        if [ $? == 0 ]; then break; fi
+      done
+    fi
+  else
+    echo "Code root dir doesn't exist: $root"
+    return 1
+  fi
+}
+
+get_stable() {
+  if [ -d "$root/$app" ]; then
+    cd "$root/$app" || exit
+    git checkout stable
+    git pull
+  else
+    echo "Can't get stable: $root/$app"
+    return 1
+  fi
+}
+
+update_ruby_and_gems() {
+  if [ -d "$root/$app" ]; then
+    if [ -f "$root/$app/Gemfile" ]; then
+      cd "$root/$app" || exit
+      rbenv install -s
+      bundler_installed=$(gem list bundler -i)
+      if [ "$bundler_installed" == 'false' ]; then
+        gem install bundler -N
+      fi
+      rbenv rehash
+      bundle
+    fi
+  else
+    echo "Can't update gems; directory not found: $root/$app"
+    return 1
+  fi
+}
+
+for app in "${apps[@]}"
+do
+  if [ "$app" ]; then
+    printf "\n\033[0;34m[ %s ]\033[0m\n" "$app"
+    clone_app_repo && get_stable
+    if [ $bundle == true ] && [ $? == 0 ]; then update_ruby_and_gems; fi
+  fi
+done
+cd "$root" || exit

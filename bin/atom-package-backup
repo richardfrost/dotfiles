@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# Usage: atom-package-backup
+#
+# Saves a list of your currently installed atom packages to
+# ~/.dotfiles/atom.symlink/packages.txt suitable for install
+# via atom-package-install
+
+# Atom Stars allows you to keep track of your favorite packages
+# To star a package:
+#   apm star package-name
+# To star all installed packages:
+#   apm star --installed
+# To install all starred packges:
+#   apm stars --install
+set -e
+
+apm list --installed --bare > ~/.dotfiles/atom.symlink/packages.txt
