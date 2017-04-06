@@ -49,6 +49,9 @@ set -g status-keys emacs
 # Use vi keybindings in copy and choice modes
 setw -g mode-keys vi
 
+# Reload tmux configuration
+bind-key r source-file ~/.tmux.conf
+
 ###########################################################################
 # Window management / navigation
 
