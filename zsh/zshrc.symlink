@@ -138,7 +138,13 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # load ssh agent
-ssh-add -K ~/.ssh/id_rsa 2>/dev/null
+# ssh-add -K ~/.ssh/id_rsa 2>/dev/null
+
+# Search for ssh agent
+source ~/.dotfiles/bin/ssh-find-agent
+if ! test $SSH_AUTH_SOCK; then
+    set_ssh_agent_socket
+fi
 
 # 'rbenv init -'
 eval "$(rbenv init -)"
