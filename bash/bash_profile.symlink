@@ -15,7 +15,7 @@ fi
 # Functions
 #============================
 # rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv > /dev/null 2>&1; then eval "$(rbenv init -)"; fi
 
 if [ "$(uname -s)" == "Darwin" ]
 then
@@ -80,6 +80,6 @@ fi
 . ~/.aliases
 
 # Add system ruby bin to path
-if which ruby >/dev/null && which gem >/dev/null; then
+if which ruby > /dev/null 2>&1 && which gem >/dev/null 2>&1; then
   PATH="$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
