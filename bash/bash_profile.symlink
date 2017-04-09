@@ -78,3 +78,8 @@ fi
 
 # Import common aliases
 . ~/.aliases
+
+# Add system ruby bin to path
+if which ruby >/dev/null && which gem >/dev/null; then
+  PATH="$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
+fi
