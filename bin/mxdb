@@ -13,31 +13,38 @@ class PGConnect < Thor
       @site = params.fetch('site')
     end
 
-    def database_number
-      case @database
-      when 'amigo', 'grafana', 'macklin', 'persona', 'vault'
+    def cluster_number
+      case @env
+      when 'prod'
+        case @database
+        when 'amigo', 'grafana', 'macklin', 'persona', 'vault'
+          1
+        when 'ballista'
+          2
+        when 'abacus'
+          3
+        when 'batcave', 'bullseye', 'dispatch', 'newman', 'sherlock', 'synchronicity', 'vault'
+          6
+        else
+          0
+        end
+      when 'corp', 'int', 'qa', 'sand'
         1
-      when 'ballista'
-        2
-      when 'abacus'
-        3
-      when 'batcave', 'bullseye', 'dispatch', 'newman', 'sherlock', 'synchronicity', 'vault'
-        6
-      else
-        0
       end
     end
 
     def environment
       case @env
-      when 'prod'
-        'production'
+      when 'corp'
+        'corporate'
       when 'int'
         'integration'
-      when 'sand'
-        'sand'
+      when 'prod'
+        'production'
       when 'qa'
         'qa'
+      when 'sand'
+        'sand'
       end
     end
 
@@ -48,12 +55,14 @@ class PGConnect < Thor
     def host
       case @env
       when 'prod'
-        "#{@site}-#{@env}-postgres#{series_number}#{database_number}"
+        "#{@site}-#{@env}-postgres#{series_number}#{cluster_number}"
+      when 'corp', 'int', 'qa', 'sand'
+        "#{@site}-#{@env}-postgres#{series_number}"
       end
     end
 
     def psql
-      "psql -U postgres -h /var/run/postgresql/9.5/postgres#{database_number}_#{environment}/"
+      "psql -U postgres -h /var/run/postgresql/9.5/postgres#{cluster_number}_#{environment}/"
     end
 
     def psql_command
@@ -70,8 +79,12 @@ class PGConnect < Thor
 
     def series_number
       case @env
+      when 'corp', 'int'
+        @master ? '101' : '201'
       when 'prod'
         @master ? '10' : '20'
+      when 'qa', 'sand'
+        @master ? '1' : '2'
       end
     end
 
@@ -91,7 +104,7 @@ class PGConnect < Thor
           options['psql'] = true
         when /^master$/i
           options['master'] = true
-        when /^s\w-\w{3,4}$/
+        when /^\w{2,}-\w{2,4}$/
           site_env = arg.split('-')
           options['site'] = site_env[0]
           options['env'] = site_env[1]
@@ -122,6 +135,10 @@ class PGConnect < Thor
     PGConnect.start(args)
   end
 
+  # Examples:
+  #   mxdb se-prod ballista
+  #   mxdb sd-prod ballista master
+  #   mxdb psql sd-prod ballista master
   desc "psql", "Default task: Connect to postgres server and run psql"
   def psql(*args)
     db = Database.parse_quick(args)
@@ -132,6 +149,8 @@ class PGConnect < Thor
     end
   end
 
+  # Examples:
+  #   mxdb ssh sd-prod ballista
   desc "ssh", "SSH into postgres server"
   def ssh(*args)
     db = Database.parse_quick(args)
