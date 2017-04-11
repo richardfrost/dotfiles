@@ -92,6 +92,7 @@ alias e.='open .' # macOS
 alias myip='curl ifconfig.co'
 alias sshfp='ssh_fingerprints'
 alias sshpub='head "$HOME"/.ssh/*.pub'
+alias tssh='sshtmux'
 alias zsh='exec zsh -l'
 
 #============================
@@ -115,4 +116,8 @@ function ssh_fingerprints {
   find "$HOME/.ssh" -name "*.pub" -print0 \
     | xargs -0 -I file sh -c \
     'echo --- file ---; ssh-keygen -lf file; ssh-keygen -E md5 -lf file; echo'
+}
+
+function sshtmux {
+  ssh -q "$@" -t 'tmux new-session -A -s main || $SHELL -l'
 }
