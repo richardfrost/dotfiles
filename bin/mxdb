@@ -7,26 +7,31 @@ class PGConnect < Thor
 
   class Database
     def initialize(params)
-      @database = params.fetch('database')
-      @env = params.fetch('env')
-      @master = params.fetch('master', false)
       @site = params.fetch('site')
+      @env = params.fetch('env')
+      @database = params.fetch('database', nil)
+      @master = params.fetch('master', false)
+      @host_number = params.fetch('host_number', nil)
     end
 
     def cluster_number
       case @env
       when 'prod'
-        case @database
-        when 'amigo', 'grafana', 'macklin', 'persona', 'vault'
-          1
-        when 'ballista'
-          2
-        when 'abacus'
-          3
-        when 'batcave', 'bullseye', 'dispatch', 'newman', 'sherlock', 'synchronicity', 'vault'
-          6
+        if @host_number
+          @host_number
         else
-          0
+          case @database
+          when 'amigo', 'grafana', 'macklin', 'persona', 'vault'
+            1
+          when 'ballista'
+            2
+          when 'abacus'
+            3
+          when 'batcave', 'bullseye', 'dispatch', 'newman', 'sherlock', 'synchronicity', 'vault'
+            6
+          else
+            0
+          end
         end
       when 'corp', 'int', 'qa', 'sand'
         1
@@ -61,6 +66,10 @@ class PGConnect < Thor
       end
     end
 
+    def list
+      " --list"
+    end
+
     def psql
       "psql -U postgres -h /var/run/postgresql/9.5/postgres#{cluster_number}_#{environment}/"
     end
@@ -75,6 +84,10 @@ class PGConnect < Thor
 
     def psql_database_command
       "#{ssh_command} -t '#{psql} #{psql_database}'"
+    end
+
+    def psql_list_command
+      "#{ssh_command} -t '#{psql} #{list}'"
     end
 
     def series_number
@@ -110,10 +123,12 @@ class PGConnect < Thor
           options['env'] = site_env[1]
         when /^\w{3,}$/
           options['database'] = arg
+        when /^\d$/
+          options['host_number'] = arg
         end
       end
 
-      if options.has_key?('site') && options.has_key?('env') && options.has_key?('database')
+      if options.has_key?('site') && options.has_key?('env')
         Database.new(options)
       end
     end
@@ -144,6 +159,20 @@ class PGConnect < Thor
     db = Database.parse_quick(args)
     if db
       system db.psql_database_command
+    else
+      say "Error, couldn't parse: #{args}"
+    end
+  end
+
+  # Examples:
+  #   mxdb se-prod ballista
+  #   mxdb sd-prod ballista master
+  #   mxdb psql sd-prod ballista master
+  desc "list", "Default task: Connect to postgres server and list databases"
+  def list(*args)
+    db = Database.parse_quick(args)
+    if db
+      system db.psql_list_command
     else
       say "Error, couldn't parse: #{args}"
     end
