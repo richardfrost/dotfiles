@@ -70,7 +70,7 @@ class PGConnect < Thor
     end
 
     def list
-      " --list"
+      "--list"
     end
 
     def psql
@@ -78,19 +78,19 @@ class PGConnect < Thor
     end
 
     def psql_command
-      "#{ssh_command} -t '#{psql}'"
+      "#{ssh_command} -t 'echo \"#{host}\n#{psql}\"; #{psql}'"
     end
 
     def psql_database
-      " -d #{full_database}" if @database
+      "-d #{full_database}" if @database
     end
 
     def psql_database_command
-      "#{ssh_command} -t '#{psql} #{psql_database}'"
+      "#{ssh_command} -t 'echo \"#{host}\n#{psql} #{psql_database}\"; #{psql} #{psql_database}'"
     end
 
     def psql_list_command
-      "#{ssh_command} -t '#{psql} #{list}'"
+      "#{ssh_command} -t 'echo \"#{host}\"; #{psql} #{list}'"
     end
 
     def series_number
