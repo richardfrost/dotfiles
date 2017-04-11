@@ -144,6 +144,19 @@ class PGConnect < Thor
     system db.ssh_command
   end
 
+  # Examples:
+  #   mxpg list sd-corp
+  #   mxpg list sd-prod ballista 6
+  desc "list", "Default task: Connect to postgres server and list databases"
+  def list(*args)
+    db = Database.parse_quick(args)
+    if db
+      system db.psql_list_command
+    else
+      say "Error, couldn't parse: #{args}"
+    end
+  end
+
   # Override method_missing to call default task with arguments
   def method_missing(method, *args)
     args = ["psql", method.to_s] + args
@@ -151,9 +164,9 @@ class PGConnect < Thor
   end
 
   # Examples:
-  #   mxdb se-prod ballista
-  #   mxdb sd-prod ballista master
-  #   mxdb psql sd-prod ballista master
+  #   mxpg se-prod ballista
+  #   mxpg sd-prod ballista master
+  #   mxpg psql sd-prod ballista master
   desc "psql", "Default task: Connect to postgres server and run psql"
   def psql(*args)
     db = Database.parse_quick(args)
@@ -165,21 +178,7 @@ class PGConnect < Thor
   end
 
   # Examples:
-  #   mxdb se-prod ballista
-  #   mxdb sd-prod ballista master
-  #   mxdb psql sd-prod ballista master
-  desc "list", "Default task: Connect to postgres server and list databases"
-  def list(*args)
-    db = Database.parse_quick(args)
-    if db
-      system db.psql_list_command
-    else
-      say "Error, couldn't parse: #{args}"
-    end
-  end
-
-  # Examples:
-  #   mxdb ssh sd-prod ballista
+  #   mxpg ssh sd-prod ballista
   desc "ssh", "SSH into postgres server"
   def ssh(*args)
     db = Database.parse_quick(args)
