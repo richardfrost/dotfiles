@@ -3,6 +3,8 @@ require "optparse"
 require "thor"
 
 class PGConnect < Thor
+  default_task :psql
+
   class Database
     def initialize(params)
       @database = params.fetch('database')
@@ -50,8 +52,20 @@ class PGConnect < Thor
       end
     end
 
+    def psql
+      "psql -U postgres -h /var/run/postgresql/9.5/postgres#{database_number}_#{environment}/"
+    end
+
     def psql_command
-      "psql -U postgres -d #{full_database} -h /var/run/postgresql/9.5/postgres#{database_number}_#{environment}/"
+      "#{ssh_command} -t '#{psql}'"
+    end
+
+    def psql_database
+      " -d #{full_database}"
+    end
+
+    def psql_database_command
+      "#{ssh_command} -t '#{psql} #{psql_database}'"
     end
 
     def series_number
@@ -62,7 +76,11 @@ class PGConnect < Thor
     end
 
     def ssh_command
-      "ssh #{host} -t '#{psql_command}'"
+      "ssh #{host}"
+    end
+
+    def ssh_command_echo_psql
+      "#{ssh_command} -t 'echo #{psql} #{psql_database}; bash -l'"
     end
 
     def self.parse_quick(args)
@@ -91,8 +109,8 @@ class PGConnect < Thor
   desc "connect", "Connect to PG"
   method_option :site, type: :string, desc: 'Site used for commands (ex: sd)', required: true
   method_option :env, type: :string, desc: 'Environment used for commands (ex: prod)', required: true
-  method_option :database, :aliases => 'db', type: :string, desc: 'Puppetdb port'
-  method_option :master, type: :boolean, desc: 'Print out header', default: false
+  method_option :database, :aliases => 'db', type: :string, desc: 'Database name'
+  method_option :master, type: :boolean, desc: 'Connect to master series', default: false
   def connect
     db = Database.new(options)
     system db.ssh_command
@@ -100,21 +118,29 @@ class PGConnect < Thor
 
   # Override method_missing to call default task with arguments
   def method_missing(method, *args)
-    args = ["quick", method.to_s] + args
+    args = ["psql", method.to_s] + args
     PGConnect.start(args)
   end
 
-  desc "quick", "Default task: Quickly connect to a database"
-  def quick(*args)
+  desc "psql", "Default task: Connect to postgres server and run psql"
+  def psql(*args)
     db = Database.parse_quick(args)
     if db
-      system db.ssh_command
+      system db.psql_database_command
     else
       say "Error, couldn't parse: #{args}"
     end
   end
 
-  default_task :quick
+  desc "ssh", "SSH into postgres server"
+  def ssh(*args)
+    db = Database.parse_quick(args)
+    if db
+      system db.ssh_command_echo_psql
+    else
+      say "Error, couldn't parse: #{args}"
+    end
+  end
 end
 
 PGConnect.start(ARGV)
