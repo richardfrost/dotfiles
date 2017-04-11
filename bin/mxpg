@@ -54,7 +54,7 @@ class PGConnect < Thor
     end
 
     def full_database
-      "#{@database}_#{environment}"
+      "#{@database}_#{environment}" if @database
     end
 
     def host
@@ -79,7 +79,7 @@ class PGConnect < Thor
     end
 
     def psql_database
-      " -d #{full_database}"
+      " -d #{full_database}" if @database
     end
 
     def psql_database_command
@@ -106,7 +106,19 @@ class PGConnect < Thor
     end
 
     def ssh_command_echo_psql
-      "#{ssh_command} -t 'echo #{psql} #{psql_database}; bash -l'"
+      "#{ssh_command} -t 'echo #{psql} #{psql_database}; $SHELL -l'"
+    end
+
+    def tmux
+      "tmux new-session -A -s psql"
+    end
+
+    def tmux_command
+      if @database
+        "#{ssh_command} -t '#{tmux} \"echo #{psql} #{psql_database}; #{psql} #{psql_database}; $SHELL -l\"'"
+      else
+        "#{ssh_command} -t '#{tmux} \"echo #{psql}; #{psql} #{list}; #{psql}; $SHELL -l\"'"
+      end
     end
 
     def self.parse_quick(args)
@@ -184,6 +196,18 @@ class PGConnect < Thor
     db = Database.parse_quick(args)
     if db
       system db.ssh_command_echo_psql
+    else
+      say "Error, couldn't parse: #{args}"
+    end
+  end
+
+  # Examples:
+  #   mxpg tmux sd-prod ballista
+  desc "tmux", "SSH into postgres with and start tmux"
+  def tmux(*args)
+    db = Database.parse_quick(args)
+    if db
+      system db.tmux_command
     else
       say "Error, couldn't parse: #{args}"
     end
