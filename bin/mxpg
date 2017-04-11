@@ -29,8 +29,6 @@ class PGConnect < Thor
             3
           when 'batcave', 'bullseye', 'dispatch', 'newman', 'sherlock', 'synchronicity', 'vault'
             6
-          else
-            0
           end
         end
       when 'corp', 'int', 'qa', 'sand'
@@ -60,7 +58,12 @@ class PGConnect < Thor
     def host
       case @env
       when 'prod'
-        "#{@site}-#{@env}-postgres#{series_number}#{cluster_number}"
+        if cluster_number
+          "#{@site}-#{@env}-postgres#{series_number}#{cluster_number}"
+        else
+          puts "Error - Couldn't find database cluster from: #{@database}"
+          exit
+        end
       when 'corp', 'int', 'qa', 'sand'
         "#{@site}-#{@env}-postgres#{series_number}"
       end
