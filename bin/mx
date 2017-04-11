@@ -124,14 +124,14 @@ class PG < Thor
     end
 
     def tmux
-      "tmuz new-session -A -s psql"
+      "tmux new-session -A -s psql"
     end
 
     def tmux_command
       if @database
-        "#{ssh_command} -t '#{tmux} \"echo #{psql} #{psql_database}; #{psql} #{psql_database}; $SHELL -l\"'"
+        "#{ssh_command} -t '#{tmux} \"echo #{psql} #{psql_database}; #{psql} #{psql_database}; $SHELL -l\" || $SHELL -l'"
       else
-        "#{ssh_command} -t '#{tmux} \"echo #{psql}; #{psql} #{list}; #{psql}; $SHELL -l\"'"
+        "#{ssh_command} -t '#{tmux} \"echo #{psql}; #{psql} #{list}; #{psql}; $SHELL -l\" || $SHELL -l'"
       end
     end
 
