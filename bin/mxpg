@@ -104,8 +104,10 @@ class PGConnect < Thor
       end
     end
 
+    # Supress server banner: -q
+    # To remove Ubuntu banner: touch ~/.hughlogin
     def ssh_command
-      "ssh #{host}"
+      "ssh -q #{host}"
     end
 
     def ssh_command_echo_psql
