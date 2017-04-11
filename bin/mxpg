@@ -134,7 +134,7 @@ class PGConnect < Thor
     end
   end
 
-  desc "connect", "Connect to PG"
+  desc "connect", "SSH into postgres server"
   method_option :site, type: :string, desc: 'Site used for commands (ex: sd)', required: true
   method_option :env, type: :string, desc: 'Environment used for commands (ex: prod)', required: true
   method_option :database, :aliases => 'db', type: :string, desc: 'Database name'
@@ -147,7 +147,7 @@ class PGConnect < Thor
   # Examples:
   #   mxpg list sd-corp
   #   mxpg list sd-prod ballista 6
-  desc "list", "Default task: Connect to postgres server and list databases"
+  desc "list", "Connect to postgres server and list databases"
   def list(*args)
     db = Database.parse_quick(args)
     if db
@@ -167,7 +167,7 @@ class PGConnect < Thor
   #   mxpg se-prod ballista
   #   mxpg sd-prod ballista master
   #   mxpg psql sd-prod ballista master
-  desc "psql", "Default task: Connect to postgres server and run psql"
+  desc "psql", "Default task: Connect to postgres server and run psql client"
   def psql(*args)
     db = Database.parse_quick(args)
     if db
