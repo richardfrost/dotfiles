@@ -1,0 +1,239 @@
+#!/usr/bin/env ruby
+require "optparse"
+require "thor"
+
+class Node < Thor
+  # Examples:
+  #   mxpg tmux sd-prod ballista
+  desc "tmux", "SSH into node and start tmux"
+  def tmux(*args)
+    system "ssh -q se-prod-vertica1 -t 'tmux new-session -A -s main || $SHELL -l'"
+  end
+end
+
+class PG < Thor
+  namespace :pg
+
+  class Database
+    def initialize(params)
+      @site = params.fetch('site')
+      @env = params.fetch('env')
+      @database = params.fetch('database', nil)
+      @master = params.fetch('master', false)
+      @host_number = params.fetch('host_number', nil)
+    end
+
+    def cluster_number
+      case @env
+      when 'prod'
+        if @host_number
+          @host_number
+        else
+          case @database
+          when 'amigo', 'grafana', 'macklin', 'persona', 'vault'
+            1
+          when 'ballista'
+            2
+          when 'abacus'
+            3
+          when 'batcave', 'bullseye', 'dispatch', 'newman', 'sherlock', 'synchronicity', 'vault'
+            6
+          end
+        end
+      when 'corp', 'int', 'qa', 'sand'
+        1
+      end
+    end
+
+    def environment
+      case @env
+      when 'corp'
+        'corporate'
+      when 'int'
+        'integration'
+      when 'prod'
+        'production'
+      when 'qa'
+        'qa'
+      when 'sand'
+        'sand'
+      end
+    end
+
+    def full_database
+      "#{@database}_#{environment}" if @database
+    end
+
+    def host
+      case @env
+      when 'prod'
+        if cluster_number
+          "#{@site}-#{@env}-postgres#{series_number}#{cluster_number}"
+        else
+          puts "Error - Couldn't find database cluster from: #{@database}"
+          exit
+        end
+      when 'corp', 'int', 'qa', 'sand'
+        "#{@site}-#{@env}-postgres#{series_number}"
+      end
+    end
+
+    def list
+      "--list"
+    end
+
+    def psql
+      "psql -U postgres -h /var/run/postgresql/9.5/postgres#{cluster_number}_#{environment}/"
+    end
+
+    def psql_command
+      "#{ssh_command} -t 'echo \"#{host}\n#{psql}\"; #{psql}'"
+    end
+
+    def psql_database
+      "-d #{full_database}" if @database
+    end
+
+    def psql_database_command
+      "#{ssh_command} -t 'echo \"#{host}\n#{psql} #{psql_database}\"; #{psql} #{psql_database}'"
+    end
+
+    def psql_list_command
+      "#{ssh_command} -t 'echo \"#{host}\"; #{psql} #{list}'"
+    end
+
+    def series_number
+      case @env
+      when 'corp', 'int'
+        @master ? '101' : '201'
+      when 'prod'
+        @master ? '10' : '20'
+      when 'qa', 'sand'
+        @master ? '1' : '2'
+      end
+    end
+
+    # Supress server banner: -q
+    # To remove Ubuntu banner: touch ~/.hughlogin
+    def ssh_command
+      "ssh -q #{host}"
+    end
+
+    def ssh_command_echo_psql
+      "#{ssh_command} -t 'echo #{psql} #{psql_database}; $SHELL -l'"
+    end
+
+    def tmux
+      "tmuz new-session -A -s psql"
+    end
+
+    def tmux_command
+      if @database
+        "#{ssh_command} -t '#{tmux} \"echo #{psql} #{psql_database}; #{psql} #{psql_database}; $SHELL -l\"'"
+      else
+        "#{ssh_command} -t '#{tmux} \"echo #{psql}; #{psql} #{list}; #{psql}; $SHELL -l\"'"
+      end
+    end
+
+    def self.parse_quick(args)
+      options = {}
+      args.each do |arg|
+        case arg
+        when /^psql$/
+          options['psql'] = true
+        when /^master$/i
+          options['master'] = true
+        when /^\w{2,}-\w{2,4}$/
+          site_env = arg.split('-')
+          options['site'] = site_env[0]
+          options['env'] = site_env[1]
+        when /^\w{3,}$/
+          options['database'] = arg
+        when /^\d$/
+          options['host_number'] = arg
+        end
+      end
+
+      if options.has_key?('site') && options.has_key?('env')
+        Database.new(options)
+      end
+    end
+  end
+
+  desc "connect", "SSH into postgres server"
+  method_option :site, type: :string, desc: 'Site used for commands (ex: sd)', required: true
+  method_option :env, type: :string, desc: 'Environment used for commands (ex: prod)', required: true
+  method_option :database, :aliases => 'db', type: :string, desc: 'Database name'
+  method_option :master, type: :boolean, desc: 'Connect to master series', default: false
+  def connect
+    db = Database.new(options)
+    system db.ssh_command
+  end
+
+  # Examples:
+  #   mxpg list sd-corp
+  #   mxpg list sd-prod ballista 6
+  desc "list", "Connect to postgres server and list databases"
+  def list(*args)
+    db = Database.parse_quick(args)
+    if db
+      system db.psql_list_command
+    else
+      say "Error, couldn't parse: #{args}"
+    end
+  end
+
+  # Override method_missing to call default task with arguments
+  def method_missing(method, *args)
+    args = ["psql", method.to_s] + args
+    PGConnect.start(args)
+  end
+
+  # Examples:
+  #   mxpg se-prod ballista
+  #   mxpg sd-prod ballista master
+  #   mxpg psql sd-prod ballista master
+  desc "psql", "Default task: Connect to postgres server and run psql client"
+  def psql(*args)
+    db = Database.parse_quick(args)
+    if db
+      system db.psql_database_command
+    else
+      say "Error, couldn't parse: #{args}"
+    end
+  end
+
+  # Examples:
+  #   mxpg ssh sd-prod ballista
+  desc "ssh", "SSH into postgres server"
+  def ssh(*args)
+    db = Database.parse_quick(args)
+    if db
+      system db.ssh_command_echo_psql
+    else
+      say "Error, couldn't parse: #{args}"
+    end
+  end
+
+  # Examples:
+  #   mxpg tmux sd-prod ballista
+  desc "tmux", "SSH into postgres and start tmux"
+  def tmux(*args)
+    db = Database.parse_quick(args)
+    if db
+      system db.tmux_command
+    else
+      say "Error, couldn't parse: #{args}"
+    end
+  end
+end
+
+class CLI < Thor
+  desc "pg", "Connect to postgres servers"
+  subcommand "pg", PG
+
+  desc "node", "Connect to a server and start tmux"
+  subcommand "node", Node
+end
+
+CLI.start(ARGV)
