@@ -1,0 +1,120 @@
+#!/usr/bin/env ruby
+require "optparse"
+require "thor"
+
+class PGConnect < Thor
+  class Database
+    def initialize(params)
+      @database = params.fetch('database')
+      @env = params.fetch('env')
+      @master = params.fetch('master', false)
+      @site = params.fetch('site')
+    end
+
+    def database_number
+      case @database
+      when 'amigo', 'grafana', 'macklin', 'persona', 'vault'
+        1
+      when 'ballista'
+        2
+      when 'abacus'
+        3
+      when 'batcave', 'bullseye', 'dispatch', 'newman', 'sherlock', 'synchronicity', 'vault'
+        6
+      else
+        0
+      end
+    end
+
+    def environment
+      case @env
+      when 'prod'
+        'production'
+      when 'int'
+        'integration'
+      when 'sand'
+        'sand'
+      when 'qa'
+        'qa'
+      end
+    end
+
+    def full_database
+      "#{@database}_#{environment}"
+    end
+
+    def host
+      case @env
+      when 'prod'
+        "#{@site}-#{@env}-postgres#{series_number}#{database_number}"
+      end
+    end
+
+    def psql_command
+      "psql -U postgres -d #{full_database} -h /var/run/postgresql/9.5/postgres#{database_number}_#{environment}/"
+    end
+
+    def series_number
+      case @env
+      when 'prod'
+        @master ? '10' : '20'
+      end
+    end
+
+    def ssh_command
+      "ssh #{host} -t '#{psql_command}'"
+    end
+
+    def self.parse_quick(args)
+      options = {}
+      args.each do |arg|
+        case arg
+        when /^psql$/
+          options['psql'] = true
+        when /^master$/i
+          options['master'] = true
+        when /^s\w-\w{3,4}$/
+          site_env = arg.split('-')
+          options['site'] = site_env[0]
+          options['env'] = site_env[1]
+        when /^\w{3,}$/
+          options['database'] = arg
+        end
+      end
+
+      if options.has_key?('site') && options.has_key?('env') && options.has_key?('database')
+        Database.new(options)
+      end
+    end
+  end
+
+  desc "connect", "Connect to PG"
+  method_option :site, type: :string, desc: 'Site used for commands (ex: sd)', required: true
+  method_option :env, type: :string, desc: 'Environment used for commands (ex: prod)', required: true
+  method_option :database, :aliases => 'db', type: :string, desc: 'Puppetdb port'
+  method_option :master, type: :boolean, desc: 'Print out header', default: false
+  def connect
+    db = Database.new(options)
+    system db.ssh_command
+  end
+
+  # Override method_missing to call default task with arguments
+  def method_missing(method, *args)
+    args = ["quick", method.to_s] + args
+    PGConnect.start(args)
+  end
+
+  desc "quick", "Default task: Quickly connect to a database"
+  def quick(*args)
+    db = Database.parse_quick(args)
+    if db
+      system db.ssh_command
+    else
+      say "Error, couldn't parse: #{args}"
+    end
+  end
+
+  default_task :quick
+end
+
+PGConnect.start(ARGV)
