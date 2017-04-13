@@ -108,6 +108,29 @@ function git_branch_revisions {
 # Run a simple python http server
 function httpd { python -m SimpleHTTPServer "$1"; }
 
+# List the IPv4 address of an interface, or all interfaces
+# Uses ip, but will fallback to ifconfig
+function ipv4 {
+  set -e
+  if hash ip 2>/dev/null; then
+    if [[ -z "$1" ]]; then
+      for x in $(ip -4 addr show | egrep -oh '\w{2,}:([^\s])'); do
+        echo "${x} $(ipv4 ${x})"
+      done
+    else
+      ip -o -4 addr show dev "$1" | cut -d ' ' -f 7 | cut -f 1 -d '/'
+    fi
+  else
+    if [[ -z "$1" ]]; then
+      for x in $(ifconfig | egrep -oh '^\w+[^:]' | awk '{print $1}'); do
+        echo "${x}: $(ipv4 ${x})"
+      done
+    else
+      ifconfig "$1" | egrep 'inet (addr)?' | sed -e 's/:/ /' | awk '{print $2}'
+    fi
+  fi
+}
+
 # Generate Password
 # alias pwgen="date | md5"
 function pwgen { if [[ $1 ]]; then length=$1; else length=32; fi; date +%s | sha256sum | base64 | head -c $length; echo; }
