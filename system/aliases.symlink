@@ -142,5 +142,5 @@ function ssh_fingerprints {
 }
 
 function sshtmux {
-  ssh -q "$@" -t 'tmux new-session -A -s main || $SHELL -l'
+  ssh "$@" -q -t 'tmux new-session -A -s main || $SHELL -l'
 }
