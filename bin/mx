@@ -2,12 +2,118 @@
 require "optparse"
 require "thor"
 
-class Node < Thor
-  # Examples:
-  #   mxpg tmux sd-prod ballista
-  desc "tmux", "SSH into node and start tmux"
+module Helper
+  def self.parse_app_quick(args)
+    options = {}
+    args.each do |arg|
+      case arg
+      when /^\w{2,}-\w{2,4}-\w+$/
+        site_env = arg.split('-')
+        options['site'] = site_env[0]
+        options['env'] = site_env[1]
+        options['app'] = site_env[2].match(/^[a-zA-Z]+/).to_s
+        if !!(site_env[2].match(/\d+$/))
+          options['node_number'] = site_env[2].match(/\d+$/)
+        end
+      end
+    end
+
+    options if options.has_key?('site') && options.has_key?('env')
+  end
+
+  def parse_pg_quick(args)
+    options = {}
+    args.each do |arg|
+      case arg
+      when /^psql$/
+        options['psql'] = true
+      when /^master$/i
+        options['master'] = true
+      when /^\w{2,}-\w{2,4}$/
+        site_env = arg.split('-')
+        options['site'] = site_env[0]
+        options['env'] = site_env[1]
+      when /^\w{3,}$/
+        options['database'] = arg
+      when /^\d$/
+        options['host_number'] = arg
+      end
+    end
+
+    if options.has_key?('site') && options.has_key?('env') && options.has_key?('app')
+      Database.new(options)
+    end
+  end
+end
+
+class App < Thor
+  class Node
+    def initialize(params)
+      @site = params.fetch('site')
+      @env = params.fetch('env')
+      @app = params.fetch('app')
+      @node_number = params.fetch('node_number', 1)
+    end
+
+    def hostname
+      "#{@site}-#{@env}-#{@app}#{@node_number}"
+    end
+
+    def logs_command
+      "#{ssh} -t 'mdtail || $SHELL -l'"
+    end
+
+    def ssh
+      "ssh -q #{hostname}"
+    end
+
+    def rails_command
+      "#{ssh} -t 'source /etc/profile && cd /srv/#{@app}/current && mdenv bundle exec rails console || $SHELL -l'"
+    end
+
+    def rails_command_tmux
+      "#{ssh} -t 'tmux new-session -A -s main \"source /etc/profile && cd /srv/#{@app}/current && mdenv bundle exec rails console || bash -l\" || $SHELL -l'"
+    end
+
+    def tmux_command
+      "#{ssh} -t 'tmux new-session -A -s main"
+    end
+  end
+
+  desc "logs", "View logs for app"
+  def logs(*args)
+    options = Helper.parse_app_quick(args)
+    node = Node.new(options)
+    if node
+      system node.logs_command
+    end
+  end
+
+  desc "rails", "Rails console of app"
+  def rails(*args)
+    options = Helper.parse_app_quick(args)
+    node = Node.new(options)
+    if node
+      system node.rails_command
+    end
+  end
+
+  desc "ssh", "SSH to app"
+  def ssh(*args)
+    options = Helper.parse_app_quick(args)
+    node = Node.new(options)
+    if node
+      system node.ssh
+    end
+  end
+
+  desc "tmux", "SSH to app and open main tmux"
   def tmux(*args)
-    system "ssh -q se-prod-vertica1 -t 'tmux new-session -A -s main || $SHELL -l'"
+    options = Helper.parse_app_quick(args)
+    node = Node.new(options)
+    if node
+      system "#{node.tmux_command}'"
+    end
   end
 end
 
@@ -232,8 +338,8 @@ class CLI < Thor
   desc "pg", "Connect to postgres servers"
   subcommand "pg", PG
 
-  desc "node", "Connect to a server and start tmux"
-  subcommand "node", Node
+  desc "app", "Connect to a server and start tmux"
+  subcommand "app", App
 end
 
 CLI.start(ARGV)
