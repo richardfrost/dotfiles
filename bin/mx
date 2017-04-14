@@ -18,7 +18,7 @@ module Helper
       end
     end
 
-    options if options.has_key?('site') && options.has_key?('env')
+    options if options.has_key?('site') && options.has_key?('env') && options.has_key?('app')
   end
 
   def parse_pg_quick(args)
@@ -40,7 +40,7 @@ module Helper
       end
     end
 
-    if options.has_key?('site') && options.has_key?('env') && options.has_key?('app')
+    if options.has_key?('site') && options.has_key?('env')
       Database.new(options)
     end
   end
@@ -118,8 +118,6 @@ class App < Thor
 end
 
 class PG < Thor
-  namespace :pg
-
   class Database
     def initialize(params)
       @site = params.fetch('site')
@@ -162,7 +160,7 @@ class PG < Thor
       when 'qa'
         'qa'
       when 'sand'
-        'sand'
+        'sandbox'
       end
     end
 
@@ -210,11 +208,11 @@ class PG < Thor
 
     def series_number
       case @env
-      when 'corp', 'int'
+      when 'corp', 'int', 'sand'
         @master ? '101' : '201'
       when 'prod'
         @master ? '10' : '20'
-      when 'qa', 'sand'
+      when 'qa'
         @master ? '1' : '2'
       end
     end
@@ -266,14 +264,10 @@ class PG < Thor
     end
   end
 
-  desc "connect", "SSH into postgres server"
-  method_option :site, type: :string, desc: 'Site used for commands (ex: sd)', required: true
-  method_option :env, type: :string, desc: 'Environment used for commands (ex: prod)', required: true
-  method_option :database, :aliases => 'db', type: :string, desc: 'Database name'
-  method_option :master, type: :boolean, desc: 'Connect to master series', default: false
-  def connect
-    db = Database.new(options)
-    system db.ssh_command
+  # Override method_missing to call default task with arguments
+  def method_missing(method, *args)
+    args = ["psql", method.to_s] + args
+    PGConnect.start(args)
   end
 
   # Examples:
@@ -287,12 +281,6 @@ class PG < Thor
     else
       say "Error, couldn't parse: #{args}"
     end
-  end
-
-  # Override method_missing to call default task with arguments
-  def method_missing(method, *args)
-    args = ["psql", method.to_s] + args
-    PGConnect.start(args)
   end
 
   # Examples:
