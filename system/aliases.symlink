@@ -144,3 +144,8 @@ function ssh_fingerprints {
 function sshtmux {
   ssh "$@" -q -t 'tmux new-session -A -s main || $SHELL -l'
 }
+
+# Verbose Copy - Show progress and rate on local copy
+function vcp {
+  rsync -ah --progress $*
+}
