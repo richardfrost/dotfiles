@@ -151,3 +151,11 @@ if which rbenv > /dev/null 2>&1; then eval "$(rbenv init -)"; fi
 
 # Enable host autocomplete for sshmux
 compdef sshmux=ssh
+
+# Hide agnoster prompt when using SSH
+# https://stackoverflow.com/questions/28491458/zsh-agnoster-theme-showing-machine-name
+prompt_context() {
+  if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
+    prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
+  fi
+}
