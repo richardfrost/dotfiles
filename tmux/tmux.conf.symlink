@@ -6,6 +6,8 @@ bind ^B send-key ^B
 
 ###########################################################################
 # General options
+set -q -g status-utf8 on                  # expect UTF-8 (tmux < 2.2)
+setw -q -g utf8 on
 
 # Default termtype. If the rcfile sets $TERM, that overrides this value.
 set -g default-terminal xterm-256color
