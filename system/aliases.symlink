@@ -87,6 +87,7 @@ alias aliases='cat "$HOME"/.aliases'
 alias a.='atom .'
 alias bash='exec bash -l'
 alias dbin='ls "$HOME"/.dotfiles/bin'
+alias dotedit='cd "$HOME"/.dotfiles && atom . && cd -'
 alias dotfiles='cd "$HOME"/.dotfiles'
 alias e.='open .' # macOS
 alias myip='curl ifconfig.co'
