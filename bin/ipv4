@@ -1,0 +1,20 @@
+# List the IPv4 address of an interface, or all interfaces
+# Uses ip, but will fallback to ifconfig
+set -e
+if hash ip 2>/dev/null; then
+  if [[ -z "$1" ]]; then
+    for x in $(ip -4 addr show | egrep -oh '\w{2,}:([^\s])'); do
+      echo "${x} $(ipv4 ${x})"
+    done
+  else
+    ip -o -4 addr show dev "$1" | cut -d ' ' -f 7 | cut -f 1 -d '/'
+  fi
+else
+  if [[ -z "$1" ]]; then
+    for x in $(ifconfig | egrep -oh '^\w+[^:]' | awk '{print $1}'); do
+      echo "${x}: $(ipv4 ${x})"
+    done
+  else
+    ifconfig "$1" | egrep 'inet (addr)?' | sed -e 's/:/ /' | awk '{print $2}'
+  fi
+fi
