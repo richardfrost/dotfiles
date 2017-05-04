@@ -28,8 +28,7 @@ fail () {
 }
 
 setup_gitconfig () {
-  # Could also check for ansible directory: ! [ -d "$HOME/.ansible" ]
-  if ! [ -f "$HOME/.ansible_managed" ] && ! [ -f git/gitconfig.local.symlink ]
+  if ! [ -f git/gitconfig.local.symlink ]
   then
     info 'setup gitconfig'
 
