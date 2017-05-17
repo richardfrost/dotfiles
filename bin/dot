@@ -20,6 +20,7 @@ then
   brew update
   brew upgrade
   "$DOTFILES/homebrew/links.sh" 2>&1
+  "$DOTFILES/homebrew/services.sh" 2>&1
 fi
 
 # Install software

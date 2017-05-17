@@ -2,6 +2,8 @@ cask_args appdir: '/Applications'
 
 tap 'homebrew/bundle'
 tap 'homebrew/dupes'
+tap 'homebrew/services'  # Lets us do `brew services restart postgres`, etc
+tap 'raggi/homebrew-ale' # Used for getting openssl-osx-ca.rb
 
 brew 'ack'
 brew 'ansible'
@@ -12,7 +14,7 @@ brew 'gdm'
 brew 'gnupg'
 brew 'go'
 brew 'grc'
-brew 'homebrew/dupes/srm'
+# brew 'homebrew/dupes/srm'
 brew 'htop'
 brew 'imagemagick'
 brew 'jp2a'
@@ -23,6 +25,7 @@ brew 'libyaml'
 brew 'ncdu'
 brew 'node'
 brew 'openssl'
+brew 'openssl-osx-ca'
 brew 'p7zip'
 brew 'pcre'
 brew 'pkg-config'
@@ -41,22 +44,23 @@ brew 'yarn'
 brew 'youtube-dl'
 brew 'zsh'
 
-cask 'appcleaner'      # Application cleanup
-cask 'atom'            # Text editor
-cask 'bettertouchtool' # Key and gesture customization
-cask 'ccleaner'        # Tempfile cleaner
-cask 'filezilla'       # File transfer
-cask 'firefox'         # Web browser
-cask 'google-chrome'   # Web browser
-cask 'handbrake'       # Video encoder
-cask 'iterm2'          # Terminal replacement
-cask 'pgadmin4'        # PostgreSQL admin tool
-cask 'slack'           # Instant messenger
-cask 'steam'           # Game distribution platform
-cask 'vlc'             # Media player
-cask 'broomstick'      # Hide menubar items
-# cask 'karabiner'       # Key modification tool
-# cask 'scroll-reverser' # Alternate scrolling per input device
+cask 'appcleaner'         # Application cleanup
+cask 'atom'               # Text editor
+cask 'bettertouchtool'    # Key and gesture customization
+cask 'ccleaner'           # Tempfile cleaner
+cask 'filezilla'          # File transfer
+cask 'firefox'            # Web browser
+cask 'google-chrome'      # Web browser
+cask 'handbrake'          # Video encoder
+cask 'iterm2'             # Terminal replacement
+cask 'karabiner-elements' # Key remapper
+cask 'pgadmin4'           # PostgreSQL admin tool
+cask 'slack'              # Instant messenger
+cask 'steam'              # Game distribution platform
+cask 'vlc'                # Media player
+cask 'broomstick'         # Hide menubar items
+# cask 'karabiner'          # Key modification tool
+# cask 'scroll-reverser'    # Alternate scrolling per input device
 
 # PostgreSQL setup
 # mkdir -p ~/Library/LaunchAgents
