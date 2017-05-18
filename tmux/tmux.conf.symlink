@@ -104,14 +104,15 @@ bind E setw synchronize-panes off
 ###########################################################################
 # Scrollback / pastebuffer
 
+# https://github.com/tmux/tmux/issues/754
 # Vim-style copy/paste
-unbind [
-bind y copy-mode
-unbind p
-bind p paste-buffer
-bind -t vi-copy v begin-selection
-bind -t vi-copy y copy-pipe "xsel -ib"
-bind -t vi-copy Escape cancel
+# unbind [
+# bind y copy-mode
+# unbind p
+# bind p paste-buffer
+# bind -t vi-copy v begin-selection
+# bind -t vi-copy y copy-pipe "xsel -ib"
+# bind -t vi-copy Escape cancel
 
 ###########################################################################
 # Mouse mode
