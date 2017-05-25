@@ -141,6 +141,9 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias bundle='noglob bundle'
+alias rails='noglob rails'
+alias rake='noglob rake'
 
 # load ssh agent
 # ssh-add -K ~/.ssh/id_rsa 2>/dev/null
