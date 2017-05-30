@@ -6,7 +6,6 @@ tap 'homebrew/services'  # Lets us do `brew services restart postgres`, etc
 tap 'raggi/homebrew-ale' # Used for getting openssl-osx-ca.rb
 
 brew 'ack'
-brew 'ansible'
 brew 'autoconf'
 brew 'bash-git-prompt'
 brew 'coreutils'
