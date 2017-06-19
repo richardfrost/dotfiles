@@ -1,0 +1,292 @@
+#!/usr/bin/env ruby -w
+
+require 'optparse'
+
+##
+# Example Commands
+#
+# List all dabases on se-prod-postgres201
+# qc pg list se-prod 1
+#
+# Start a psql session on se-prod-postgres201
+# qc pg [psql] se-prod 1
+#
+# Connect to the rails console on sb-sand-ballista1
+# qc app rails sb-sand-ballista
+# TODO:
+# Connect to the rails console on sb-sand-ballista1
+# qc app current rails sb-sand-ballista
+# TODO:
+# Connect to the rails console on sb-sand-ballista1
+# qc app current rails sb-sand-ballista
+# TODO: Switch to current on app?
+# TODO: mdtail - Maybe open up sshmux to all nodes and execute mdtail?
+# TODO: vertica
+
+##
+# Todo
+#
+# Support explicit database hostname instead of just master
+
+# Supported attributes:
+# app
+# hostname
+#
+class Command
+  def logs
+    "#{ssh} -t 'mdtail || $SHELL -l'"
+  end
+
+  def rails
+    "#{ssh} -t 'source /etc/profile && cd /srv/#{@app}/current && mdenv bundle exec rails console || $SHELL -l'"
+  end
+
+  def rails_tmux
+    "#{ssh} -t 'tmux new-session -A -s main \"source /etc/profile && cd /srv/#{@app}/current && mdenv bundle exec rails console || bash -l\" || $SHELL -l'"
+  end
+
+  def run
+    puts self.public_send(@command)
+    system(self.public_send(@command))
+  end
+
+  def ssh
+    "ssh -q #{hostname}"
+  end
+
+  def tmux
+    title = @command.nil? ? "main" : @command
+    "#{ssh} -t 'tmux new-session -A -s #{title}'"
+  end
+end
+
+class App < Command
+  def initialize(params)
+    @command = params.fetch('command', 'ssh')
+    @site = params.fetch('site')
+    @env = params.fetch('env')
+    @app = params.fetch('app')
+    @node_number = params.fetch('node_number', 1)
+  end
+
+  def self.parse_quick(args)
+    options = {}
+    args.each do |arg|
+      case arg
+      when /^(logs|rails|ssh|tmux)$/i
+        options['command'] = arg
+      when /^\w{2,}-\w{2,4}-\w+$/
+        site_env = arg.split('-')
+        options['site'] = site_env[0]
+        options['env'] = site_env[1]
+        options['app'] = site_env[2].match(/^[a-zA-Z]+/).to_s
+        if !!(site_env[2].match(/\d+$/))
+          options['node_number'] = site_env[2].match(/\d+$/)
+        end
+      end
+    end
+
+    options if options.has_key?('site') && options.has_key?('env') && options.has_key?('app')
+  end
+
+  def hostname
+    "#{@site}-#{@env}-#{@app}#{@node_number}"
+  end
+end
+
+class Postgres < Command
+  def initialize(params)
+    @command = params.fetch('command', 'psql')
+    @site = params.fetch('site')
+    @env = params.fetch('env')
+    @database = params.fetch('database', nil)
+    @master = params.fetch('master', false)
+    @host_number = params.fetch('host_number', nil)
+  end
+
+  def self.parse_quick(args)
+    options = {}
+    args.each do |arg|
+      case arg
+      when /^(list|psql)$/i
+        options['command'] = arg
+      when /^master$/i
+        options['master'] = true
+      when /^\w{2,}-\w{2,4}$/
+        site_env = arg.split('-')
+        options['site'] = site_env[0]
+        options['env'] = site_env[1]
+      when /^\w{3,}$/
+        options['database'] = arg
+      when /^\d$/
+        options['host_number'] = arg
+      end
+    end
+
+    options if options.has_key?('site') && options.has_key?('env')
+  end
+
+  def cluster_number
+    case @env
+    when 'prod'
+      if @host_number
+        @host_number
+      else
+        case @database
+        when 'amigo', 'grafana', 'macklin', 'persona', 'vault'
+          1
+        when 'ballista'
+          2
+        when 'abacus'
+          3
+        when 'batcave', 'bullseye', 'dispatch', 'newman', 'sherlock', 'synchronicity' #, 'vault'
+          6
+        end
+      end
+    when 'corp', 'int', 'qa', 'sand'
+      1
+    end
+  end
+
+  def environment
+    case @env
+    when 'corp'
+      'corporate'
+    when 'int'
+      'integration'
+    when 'prod'
+      'production'
+    when 'qa'
+      'qa'
+    when 'sand'
+      'sandbox'
+    end
+  end
+
+  def full_database
+    "#{@database}_#{environment}" if @database
+  end
+
+  def hostname
+    case @env
+    when 'prod'
+      if cluster_number
+        "#{@site}-#{@env}-postgres#{series_number}#{cluster_number}"
+      else
+        puts "Error - Couldn't find database cluster from: #{@database}"
+        exit
+      end
+    when 'corp', 'int', 'qa', 'sand'
+      "#{@site}-#{@env}-postgres#{series_number}"
+    end
+  end
+
+  def series_number
+    case @env
+    when 'corp', 'int', 'sand'
+      @master ? '101' : '201'
+    when 'prod'
+      @master ? '10' : '20'
+    when 'qa'
+      @master ? '1' : '2'
+    end
+  end
+
+  ##
+  # Command components
+  #
+  def psql_component
+    "psql -U postgres -h /var/run/postgresql/9.5/postgres#{cluster_number}_#{environment}/"
+  end
+
+
+  def psql_database
+    "-d #{full_database}" if @database
+  end
+
+  ##
+  # Instance Commands
+  #
+  def list
+    "#{ssh} -t 'echo \"#{hostname}\"; #{psql_component} --list'"
+  end
+
+  def psql
+    "#{ssh} -t 'echo \"#{hostname}\n#{psql_component} #{psql_database}\"; #{psql_component} #{psql_database}'"
+  end
+
+  # def ssh_echo_psql
+  #   "#{ssh} -t 'echo #{psql} #{psql_database}; $SHELL -l'"
+  # end
+  #
+  # def tmux_command
+  #   if @database
+  #     "#{ssh} -t '#{tmux} \"echo #{psql} #{psql_database}; #{psql} #{psql_database}; $SHELL -l\" || $SHELL -l'"
+  #   else
+  #     "#{ssh} -t '#{tmux} \"echo #{psql}; #{psql} #{list}; #{psql}; $SHELL -l\" || $SHELL -l'"
+  #   end
+  # end
+end
+
+class Vertica
+  def initialize(params)
+    @command = params.fetch('command', 'vsql')
+    @site = params.fetch('site')
+    @env = params.fetch('env')
+    @app = params.fetch('app')
+    @node_number = params.fetch('node_number', 1)
+  end
+
+  def self.parse_quick(args)
+    options = {}
+    args.each do |arg|
+      case arg
+      when /^(vsql)$/i
+        options['command'] = arg
+      when /^\w{2,}-\w{2,4}$/
+        site_env = arg.split('-')
+        options['site'] = site_env[0]
+        options['env'] = site_env[1]
+      when /^\w{3,}$/
+        options['database'] = arg
+      when /^\d$/
+        options['host_number'] = arg
+      end
+    end
+  end
+end
+
+class QuickConnect
+  # def initialize
+  #   @options = {
+  #     command: 'app',
+  #     args:
+  #
+  #   }
+  # end
+
+  def run(args)
+    @options = {
+      command: args.first,
+      args: args[1..-1]
+    }
+
+    # require 'pry'; binding.pry
+    case @options[:command]
+    when "app"
+      @app_options = App.parse_quick(@options[:args])
+      app = App.new(@app_options)
+      app.run
+    when "pg"
+      @pg_options = Postgres.parse_quick(@options[:args])
+      pg = Postgres.new(@pg_options)
+      pg.run
+    end
+  end
+
+  def available_commands
+    ["app", "psql"]
+  end
+end
+
+QuickConnect.new.run(ARGV)
