@@ -22,9 +22,12 @@ alias gr="git reset"
 alias gcomp='git diff master..$(current_branch)'
 alias gpusho='git push origin'
 alias gpushb='git push origin $(current_branch)'
-alias gpushu='git push -u origin $(current_branch)'
 alias gpubb='git-publish-branch'
+
+# Advanced git aliases
+alias gabortmerge='git reset --hard HEAD'
 alias git_protect_master='ln -s $HOME/.dotfiles/git/hooks/pre-commit ./.git/hooks'
+alias gpushu='git push -u origin $(current_branch)'
 alias gundo='git reset --soft HEAD~1'
 alias gredo='git commit -c ORIG_HEAD'
 
