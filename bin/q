@@ -33,16 +33,31 @@ require 'optparse'
 # hostname
 #
 class Command
+  def environment
+    case @env
+    when 'corp'
+      'corporate'
+    when 'int'
+      'integration'
+    when 'prod'
+      'production'
+    when 'qa'
+      'qa'
+    when 'sand'
+      'sandbox'
+    end
+  end
+
+  def hostname
+    "#{@site}-#{@env}-#{@app}#{@node_number}"
+  end
+
   def logs
     "#{ssh} -t 'mdtail || $SHELL -l'"
   end
 
   def rails
     "#{ssh} -t 'source /etc/profile && cd /srv/#{@app}/current && mdenv bundle exec rails console || $SHELL -l'"
-  end
-
-  def rails_tmux
-    "#{ssh} -t 'tmux new-session -A -s main \"source /etc/profile && cd /srv/#{@app}/current && mdenv bundle exec rails console || bash -l\" || $SHELL -l'"
   end
 
   def run
@@ -58,22 +73,30 @@ class Command
     title = @command.nil? ? "main" : @command
     "#{ssh} -t 'tmux new-session -A -s #{title}'"
   end
+
+  def tmux_rails
+    "#{ssh} -t 'tmux new-session -A -s main \"source /etc/profile && cd /srv/#{@app}/current && mdenv bundle exec rails console; bash -l\" || $SHELL -l'"
+  end
 end
 
 class App < Command
-  def initialize(params)
-    @command = params.fetch('command', 'ssh')
-    @site = params.fetch('site')
-    @env = params.fetch('env')
-    @app = params.fetch('app')
-    @node_number = params.fetch('node_number', 1)
+  def initialize(args)
+    options = App.parse_quick(args)
+    if options
+      @command = options.fetch('command', 'ssh')
+      @site = options.fetch('site')
+      @env = options.fetch('env')
+      @app = options.fetch('app')
+      @node_number = options.fetch('node_number', 1)
+      run
+    end
   end
 
   def self.parse_quick(args)
     options = {}
     args.each do |arg|
       case arg
-      when /^(logs|rails|ssh|tmux)$/i
+      when /^(logs|rails|ssh|tmux|tmux_rails)$/i
         options['command'] = arg
       when /^\w{2,}-\w{2,4}-\w+$/
         site_env = arg.split('-')
@@ -88,20 +111,20 @@ class App < Command
 
     options if options.has_key?('site') && options.has_key?('env') && options.has_key?('app')
   end
-
-  def hostname
-    "#{@site}-#{@env}-#{@app}#{@node_number}"
-  end
 end
 
 class Postgres < Command
-  def initialize(params)
-    @command = params.fetch('command', 'psql')
-    @site = params.fetch('site')
-    @env = params.fetch('env')
-    @database = params.fetch('database', nil)
-    @master = params.fetch('master', false)
-    @host_number = params.fetch('host_number', nil)
+  def initialize(args)
+    options = Postgres.parse_quick(args)
+    if options
+      @command = options.fetch('command', 'psql')
+      @site = options.fetch('site')
+      @env = options.fetch('env')
+      @database = options.fetch('database', nil)
+      @master = options.fetch('master', false)
+      @host_number = options.fetch('host_number', nil)
+      run
+    end
   end
 
   def self.parse_quick(args)
@@ -148,21 +171,6 @@ class Postgres < Command
     end
   end
 
-  def environment
-    case @env
-    when 'corp'
-      'corporate'
-    when 'int'
-      'integration'
-    when 'prod'
-      'production'
-    when 'qa'
-      'qa'
-    when 'sand'
-      'sandbox'
-    end
-  end
-
   def full_database
     "#{@database}_#{environment}" if @database
   end
@@ -183,12 +191,10 @@ class Postgres < Command
 
   def series_number
     case @env
-    when 'corp', 'int', 'sand'
+    when 'corp', 'int', 'qa', 'sand'
       @master ? '101' : '201'
     when 'prod'
       @master ? '10' : '20'
-    when 'qa'
-      @master ? '1' : '2'
     end
   end
 
@@ -228,20 +234,27 @@ class Postgres < Command
   # end
 end
 
-class Vertica
-  def initialize(params)
-    @command = params.fetch('command', 'vsql')
-    @site = params.fetch('site')
-    @env = params.fetch('env')
-    @app = params.fetch('app')
-    @node_number = params.fetch('node_number', 1)
+class Vertica < Command
+  def initialize(args)
+    options = Vertica.parse_quick(args)
+    puts args
+    if options
+      @command = options.fetch('command', 'vsql')
+      @site = options.fetch('site')
+      @env = options.fetch('env')
+      @app = 'vertica'
+      @database = options.fetch('database', 'ballista')
+      @node_number = options.fetch('node_number', 1)
+      run
+    end
   end
 
+  # Don't require database because there is only one
   def self.parse_quick(args)
     options = {}
     args.each do |arg|
       case arg
-      when /^(vsql)$/i
+      when /^(tmux|vsql)$/i
         options['command'] = arg
       when /^\w{2,}-\w{2,4}$/
         site_env = arg.split('-')
@@ -253,40 +266,53 @@ class Vertica
         options['host_number'] = arg
       end
     end
+
+    options if options.has_key?('site') && options.has_key?('env')
+  end
+
+  ##
+  # Command components
+  #
+  def vertica_database
+    "-d #{@database}_#{environment}"
+  end
+
+  def vsql_component
+    "/opt/vertica/bin/vsql"
+  end
+
+  ##
+  # Instance Commands
+  #
+  def vsql
+    "#{ssh} -t 'echo \"#{hostname}\"; sudo -i -u dbadmin #{vsql_component} #{vertica_database}'"
+  end
+
+  def tmux
+    puts "#{ssh} -t 'tmux new-session -A -s main \"tmux split-window -h sudo -i -u dbadmin bash\" || $SHELL -l'"
+    "#{ssh} -t 'tmux new-session -A -s main \"tmux split-window -h sudo -i -u dbadmin bash\" || $SHELL -l'"
   end
 end
 
 class QuickConnect
-  # def initialize
-  #   @options = {
-  #     command: 'app',
-  #     args:
-  #
-  #   }
-  # end
-
-  def run(args)
-    @options = {
-      command: args.first,
-      args: args[1..-1]
-    }
-
-    # require 'pry'; binding.pry
-    case @options[:command]
-    when "app"
-      @app_options = App.parse_quick(@options[:args])
-      app = App.new(@app_options)
-      app.run
-    when "pg"
-      @pg_options = Postgres.parse_quick(@options[:args])
-      pg = Postgres.new(@pg_options)
-      pg.run
-    end
+  def initialize(args)
+    available_commands = ["app", "pg", "vertica"]
+    args.unshift('app') unless available_commands.include? args.first # Default to app
+    @command = args.first
+    @args = args[1..-1]
   end
 
-  def available_commands
-    ["app", "psql"]
+  def run
+    case @command
+    when "app"
+      App.new(@args)
+    when "pg"
+      puts "postgres"
+      Postgres.new(@args)
+    when "vertica"
+      Vertica.new(@args)
+    end
   end
 end
 
-QuickConnect.new.run(ARGV)
+QuickConnect.new(ARGV).run
