@@ -87,7 +87,7 @@ function provision_vms { ~/code/puppet/bin/csv_to_provision provision --site="$1
 # Richard's Aliases
 #============================
 # Applications/Misc
-alias aliases='cat "$HOME"/.aliases'
+alias aliases='less "$HOME"/.aliases'
 alias a.='atom .'
 alias bash='exec bash -l'
 alias dbin='ls "$HOME"/.dotfiles/bin'
