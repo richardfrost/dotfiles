@@ -1,6 +1,6 @@
 # export PS1="\h \W \$ "
 export PS1='\[\033[1;42m\]\h\[\033[0m\] \W \$ '
-export RBENV_ROOT=/usr/local/var/rbenv
+# export RBENV_ROOT=/usr/local/var/rbenv
 export HISTTIMEFORMAT="%s "
 export HISTCONTROL=ignoredups:ignorespace
 
@@ -16,12 +16,12 @@ fi
 
 # PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER \ "$(history 1)" >> ~/.bash_permanent_history'
 
-#============================
-# Functions
-#============================
 # rbenv
 if which rbenv > /dev/null 2>&1; then eval "$(rbenv init -)"; fi
 
+#============================
+# Functions
+#============================
 if [ "$(uname -s)" == "Darwin" ]
 then
   # Bash completion

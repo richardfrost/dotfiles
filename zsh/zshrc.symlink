@@ -107,12 +107,10 @@ DEFAULT_USER=$USERNAME
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
+##
 # User configuration
-
+#
 # NOTE: Path is being loaded in system/_path.zsh
-# export PATH="/usr/local/var/rbenv/shims:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-# export PATH="/usr/local/var/rbenv/shims:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
-# export MANPATH="/usr/local/man:$MANPATH"
 
 # Run oh-my-zsh
 source $ZSH/oh-my-zsh.sh
