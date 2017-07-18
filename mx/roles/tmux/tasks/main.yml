@@ -1,0 +1,5 @@
+---
+- name: copy tmux config file to servers
+  copy:
+    src: "{{ dotfiles }}/tmux/tmux.conf.symlink"
+    dest: "/home/{{ username }}/.tmux.conf"

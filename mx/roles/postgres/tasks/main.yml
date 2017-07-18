@@ -1,0 +1,5 @@
+---
+- name: copy postgres psql config
+  copy:
+    src: "{{ dotfiles }}/postgres/psqlrc.symlink"
+    dest: "/home/{{ username }}/.psqlrc"

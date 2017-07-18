@@ -1,0 +1,4 @@
+---
+dotfiles: ../../../..
+username: richard.frost
+home_folder: "/home/{{ username }}"

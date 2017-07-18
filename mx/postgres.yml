@@ -1,0 +1,5 @@
+---
+- hosts: app=postgres
+  roles:
+    - postgres
+    - tmux

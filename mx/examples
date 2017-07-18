@@ -1,0 +1,12 @@
+##
+# Inventory group examples
+#
+app=postgres
+env-app=sand-postgres
+site-env-app=sb-sand-postgres
+
+##
+# Example plays
+#
+ansible-playbook common.yml -l sb-sand-postgres101
+ansible-playbook postgres.yml -l site-env=sb-sand
