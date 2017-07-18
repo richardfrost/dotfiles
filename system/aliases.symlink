@@ -45,6 +45,7 @@ alias ssht="echo ssh -TL 127.0.0.1:9200:127.0.0.1:9200 sa-sand-logmill1"
 alias pts="echo 'sudo puppet agent —enable; sudo puppet agent —test —environment=branch; sudo puppet agent —disable testing_initials'"
 
 # Deployment
+alias rails-pipeline="RAILS_ENV=test rake db:migrate && rspec ; rubocop && brakeman"
 alias pushall="git push origin master:sa-sand master:po-misc master:sc-prod master:sd-prod master:sd-corp master:se-prod"
 alias pushsp="git push origin master:sa-sand master:po-misc"
 alias dsa="./bin/deploy --limit=sa-sand-puppetmaster1"
@@ -103,6 +104,36 @@ alias zsh='exec zsh -l'
 #============================
 # Other functions
 #============================
+function checkout-from-master {
+  git checkout origin/master -- $1
+}
+
+# Rename a git branch name
+function branch-rename {
+  new_branch=$1
+  old_branch=$(current_branch)
+  printf '%s ' "Rename branch: $old_branch to $new_branch. [y/n]? "
+  read REPLY
+  if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+    # Rename branch
+    git branch -m $new_branch
+
+    printf '%s ' 'Update remote branch [y/n]? '
+    read REPLY
+    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+      # Delete the old-name remote branch and push the new-name local branch.
+      git push origin :$old_branch $new_branch
+
+      # Reset the upstream branch for the new-name local branch.
+      git push origin -u $new_branch
+    else
+      exit 0
+    fi
+  else
+    exit 1
+  fi
+}
+
 # List all local branches and their last revision date in order
 function git_branch_revisions {
   for k in $(git branch | sed s/^..//); \
@@ -112,6 +143,12 @@ function git_branch_revisions {
 
 # Run a simple python http server
 function httpd { python -m SimpleHTTPServer "$1"; }
+
+# Switch branch to master branch, pull, and merge in current branch
+function merge-master {
+  branch=$(current_branch)
+  git checkout master && git pull && git checkout $branch && git merge master
+}
 
 # Generate Password
 # alias pwgen="date | md5"
