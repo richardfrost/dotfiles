@@ -131,7 +131,7 @@ class Postgres < Command
     options = {}
     args.each do |arg|
       case arg
-      when /^(list|psql)$/i
+      when /^(list|psql|tmux)$/i
         options['command'] = arg
       when /^master$/i
         options['master'] = true
@@ -205,7 +205,6 @@ class Postgres < Command
     "psql -U postgres -h /var/run/postgresql/9.5/postgres#{cluster_number}_#{environment}/"
   end
 
-
   def psql_database
     "-d #{full_database}" if @database
   end
@@ -219,6 +218,10 @@ class Postgres < Command
 
   def psql
     "#{ssh} -t 'echo \"#{hostname}\n#{psql_component} #{psql_database}\"; #{psql_component} #{psql_database}'"
+  end
+
+  def tmux
+    "#{ssh} -t 'tmux new-session -A -s psql \"#{psql_component} #{psql_database}; bash -l\" || $SHELL -l'"
   end
 
   # def ssh_echo_psql
