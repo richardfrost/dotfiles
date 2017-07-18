@@ -1,4 +1,4 @@
-SELECT-- Sources:
+-- Sources:
 -- https://www.citusdata.com/blog/2017/07/16/customizing-my-postgres-shell-using-psqlrc/
 -- http://www.craigkerstiens.com/2013/02/21/more-out-of-psql/
 -- https://robots.thoughtbot.com/an-explained-psqlrc
@@ -36,7 +36,8 @@ SELECT-- Sources:
 \timing
 \x auto
 
-\set aliases '\! sed "1,/-- Saved Queries/d" ~/.psqlrc | egrep -o "\\set [a-z_]*" | sort'
+-- sed "1,/-- Saved Queries/d" ~/.psqlrc | egrep -o '^.set [a-z_]*' | awk '{print $2}' | sort
+\set aliases '\\! sed "1,/-- Saved Queries/d" ~/.psqlrc | egrep -o ''^.set [a-z_]*'' | awk ''{print $2}'' | sort'
 -------------------------------------------------
 -- Saved Queries
 -------------------------------------------------
