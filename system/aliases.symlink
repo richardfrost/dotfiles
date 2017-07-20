@@ -104,8 +104,9 @@ alias zsh='exec zsh -l'
 #============================
 # Other functions
 #============================
-function checkout-from-master {
-  git checkout origin/master -- $1
+# https://stackoverflow.com/questions/3334475/git-how-to-update-checkout-a-single-file-from-remote-origin-master
+function checkout-file-from-master {
+  git checkout origin/master -- "$1"
 }
 
 # Rename a git branch name
@@ -116,16 +117,16 @@ function branch-rename {
   read REPLY
   if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
     # Rename branch
-    git branch -m $new_branch
+    git branch -m "$new_branch"
 
     printf '%s ' 'Update remote branch [y/n]? '
     read REPLY
     if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
       # Delete the old-name remote branch and push the new-name local branch.
-      git push origin :$old_branch $new_branch
+      git push origin :$old_branch "$new_branch"
 
       # Reset the upstream branch for the new-name local branch.
-      git push origin -u $new_branch
+      git push origin -u "$new_branch"
     else
       exit 0
     fi
@@ -147,7 +148,7 @@ function httpd { python -m SimpleHTTPServer "$1"; }
 # Switch branch to master branch, pull, and merge in current branch
 function merge-master {
   branch=$(current_branch)
-  git checkout master && git pull && git checkout $branch && git merge master
+  git checkout master && git pull && git checkout "$branch" && git merge master
 }
 
 # Generate Password
@@ -166,5 +167,5 @@ function sshtmux {
 
 # Verbose Copy - Show progress and rate on local copy
 function vcp {
-  rsync -ah --progress $*
+  rsync -ah --progress "$@"
 }
