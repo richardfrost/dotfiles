@@ -280,7 +280,7 @@ class Vertica < Command
     "-d #{@database}_#{environment}"
   end
 
-  def vsql_component
+  def vsql_bin
     "/opt/vertica/bin/vsql"
   end
 
@@ -288,11 +288,11 @@ class Vertica < Command
   # Instance Commands
   #
   def vsql
-    "#{ssh} -t 'echo \"#{hostname}\"; sudo -i -u dbadmin #{vsql_component} #{vertica_database}'"
+    # "#{ssh} -t 'echo \"#{hostname}\"; sudo -i -u dbadmin #{vsql_bin} #{vertica_database}'"
+    "#{ssh} -t 'echo \"#{hostname}\"; #{vsql_bin} --user=dbadmin #{vertica_database}'"
   end
 
   def tmux
-    puts "#{ssh} -t 'tmux new-session -A -s main \"tmux split-window -h sudo -i -u dbadmin bash\" || $SHELL -l'"
     "#{ssh} -t 'tmux new-session -A -s main \"tmux split-window -h sudo -i -u dbadmin bash\" || $SHELL -l'"
   end
 end
