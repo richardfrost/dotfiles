@@ -104,26 +104,21 @@ alias zsh='exec zsh -l'
 #============================
 # Other functions
 #============================
-# https://stackoverflow.com/questions/3334475/git-how-to-update-checkout-a-single-file-from-remote-origin-master
-function checkout-file-from-master {
-  git checkout origin/master -- "$1"
-}
-
 # Rename a git branch name
 function branch-rename {
   new_branch=$1
   old_branch=$(current_branch)
   printf '%s ' "Rename branch: $old_branch to $new_branch. [y/n]? "
-  read REPLY
+  read -r REPLY
   if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
     # Rename branch
     git branch -m "$new_branch"
 
     printf '%s ' 'Update remote branch [y/n]? '
-    read REPLY
+    read -r REPLY
     if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
       # Delete the old-name remote branch and push the new-name local branch.
-      git push origin :$old_branch "$new_branch"
+      git push origin :"$old_branch" "$new_branch"
 
       # Reset the upstream branch for the new-name local branch.
       git push origin -u "$new_branch"
@@ -136,14 +131,16 @@ function branch-rename {
 }
 
 # List all local branches and their last revision date in order
-function git_branch_revisions {
+function branch-revisions {
   for k in $(git branch | sed s/^..//); \
-    do echo -e "$(git log -1 --pretty=format:'%Cgreen%ci %Cblue%cr%Creset' $k --)" \
+    do echo -e "$(git log -1 --pretty=format:'%Cgreen%ci %Cblue%cr%Creset' "$k" --)" \
     \\t"$k";done | sort
 }
 
-# Run a simple python http server
-function httpd { python -m SimpleHTTPServer "$1"; }
+# https://stackoverflow.com/questions/3334475/git-how-to-update-checkout-a-single-file-from-remote-origin-master
+function checkout-file-from-master {
+  git checkout origin/master -- "$1"
+}
 
 # Switch branch to master branch, pull, and merge in current branch
 function merge-master {
@@ -154,6 +151,9 @@ function merge-master {
 # Generate Password
 # alias pwgen="date | md5"
 function pwgen { if [[ $1 ]]; then length=$1; else length=32; fi; date +%s | sha256sum | base64 | head -c $length; echo; }
+
+# Run a simple python http server for a folder
+function pyhttp { python -m SimpleHTTPServer "$1"; }
 
 function ssh_fingerprints {
   find "$HOME/.ssh" -name "*.pub" -print0 \
