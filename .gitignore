@@ -7,10 +7,10 @@ atom.symlink/packages
 atom.symlink/split-diff
 atom.symlink/storage
 atom.symlink/themes
-atom.symlink/blob-store
 atom.symlink/recovery
 
 git/gitconfig.local.symlink
+
 vim/vim.symlink/bundle
 
 # OSX

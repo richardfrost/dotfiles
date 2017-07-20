@@ -153,7 +153,10 @@ if ! test $SSH_AUTH_SOCK; then
 fi
 
 # 'rbenv init -'
-if which rbenv > /dev/null 2>&1; then eval "$(rbenv init -)"; fi
+if which rbenv > /dev/null 2>&1; then
+  export RBENV_VERSION=2.4.1
+  eval "$(rbenv init -)";
+fi
 
 # Enable host autocomplete for sshmux
 compdef sshmux=ssh
