@@ -1,5 +1,6 @@
 ---
 - hosts: app=postgres
+  gather_facts: no
   roles:
     - postgres
     - tmux

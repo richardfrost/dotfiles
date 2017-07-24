@@ -1,0 +1,49 @@
+\set QUIET 1
+
+-------------------------------------------------
+-- Presentation Settings
+-------------------------------------------------
+\pset null '¤'
+
+-------------------------------------------------
+-- Other Settings
+-------------------------------------------------
+-- \set PROMPT1 '%[%033[1m%][%/] # '
+-- SELECT * FROM<enter>. %R shows what type of input it expects.
+-- \set PROMPT2 '... %R > '
+
+-- \set ON_ERROR_ROLLBACK interactive
+\set COMP_KEYWORD_CASE upper
+\set HISTFILE ~/.vsql_history- :DBNAME
+\set HISTCONTROL ignoredups
+\set VERBOSITY verbose
+
+-------------------------------------------------
+-- Client Commands
+-------------------------------------------------
+\timing
+
+-- Shortcuts
+\set e '\\echo'
+\set p '\\pset pager'
+\set s '\\set'
+\set t '\\timing'
+\set w '\\watch'
+
+-- Helpers for Saved Queries
+-- \set alias_list `sed '1,/^-- Saved Queries/d' ~/.vsqlrc | egrep -o '^.set [a-z_]*' | awk '{print $2}' | sort`
+\set aliases '\\echo :alias_list'
+\set today 'SELECT now()::date;'
+
+-- Variables for Saved Queries
+\set site '\\set var_site'
+\set table_name '\\set var_table_name'
+-------------------------------------------------
+-- Saved Queries
+-------------------------------------------------
+\set latest_updated_at 'SELECT updated_at FROM var_table_name ORDER BY updated_at DESC LIMIT 1;'
+-- select table_name from ALL_TABLES where schema_name = 'public' and table_name NOT ILIKE 'view_%'
+
+-- MX Queries
+
+\unset QUIET

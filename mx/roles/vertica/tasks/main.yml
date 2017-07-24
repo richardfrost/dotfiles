@@ -1,0 +1,5 @@
+---
+- name: copy vertica vsql config
+  copy:
+    src: "{{ dotfiles }}/vertica/vsqlrc.symlink"
+    dest: "/home/{{ username }}/.vsqlrc"

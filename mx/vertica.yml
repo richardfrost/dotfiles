@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- hosts: app=vertica
   gather_facts: no
   roles:
+    - vertica
     - tmux
