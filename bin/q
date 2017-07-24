@@ -131,7 +131,7 @@ class Postgres < Command
     options = {}
     args.each do |arg|
       case arg
-      when /^(list|psql|tmux)$/i
+      when /^(list|log|psql|tmux)$/i
         options['command'] = arg
       when /^master$/i
         options['master'] = true
@@ -201,6 +201,10 @@ class Postgres < Command
   ##
   # Command components
   #
+  def pg_log_dir
+    "/var/lib/postgresql/9.5/postgres#{cluster_number}_#{environment}/pg_log"
+  end
+
   def psql_component
     "psql -U postgres -h /var/run/postgresql/9.5/postgres#{cluster_number}_#{environment}/"
   end
@@ -214,6 +218,10 @@ class Postgres < Command
   #
   def list
     "#{ssh} -t 'echo \"#{hostname}\"; #{psql_component} --list'"
+  end
+
+  def log
+    "#{ssh} -t 'echo \"#{hostname}\"; sudo su -c \"tail -f #{pg_log_dir}/*\"'"
   end
 
   def psql
