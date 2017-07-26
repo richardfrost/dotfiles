@@ -22,7 +22,7 @@ _sshmux () {
   else
     hosts=($*)
 
-    local ssh="ssh -o StrictHostKeyChecking=no -o ConnectTimeout=1"
+    local ssh="ssh -q -o StrictHostKeyChecking=no -o ConnectTimeout=1"
     local tty=$(tty)
     local session="sshmux-$RANDOM"
 
