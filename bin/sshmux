@@ -49,11 +49,12 @@ _sshmux () {
 
     tmux setw synchronize-panes on > /dev/null
 
-    if [ "$TERM_PROGRAM" == "iTerm.app" ]; then
-      tmux -CC attach -t $session
-    else
-     tmux attach -t $session
-    fi
+    # if [ "$TERM_PROGRAM" == "iTerm.app" ]; then
+    #   tmux -CC attach -t $session
+    # else
+    #  tmux attach -t $session
+    # fi
+    tmux attach -t $session
   fi
 }
 
