@@ -54,6 +54,7 @@ _sshmux () {
     # else
     #  tmux attach -t $session
     # fi
+    echo "To re-attach: tmux attach -t $session"
     tmux attach -t $session
   fi
 }
