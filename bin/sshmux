@@ -9,14 +9,27 @@
 #  sshmux app1.example.com app2.example.com"
 #  sshmux app{1..2}.example.com"
 #  sshmux app.{site1,site2}.com"
+#  sshmux app{1..10..2}
+#  sshmux app{2..10..2}
 
 _sshmux () {
   local hosts=()
 
+  # Check for 'even' or 'odd'
+  skip=false
+  start=1
+  last=${*: -1}
+  if [ "$last" == "even" ] || [ "$last" == "odd" ]; then
+    set -- "${@:1:$(($#-1))}" # Remove last argument from arguments
+    skip=true
+    if [ "$last" == "even" ] ; then start=2 ; fi
+  fi
+
   # Open several nodes if only 1 argument without a number is specified
   if [[ $# -eq 1 ]] && [[ ! "$*" =~ [0-9] ]]; then
-    for (( n = 1 ; n <= 24 ; n++ )); do
+    for (( n = start ; n <= 24 ; n++ )); do
       hosts+=("$1$n")
+      if [ "$skip" = true ] ; then ((n++)) ; fi # If even/odd, skip to next number
     done
     _sshmux "${hosts[@]}"
   else
@@ -33,6 +46,10 @@ _sshmux () {
       echo "  sshmux app1.example.com app2.example.com"
       echo "  sshmux app{1..2}.example.com"
       echo "  sshmux app.{site1,site2}.com"
+      echo "  sshmux app odd"
+      echo "  sshmux app{1..10..2}"
+      echo "  sshmux app even"
+      echo "  sshmux app{2..10..2}"
       exit 1
     fi
 
