@@ -1,4 +1,21 @@
 # ~/.tmux.conf
+# Notes
+#  https://superuser.com/questions/352117/binding-a-tmux-key-to-multiple-commands
+
+##
+# Shortcuts
+#
+# General:
+# r - Reload tmux config
+# R - Refresh (redraw) client
+#
+# Pane management/navigation:
+# e - Synchronize commands to all panes
+#
+# Mouse:
+# m - Toggle Mouse
+# o - Mouse On (Pre 2.1)
+# O - Mouse Off (Pre 2.1)
 
 # ^B ^B to passthrough a ^B
 unbind ^B
@@ -36,13 +53,7 @@ bind-key ^D detach-client
 bind-key ^C new-window
 
 # Redraw the client (if interrupted by wall, etc)
-bind R refresh-client
-
-# reload tmux config
-unbind r
-bind r \
-    source-file ~/.tmux.conf \;\
-    display 'Reloaded tmux config.'
+bind R refresh-client \; display 'Refresh client'
 
 # Use vi keybindings for tmux commandline input.
 # Note that to get command mode you need to hit ESC twice...
@@ -52,7 +63,8 @@ set -g status-keys emacs
 setw -g mode-keys vi
 
 # Reload tmux configuration
-bind-key r source-file ~/.tmux.conf
+unbind-key r
+bind-key r source-file ~/.tmux.conf \; display 'Reloading tmux config'
 
 ###########################################################################
 # Window management / navigation
@@ -96,10 +108,8 @@ bind-key ^V split-window -h
 # bind-key H resize-pane -L
 # bind-key L resize-pane -R
 
-# easily toggle synchronization (mnemonic: e is for echo)
-# sends input to all panes in a given window.
-bind e setw synchronize-panes on
-bind E setw synchronize-panes off
+# synchronize-panes sends input to all panes in a given window.
+bind-key e setw synchronize-panes \; display 'Toggle synchronize-panes'
 
 ###########################################################################
 # Scrollback / pastebuffer
@@ -116,21 +126,33 @@ bind E setw synchronize-panes off
 
 ###########################################################################
 # Mouse mode
+# https://stackoverflow.com/questions/35016458/how-to-write-if-statement-in-tmux-conf-to-set-different-options-for-different-t
+# run-shell "tmux setenv -g TMUX_VERSION $(tmux -V | cut -c 6-)"
 
-set -g mouse on
+##
+# Pre 2.1
+#
+# Enable mouse by default
+# if-shell -b "tmux -V | awk '{exit !($2 < \"2.1\")}'" \
+#   "set-option -g mode-mouse on ; set-option -g mouse-select-pane on ; set-option -g mouse-resize-pane on ; set-option -g mouse-select-window on"
 
-# Toggle mouse on
-bind m \
-    set -g mouse on \;\
-    display 'Mouse: ON'
+if-shell -b "tmux -V | awk '{exit !($2 < \"2.1\")}'" \
+  "bind o set-option -g mode-mouse on \\\; set-option -g mouse-select-pane on \\\; set-option -g mouse-resize-pane on \\\; set-option -g mouse-select-window on \\\; display 'Mouse: ON'"
 
-# Toggle mouse off
-bind M \
-    set -g mouse off \;\
-    display 'Mouse: OFF'
+if-shell -b "tmux -V | awk '{exit !($2 < \"2.1\")}'" \
+  "bind O set-option -g mode-mouse off \\\; set-option -g mouse-select-pane off \\\; set-option -g mouse-resize-pane off \\\; set-option -g mouse-select-window off \\\; display 'Mouse: OFF'"
 
-bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M; send-keys -M; send-keys -M; send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M; send-keys -M; send-keys -M; send-keys -M' 'copy-mode -e; send-keys -M; send-keys -M; send-keys -M; send-keys -M'"
-bind -n WheelDownPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M; send-keys -M; send-keys -M; send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M; send-keys -M; send-keys -M; send-keys -M' 'copy-mode -e; send-keys -M; send-keys -M; send-keys -M; send-keys -M'"
+##
+# 2.1+
+#
+# Enable mouse by default
+# if-shell -b "tmux -V | awk '{exit !($2 >= \"2.1\")}'" \
+#   "set -g mouse on ;"
+
+bind-key m set-option -g mouse \; display 'Toggle Mouse'
+
+# bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M; send-keys -M; send-keys -M; send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M; send-keys -M; send-keys -M; send-keys -M' 'copy-mode -e; send-keys -M; send-keys -M; send-keys -M; send-keys -M'"
+# bind -n WheelDownPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M; send-keys -M; send-keys -M; send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M; send-keys -M; send-keys -M; send-keys -M' 'copy-mode -e; send-keys -M; send-keys -M; send-keys -M; send-keys -M'"
 
 ###########################################################################
 # Color scheme (Solarized light)
