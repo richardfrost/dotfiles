@@ -60,8 +60,7 @@
     plugins:
       "split-diff": true
       "split-diffDecorationsZIndex": 0
-  pigments:
-    markerType: "square-dot"
+  pigments: {}
   "release-notes":
     viewedVersion: "0.89.0"
   "spell-check":
