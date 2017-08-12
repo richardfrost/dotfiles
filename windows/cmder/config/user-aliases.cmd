@@ -4,15 +4,7 @@
 ;= rem In batch mode, jump to the end of the file
 ;= goto:eof
 ;= Add aliases below here
-e.=explorer .
-gl=git log --oneline --all --graph --decorate  $*
-ls=ls --show-control-chars -F --color $*
-pwd=cd
-clear=cls
-history=cat %CMDER_ROOT%\config\.history
-unalias=alias /d $1
-vi=vim $*
-cmderr=cd /d "%CMDER_ROOT%"
+
 ;= Richard Frost's Aliases
 ;= www.richardfrost.info
 ;============================
@@ -81,10 +73,5 @@ s.="%SUBLIME%" .
 ;= Personal Aliases
 ;============================
 c=cd /d d:\code\$*
-lemma=cd /d d:\git\skeduna\lemma
 pub_key=cat ~/.ssh/id_rsa.pub
-skeduna=cd /d d:\git\skeduna
-vagrant-re=cd /d d:\git\skeduna\lemma && vagrant halt && vagrant up
-vagrant-ssh=ssh vagrant@vagrant
-vagrant-up-ssh=cd /d d:\git\skeduna\lemma && vagrant up && vagrant ssh
 edoras=ssh -A phermium@phlurry.homenet.org -p 3022
