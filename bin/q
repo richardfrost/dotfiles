@@ -301,7 +301,7 @@ class Vertica < Command
   end
 
   def tmux
-    "#{ssh} -t 'tmux new-session -A -s main \"tmux split-window -h sudo -i -u dbadmin bash\" || $SHELL -l'"
+    "#{ssh} -t 'tmux new-session -A -s main \"#{vsql_bin} --user=dbadmin #{vertica_database} || $SHELL -l\" || $SHELL -l'"
   end
 end
 
@@ -318,7 +318,6 @@ class QuickConnect
     when "app"
       App.new(@args)
     when "pg"
-      puts "postgres"
       Postgres.new(@args)
     when "vertica"
       Vertica.new(@args)
