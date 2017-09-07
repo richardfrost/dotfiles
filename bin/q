@@ -296,8 +296,16 @@ class Vertica < Command
   # Instance Commands
   #
   def vsql
+    user = "richard.frost"
+    # Use sudo to switch to dbadmin
     # "#{ssh} -t 'echo \"#{hostname}\"; sudo -i -u dbadmin #{vsql_bin} #{vertica_database}'"
-    "#{ssh} -t 'echo \"#{hostname}\"; #{vsql_bin} --user=dbadmin #{vertica_database}'"
+
+    # Run vsql with dbadmin user
+    # "#{ssh} -t 'echo \"#{hostname}\"; #{vsql_bin} --user=dbadmin #{vertica_database}'"
+
+    # Connect locally with my user account to host by IP
+    server_ip = `host se-prod-vertica1 | awk '/has address/ { print $4 }'`
+    "#{ssh} -t 'echo \"#{hostname}\"; #{vsql_bin} --user=#{user} -h #{server_ip} #{vertica_database}'"
   end
 
   def tmux
