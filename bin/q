@@ -265,7 +265,7 @@ class Vertica < Command
     options = {}
     args.each do |arg|
       case arg
-      when /^(tmux|vsql|dbadmin)$/i
+      when /^(dbadmin|tmux|tmux_dbadmin|vsql|)$/i
         options['command'] = arg
       when /^\w{2,}-\w{2,4}$/
         site_env = arg.split('-')
@@ -285,7 +285,7 @@ class Vertica < Command
   # Command components
   #
   def vertica_database
-    "-d #{@database}_#{environment}"
+    "#{@database}_#{environment}"
   end
 
   def vsql_bin
@@ -300,18 +300,22 @@ class Vertica < Command
     # "#{ssh} -t 'echo \"#{hostname}\"; sudo -i -u dbadmin #{vsql_bin} #{vertica_database}'"
 
     # Run vsql with dbadmin user
-    "#{ssh} -t 'echo \"#{hostname}\"; #{vsql_bin} --user=dbadmin #{vertica_database}'"
+    "#{ssh} -t 'echo \"#{hostname}\"; #{vsql_bin} -U dbadmin -d #{vertica_database}'"
   end
 
   def vsql
-    user = "richard.frost"
     # Connect locally with my user account to host by IP
     server_ip = `host #{hostname} | awk '/has address/ { print $4 }'`
-    "#{ssh} -t 'echo \"#{hostname}\"; #{vsql_bin} --user=#{user} -h #{server_ip} #{vertica_database}'"
+    "#{ssh} -t 'echo \"#{hostname}\"; #{vsql_bin} -h #{server_ip}'"
   end
 
   def tmux
-    "#{ssh} -t 'tmux new-session -A -s main \"#{vsql_bin} --user=dbadmin #{vertica_database} || $SHELL -l\" || $SHELL -l'"
+    server_ip = `host #{hostname} | awk '/has address/ { print $4 }'`
+    "#{ssh} -t 'tmux new-session -A -s main \"#{vsql_bin} -h #{server_ip} || $SHELL -l\" || $SHELL -l'"
+  end
+
+  def tmux_dbadmin
+    "#{ssh} -t 'tmux new-session -A -s main \"#{vsql_bin} -U dbadmin -d #{vertica_database} || $SHELL -l\" || $SHELL -l'"
   end
 end
 
