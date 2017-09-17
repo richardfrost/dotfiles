@@ -8,4 +8,4 @@
 @set PATH=%PATH%;%Apps%\Windows\Sysinternals
 
 :: Run SSH Agent if system has an SSH key
-@IF EXIST "%UserProfile%\.ssh\id_rsa" @call "%GIT_INSTALL_ROOT%/cmd/start-ssh-agent.cmd"
+@IF EXIST "%UserProfile%\.ssh\id_rsa" @call "%CMDER_ROOT%/vendor/git-for-windows/cmd/start-ssh-agent.cmd"
