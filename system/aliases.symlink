@@ -43,6 +43,7 @@ alias gpubb='git-publish-branch'
 alias gf='git fetch'
 alias glog='git log --oneline --all --graph --decorate'
 alias glogp='git log --pretty=format:"%h %s" --graph'
+alias gcleanmerged='git branch --merged master | egrep -v "^\s*master$" | xargs git branch -d'
 
 # Git - Advanced
 alias gabortmerge='git reset --hard HEAD'
