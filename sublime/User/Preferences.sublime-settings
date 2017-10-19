@@ -10,6 +10,7 @@
 		"gray_antialias",
 		"subpixel_antialias"
 	],
+	"font_size": 14,
 	"highlight_line": false,
 	"ignored_packages":
 	[
@@ -17,6 +18,7 @@
 	],
 	"overlay_scroll_bars": "false",
 	"save_on_focus_lost": false,
+	"scroll_past_end": true,
 	"show_encoding": true,
 	"tab_size": 2,
 	"theme": "Material-Theme.sublime-theme",

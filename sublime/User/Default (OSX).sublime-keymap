@@ -1,10 +1,11 @@
 [
   // Commands
   { "keys": ["ctrl+z"], "command": "undo" },
-  { "keys": ["ctrl+y"], "command": "redo" }, // Broken
+  { "keys": ["ctrl+y"], "command": "redo" },
   { "keys": ["ctrl+/"], "command": "toggle_comment", "args": { "block": false } },
   { "keys": ["ctrl+shift+/"], "command": "toggle_comment", "args": { "block": true } }, // testing
   { "keys": ["ctrl+shift+f"], "command": "show_panel", "args": {"panel": "find_in_files"} },
+  { "keys": ["ctrl+shift+t"], "command": "open_recent_file", "args": {"index": 0 } },
 
   // Interface
   { "keys": ["ctrl+p"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
@@ -16,6 +17,10 @@
   { "keys": ["ctrl+shift+tab"], "command": "prev_view" }, // Use absolute order for switching tabs
   { "keys": ["ctrl+pagedown"], "command": "next_view_in_stack" }, // Use tab stacking order for switching tabs
   { "keys": ["ctrl+pageup"], "command": "prev_view_in_stack" }, // Use tab stacking order for switching tabs
+  { "keys": ["ctrl+="], "command": "increase_font_size" },
+  { "keys": ["ctrl++"], "command": "increase_font_size" },
+  { "keys": ["ctrl+-"], "command": "decrease_font_size" },
+  { "keys": ["ctrl+t"], "command": "new_file" },
 
   // Navigation
   { "keys": ["super+shift+up"], "command": "select_lines", "args": {"forward": false} },
@@ -24,12 +29,16 @@
   { "keys": ["ctrl+shift+down"], "command": "swap_line_down" },
   { "keys": ["ctrl+d"], "command": "find_under_expand" },
   { "keys": ["ctrl+shift+d"], "command": "find_under_prev" },
+  { "keys": ["ctrl+home"], "command": "move_to", "args": {"to": "bof"} },
+  { "keys": ["ctrl+end"], "command": "move_to", "args": {"to": "eof"} },
+  { "keys": ["ctrl+shift+backspace"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Delete to Hard BOL.sublime-macro"} },
+  { "keys": ["ctrl+shift+delete"], "command": "run_macro_file", "args": {"file": "res://Packages/Default/Delete to Hard EOL.sublime-macro"} },
+  { "keys": ["ctrl+delete"], "command": "delete_word", "args": {"forward": true, "sub_words": false} }, // Delete sub_words: long_name
 
-  // Not Working
-  // { "keys": ["ctrl+t"], "command": "new_file" },
+  // Plugin Specific
+  { "keys": ["ctrl+shift+m"], "command": "markdown_preview", "args": {"target": "browser", "parser":"markdown"} },
 
   // Untested
-  // { "keys": ["alt+m"], "command": "markdown_preview", "args": {"target": "browser", "parser":"markdown"} },
   // { "keys": ["ctrl+alt+m"], "command": "markdown_preview_select", "args": {"target": "browser"} },
   // { "keys": ["f8"], "command": "permute_lines", "args": {"operation": "unique"} },
   // { "keys": ["ctrl+'"], "command": "show_overlay", "command": "select_lines", "args": {"forward": false} }
