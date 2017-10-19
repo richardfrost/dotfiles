@@ -4,6 +4,7 @@
   { "keys": ["ctrl+y"], "command": "redo" }, // Broken
   { "keys": ["ctrl+/"], "command": "toggle_comment", "args": { "block": false } },
   { "keys": ["ctrl+shift+/"], "command": "toggle_comment", "args": { "block": true } }, // testing
+  { "keys": ["ctrl+shift+f"], "command": "show_panel", "args": {"panel": "find_in_files"} },
 
   // Interface
   { "keys": ["ctrl+p"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },

@@ -13,4 +13,7 @@
 #   $ e .
 #   $ e /usr/local
 #   # => opens the specified directory in your editor
-exec "$EDITOR" "${1:-.}"
+# exec "$EDITOR" "${1:-.}"
+
+# Open editor if no path is specified, otherwise open the path
+exec "$EDITOR" "${1}"

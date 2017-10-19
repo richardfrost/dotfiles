@@ -1,3 +1,6 @@
+# Set editor for both BASH and ZSH
+export EDITOR='sublime'
+
 #============================
 # My Aliases
 #============================
@@ -16,8 +19,6 @@ alias zsh='exec zsh -l'
 #============================
 # Development Aliases
 #============================
-alias a.='atom .'
-
 # Git
 function current_branch { git symbolic-ref --short HEAD; }
 alias g='git'
