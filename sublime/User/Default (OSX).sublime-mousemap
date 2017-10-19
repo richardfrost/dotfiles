@@ -1,0 +1,8 @@
+[
+  // open_url single alt-click
+  {
+    "button": "button1", "count": 2, "modifiers": ["super"],
+    "press_command": "drag_select",
+    "command": "open_url"
+  }
+]

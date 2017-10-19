@@ -4,12 +4,12 @@
 	"caret_style": "phase",
 	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
 	"ensure_newline_at_eof_on_save": true,
+	"find_selected_text": true,
 	"font_options":
 	[
 		"gray_antialias",
 		"subpixel_antialias"
 	],
-	"font_size": 9,
 	"highlight_line": false,
 	"ignored_packages":
 	[

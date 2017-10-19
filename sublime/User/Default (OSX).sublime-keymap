@@ -1,0 +1,35 @@
+[
+  // Commands
+  { "keys": ["ctrl+z"], "command": "undo" },
+  { "keys": ["ctrl+y"], "command": "redo" }, // Broken
+  { "keys": ["ctrl+/"], "command": "toggle_comment", "args": { "block": false } },
+  { "keys": ["ctrl+shift+/"], "command": "toggle_comment", "args": { "block": true } }, // testing
+
+  // Interface
+  { "keys": ["ctrl+p"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
+  { "keys": ["ctrl+shift+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
+  { "keys": ["ctrl+\\"], "command": "toggle_side_bar" },
+  { "keys": ["ctrl+shift+\\"], "command": "reveal_in_side_bar" },
+  { "keys": ["ctrl+shift+`"], "command": "show_panel", "args": {"panel": "console", "toggle": true} },
+  { "keys": ["ctrl+tab"], "command": "next_view" }, // Use absolute order for switching tabs
+  { "keys": ["ctrl+shift+tab"], "command": "prev_view" }, // Use absolute order for switching tabs
+  { "keys": ["ctrl+pagedown"], "command": "next_view_in_stack" }, // Use tab stacking order for switching tabs
+  { "keys": ["ctrl+pageup"], "command": "prev_view_in_stack" }, // Use tab stacking order for switching tabs
+
+  // Navigation
+  { "keys": ["super+shift+up"], "command": "select_lines", "args": {"forward": false} },
+  { "keys": ["super+shift+down"], "command": "select_lines", "args": {"forward": true} },
+  { "keys": ["ctrl+shift+up"], "command": "swap_line_up" },
+  { "keys": ["ctrl+shift+down"], "command": "swap_line_down" },
+  { "keys": ["ctrl+d"], "command": "find_under_expand" },
+  { "keys": ["ctrl+shift+d"], "command": "find_under_prev" },
+
+  // Not Working
+  // { "keys": ["ctrl+t"], "command": "new_file" },
+
+  // Untested
+  // { "keys": ["alt+m"], "command": "markdown_preview", "args": {"target": "browser", "parser":"markdown"} },
+  // { "keys": ["ctrl+alt+m"], "command": "markdown_preview_select", "args": {"target": "browser"} },
+  // { "keys": ["f8"], "command": "permute_lines", "args": {"operation": "unique"} },
+  // { "keys": ["ctrl+'"], "command": "show_overlay", "command": "select_lines", "args": {"forward": false} }
+ ]
