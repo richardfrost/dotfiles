@@ -1,0 +1,6 @@
+{
+  "scope": "source.ruby",
+  "completions": [
+    { "trigger": "pry\tbinding.pry", "contents": "binding.pry" }
+  ]
+}

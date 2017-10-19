@@ -1,0 +1,41 @@
+{
+	"bootstrapped": true,
+	"ignore_vcs_packages": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"Alignment",
+		"All Autocomplete",
+		"AutoHotkey",
+		"BracketHighlighter",
+		"Case Conversion",
+		"Color Highlighter",
+		"Diffy",
+		"EasyDiff",
+		"Energy Color Scheme",
+		"FileDiffs",
+		"Git",
+		"Hasher",
+		"Markdown Preview",
+		"Material Theme",
+		"Open URL",
+		"Package Control",
+		"PowerShell",
+		"Pretty JSON",
+		"SFTP",
+		"SideBarEnhancements",
+		"SqlBeautifier",
+		"sublime-sqlexec",
+		"Text Pastry",
+		"Theme - SoDaReloaded",
+		"Themr"
+	],
+	"repositories":
+	[
+		"https://github.com/richardfrost/sublime-sqlexec",
+		"https://github.com/richardfrost/GitGutter.git"
+	]
+}

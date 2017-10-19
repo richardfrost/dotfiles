@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+SELECT table_name FROM information_schema.columns WHERE column_name = '${1:you_column_name}' ORDER BY table_name
+]]></content>
+	<tabTrigger>find_column</tabTrigger>
+	<description>SQL Query to show which tables a specific column is found in.</description>
+</snippet>

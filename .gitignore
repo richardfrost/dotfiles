@@ -11,6 +11,12 @@ atom.symlink/recovery
 
 git/gitconfig.local.symlink
 
+sublime/User/Package Control.cache/
+sublime/User/Package Control.last-run
+sublime/User/Package Control.merged-ca-bundle
+sublime/User/Package Control.user-ca-bundle
+sublime/User/oscrypto-ca-bundle.crt
+
 vim/vim.symlink/bundle
 
 # OSX

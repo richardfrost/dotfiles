@@ -1,0 +1,43 @@
+{
+  "sql_exec.debug": false,
+  "sql_exec.commands": {
+    "pgsql"  : "\"C:\\Program Files (x86)\\pgAdmin III\\1.22\\psql.exe\""
+  },
+  "connections": {
+    "Iago": {
+      "type"    : "pgsql",
+      "host"    : "192.168.117.6",
+      "port"    : 5432,
+      "username": "iago_db",
+      "database": "iago"
+    },
+    "CK-Dev": {
+      "type"    : "pgsql",
+      "host"    : "corp-sql01",
+      "port"    : 5432,
+      "username": "postgres",
+      "database": "ck_dev2"
+    },
+    "Dev5": {
+      "type"    : "pgsql",
+      "host"    : "corp-sql01",
+      "port"    :  5432,
+      "username": "postgres",
+      "database": "Skedunav_development5"
+    },
+    "Test": {
+      "type"    : "pgsql",
+      "host"    : "corp-sql01",
+      "port"    :  5432,
+      "username": "postgres",
+      "database": "test-rfrost-skeduna"
+    },
+    "Stage": {
+      "type"    : "pgsql",
+      "host"    : "ck-stg-web01.cloudapp.net",
+      "port"    :  5432,
+      "username": "postgres",
+      "database": "ck_stg"
+    }
+  }
+}
