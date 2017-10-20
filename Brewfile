@@ -42,6 +42,8 @@ brew 'yarn'
 brew 'youtube-dl'
 brew 'zsh'
 
+# There is no offical way to update packages installed with cask
+# To update one fo these packages: brew cask install --force packageName
 cask 'appcleaner'         # Application cleanup
 cask 'atom'               # Text editor
 cask 'bettertouchtool'    # Key and gesture customization

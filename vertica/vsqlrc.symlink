@@ -46,4 +46,31 @@
 
 -- MX Queries
 
+-- Vertica Queries
+
 \unset QUIET
+
+-- \set get_ro '\\set var_ro \'SELECT name FROM roles WHERE name LIKE \\'%RO\\';\''
+-- \set get_rw '\\set var_rw SELECT name FROM roles WHERE name LIKE \'%RW\';'
+-- \set ro 'SET ROLE :var_ro;'
+-- \set rw 'SET ROLE :var_rw;'
+-- \set rw 'SET ROLE '
+-- \set env 'SET ROLE `hostname | grep -\w*- `VerticaRW'
+--
+-- \set role 'SET ROLE'
+-- \set roles 'SHOW AVAILABLE_ROLES;'
+-- WITH rw_role AS (
+--   SELECT name FROM roles WHERE name LIKE '%RW'
+-- )
+--
+-- SELECT name FROM roles WHERE name LIKE '%RW' INTO SET ROLE;
+--
+-- SELECT * FROM (SELECT name FROM roles WHERE name LIKE '%RW')
+--
+-- CREATE OR REPLACE FUNCTION rw_role() RETURN varchar AS BEGIN
+--
+-- CREATE FUNCTION rw_role() RETURN varchar AS BEGIN
+--   RETURN (SELECT name FROM roles WHERE name LIKE '%RW');
+-- END;
+--
+-- SELECT role.name INTO abc FROM roles WHERE name LIKE '%VerticaRW';
