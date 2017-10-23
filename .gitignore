@@ -23,6 +23,8 @@ sublime/User/TextPastryHistory.sublime-settings
 
 vim/vim.symlink/bundle
 
+vscode/User/workspaceStorage
+
 # OSX
 *.DS_Store
 .AppleDouble
