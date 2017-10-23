@@ -1,11 +1,19 @@
 [
   // Commands
+  { "keys": ["ctrl+s"], "command": "save" },
+  { "keys": ["ctrl+x"], "command": "cut" },
+  { "keys": ["ctrl+c"], "command": "copy" },
+  { "keys": ["ctrl+v"], "command": "paste" },
   { "keys": ["ctrl+z"], "command": "undo" },
   { "keys": ["ctrl+y"], "command": "redo" },
+  { "keys": ["ctrl+w"], "command": "close_file" },
+  { "keys": ["ctrl+shift+t"], "command": "reopen_last_file" },
   { "keys": ["ctrl+/"], "command": "toggle_comment", "args": { "block": false } },
   { "keys": ["ctrl+shift+/"], "command": "toggle_comment", "args": { "block": true } }, // testing
+  { "keys": ["ctrl+f"], "command": "show_panel", "args": {"panel": "find"} },
   { "keys": ["ctrl+shift+f"], "command": "show_panel", "args": {"panel": "find_in_files"} },
   { "keys": ["ctrl+shift+t"], "command": "open_recent_file", "args": {"index": 0 } },
+  { "keys": ["ctrl+a"], "command": "select_all" },
 
   // Interface
   { "keys": ["ctrl+p"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
