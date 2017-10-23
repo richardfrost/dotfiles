@@ -75,8 +75,9 @@
   'ctrl-shift-delete': 'editor:delete-to-end-of-line'
   'ctrl-shift-M': 'markdown-preview:toggle'
   'ctrl-shift-P': 'command-palette:toggle'
-  'cmd-z': 'core:undo'
-  'cmd-y': 'core:redo'
+  'ctrl-z': 'core:undo'
+  'ctrl-y': 'core:redo'
+  'ctrl-shift-f': 'project-find:show'
 
 '.platform-darwin .find-and-replace':
   'cmd-enter': 'find-and-replace:find-all'
