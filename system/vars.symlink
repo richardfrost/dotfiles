@@ -1,0 +1,38 @@
+# Set editor for both BASH and ZSH
+export EDITOR='code'
+
+# Setup locale
+export LANG=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Search for ssh agent
+source ~/.dotfiles/bin/ssh-find-agent
+if ! test $SSH_AUTH_SOCK; then
+  set_ssh_agent_socket
+fi
+
+##
+# Path
+#
+export PATH="./bin:/usr/local/bin:/usr/local/sbin:$DOTFILES/bin:$PATH"
+export MANPATH="/usr/local/man:/usr/local/git/man:$MANPATH"
+
+if [ "$(uname -s)" = "Darwin" ]
+then
+  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+  # Add vscode to path
+  PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+fi
+
+# Add system ruby bin to path
+if which ruby > /dev/null 2>&1 && which gem > /dev/null 2>&1; then
+  export PATH="$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
+fi
+
+# 'rbenv init -'
+if which rbenv > /dev/null 2>&1; then
+  export RBENV_VERSION=2.4.1
+  eval "$(rbenv init -)";
+  export PATH="$PATH:$HOME/.rbenv/bin"
+fi

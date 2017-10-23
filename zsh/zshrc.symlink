@@ -1,11 +1,6 @@
-#============================
+##
 # Dotfiles
-#============================
-# Setup locale
-export LANG=en_US.UTF-8
-export LANGUAGE=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
+#
 # shortcut to this dotfiles path is $DOTFILES
 export DOTFILES=$HOME/.dotfiles
 
@@ -48,9 +43,10 @@ done
 
 unset config_files
 
-#============================
+
+##
 # Oh-my-zsh
-#============================
+#
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -107,6 +103,7 @@ DEFAULT_USER=$USERNAME
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git)
 
+
 ##
 # User configuration
 #
@@ -114,9 +111,6 @@ plugins=(git)
 
 # Run oh-my-zsh
 source $ZSH/oh-my-zsh.sh
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -137,26 +131,12 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias bundle='noglob bundle'
 alias rails='noglob rails'
 alias rake='noglob rake'
 
 # load ssh agent
 # ssh-add -K ~/.ssh/id_rsa 2>/dev/null
-
-# Search for ssh agent
-source ~/.dotfiles/bin/ssh-find-agent
-if ! test $SSH_AUTH_SOCK; then
-    set_ssh_agent_socket
-fi
-
-# 'rbenv init -'
-if which rbenv > /dev/null 2>&1; then
-  export RBENV_VERSION=2.4.1
-  eval "$(rbenv init -)";
-fi
 
 # Enable host autocomplete for sshmux
 compdef sshmux=ssh
@@ -168,3 +148,13 @@ compdef sshmux=ssh
 #     prompt_segment black default "%(!.%{%F{yellow}%}.)$USER"
 #   fi
 # }
+
+
+# Import variables
+. ~/.vars
+
+# Import functions
+. ~/.functions
+
+# Import common aliases
+. ~/.aliases

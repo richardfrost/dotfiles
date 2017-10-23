@@ -1,9 +1,6 @@
-# Set editor for both BASH and ZSH
-export EDITOR='sublime'
-
-#============================
+##
 # My Aliases
-#============================
+#
 alias aliases='less "$HOME"/.aliases'
 alias bash='exec bash -l'
 alias dbin='ls "$HOME"/.dotfiles/bin'
@@ -16,11 +13,9 @@ alias tssh='sshtmux'
 alias zsh='exec zsh -l'
 
 
-#============================
+##
 # Development Aliases
-#============================
-# Git
-function current_branch { git symbolic-ref --short HEAD; }
+#
 alias g='git'
 alias cb="current_branch"
 alias gs="git status"
@@ -68,17 +63,17 @@ alias bx='bundle exec'
 alias irbl="irb -I . -r"
 
 
-#============================
+##
 # macOS Aliases
-#============================
+#
 alias e.='open .' # macOS
 alias mac_flushdns='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder; echo DNS cache flushed'
 alias readlink=greadlink
 
 
-#============================
+##
 # MX Specific
-#============================
+#
 alias up="bin/up"
 alias down="bin/down"
 alias sc="bin/syntaxcheck"
@@ -88,91 +83,11 @@ alias ssht="echo ssh -TL 127.0.0.1:9200:127.0.0.1:9200 sa-sand-logmill1"
 # Development
 alias rails-pipeline="RAILS_ENV=test rake db:migrate && rspec ; rubocop && brakeman"
 
-# Functions
-function dev { git clone "git@git.moneydesktop.com:dev/$1" "$PROJECTS/$1"; }
-function ops { git clone "git@git.moneydesktop.com:it-infrastructure/$1" "$PROJECTS/$1"; }
-
 # Thor wrapppers
 alias unseal="mx_vault_unseal"
 
 
-#============================
+##
 # System
-#============================
+#
 alias dmesgw='watch -n 0.1 "dmesg | tail -n $((LINES-6))"'
-
-
-#============================
-# Thor Wrappers
-#============================
-function provision_vms { ~/code/puppet/bin/csv_to_provision provision --site="$1" --env="$2" --rebuild; }
-
-
-#============================
-# Other functions
-#============================
-# Rename a git branch name
-function branch-rename {
-  new_branch=$1
-  old_branch=$(current_branch)
-  printf '%s ' "Rename branch: $old_branch to $new_branch. [y/n]? "
-  read -r REPLY
-  if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-    # Rename branch
-    git branch -m "$new_branch"
-
-    printf '%s ' 'Update remote branch [y/n]? '
-    read -r REPLY
-    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-      # Delete the old-name remote branch and push the new-name local branch.
-      git push origin :"$old_branch" "$new_branch"
-
-      # Reset the upstream branch for the new-name local branch.
-      git push origin -u "$new_branch"
-    else
-      exit 0
-    fi
-  else
-    exit 1
-  fi
-}
-
-# List all local branches and their last revision date in order
-function branch-revisions {
-  for k in $(git branch | sed s/^..//); \
-    do echo -e "$(git log -1 --pretty=format:'%Cgreen%ci %Cblue%cr%Creset' "$k" --)" \
-    \\t"$k";done | sort
-}
-
-# https://stackoverflow.com/questions/3334475/git-how-to-update-checkout-a-single-file-from-remote-origin-master
-function checkout-file-from-master {
-  git checkout origin/master -- "$1"
-}
-
-# Switch branch to master branch, pull, and merge in current branch
-function merge-master {
-  branch=$(current_branch)
-  git checkout master && git pull && git checkout "$branch" && git merge master
-}
-
-# Generate Password
-# alias pwgen="date | md5"
-function pwgen { if [[ $1 ]]; then length=$1; else length=32; fi; date +%s | sha256sum | base64 | head -c $length; echo; }
-
-# Run a simple python http server for a folder
-function pyhttp { python -m SimpleHTTPServer "$1"; }
-
-function ssh_fingerprints {
-  find "$HOME/.ssh" -name "*.pub" -print0 \
-    | xargs -0 -I file sh -c \
-    'echo --- file ---; ssh-keygen -lf file; ssh-keygen -E md5 -lf file; echo'
-}
-
-function sshtmux {
-  ssh "$@" -q -t 'tmux new-session -A -s main || $SHELL -l'
-}
-
-# Verbose Copy - Show progress and rate on local copy
-function vcp {
-  rsync -ah --progress "$@"
-}
