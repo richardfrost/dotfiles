@@ -12,6 +12,7 @@ source ~/.dotfiles/bin/ssh_find_agent
 #   set_ssh_agent_socket
 # fi
 ssh_find_agent -a || eval $(ssh-agent) > /dev/null
+ssh-add $HOME/.ssh/id_rsa
 
 ##
 # Path
