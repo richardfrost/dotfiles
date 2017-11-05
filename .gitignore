@@ -25,6 +25,8 @@ vim/vim.symlink/bundle
 
 vscode/User/workspaceStorage
 
+project.sublime-workspace
+
 # OSX
 *.DS_Store
 .AppleDouble
