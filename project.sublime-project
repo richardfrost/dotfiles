@@ -2,20 +2,22 @@
 	"folders":
 	[
 		{
-			"path": "."
+			"path": ".",
+			"folder_exclude_patterns":
+			[
+				"atom.symlink/.apm",
+				"atom.symlink/.node-gyp",
+				"atom.symlink/.storage",
+				"atom.symlink/blob-store",
+				"atom.symlink/compile-cache",
+				"atom.symlink/packages",
+				"atom.symlink/split-diff",
+				"atom.symlink/storage",
+				"atom.symlink/themes",
+				"atom.symlink/recovery",
+				"vscode/User/workspaceStorage",
+				"vscode.symlink"
+			]
 		}
-	],
-  "folder_exclude_patterns":
-  [
-    "atom.symlink/.apm",
-    "atom.symlink/.node-gyp",
-    "atom.symlink/.storage",
-    "atom.symlink/blob-store",
-    "atom.symlink/compile-cache",
-    "atom.symlink/packages",
-    "atom.symlink/split-diff",
-    "atom.symlink/storage",
-    "atom.symlink/themes",
-    "atom.symlink/recovery"
-  ]
+	]
 }
