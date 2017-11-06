@@ -18,18 +18,20 @@
 		"Energy Color Scheme",
 		"FileDiffs",
 		"Git",
+		"GitGutter",
 		"Hasher",
 		"Markdown Preview",
 		"Material Theme",
 		"Open URL",
 		"Package Control",
+		"PackageDev",
 		"PowerShell",
 		"Pretty JSON",
-		"Puppet",
 		"SFTP",
 		"SideBarEnhancements",
 		"SqlBeautifier",
 		"sublime-sqlexec",
+		"SublimePuppet",
 		"SummitLinter",
 		"Text Pastry",
 		"Theme - SoDaReloaded",
@@ -38,6 +40,6 @@
 	"repositories":
 	[
 		"https://github.com/richardfrost/sublime-sqlexec",
-		"https://github.com/richardfrost/GitGutter.git"
+		"https://github.com/richardfrost/GitGutter.git",
 	]
 }
