@@ -25,7 +25,7 @@ vim/vim.symlink/bundle
 
 vscode/User/workspaceStorage
 
-project.sublime-workspace
+*.sublime-workspace
 
 # OSX
 *.DS_Store
