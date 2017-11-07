@@ -7,12 +7,18 @@ export LANGUAGE=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # Search for ssh agent
-source ~/.dotfiles/bin/ssh_find_agent
+# source ~/.dotfiles/bin/ssh_find_agent
 # if ! test $SSH_AUTH_SOCK; then
 #   set_ssh_agent_socket
 # fi
-ssh_find_agent -a || eval $(ssh-agent) > /dev/null
-ssh-add -l | grep -q "$HOME/.ssh/id_rsa" || ssh-add $HOME/.ssh/id_rsa
+# ssh_find_agent -a || eval $(ssh-agent) > /dev/null
+# ssh-add -l | grep -q "$HOME/.ssh/id_rsa" || ssh-add $HOME/.ssh/id_rsa
+if [ ! -S ~/.ssh/ssh-agent.socket ]; then
+  eval $(ssh-agent)
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh-agent.socket
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh-agent.socket
+# ssh-add -l | grep "The agent has no identities" && ssh-add
 
 ##
 # Path
