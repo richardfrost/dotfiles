@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 # http://www.sublimetext.com/docs/3/syntax.html
-name: Puppet_New
+name: Puppet_
 file_extensions:
   - pp
   - epp

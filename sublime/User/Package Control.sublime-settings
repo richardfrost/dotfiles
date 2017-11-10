@@ -40,6 +40,6 @@
 	"repositories":
 	[
 		"https://github.com/richardfrost/sublime-sqlexec",
-		"https://github.com/richardfrost/GitGutter.git",
+		"https://github.com/richardfrost/GitGutter.git"
 	]
 }
