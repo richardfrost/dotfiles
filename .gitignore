@@ -23,6 +23,9 @@ sublime/User/TextPastryHistory.sublime-settings
 
 vim/vim.symlink/bundle
 
+vscode/User/sync.lock
+vscode/User/syncLocalSettings.json
+vscode/User/syncSummary.txt
 vscode/User/workspaceStorage
 
 *.sublime-workspace
