@@ -321,7 +321,7 @@ end
 
 class QuickConnect
   def initialize(args)
-    available_commands = ["app", "pg", "vertica"]
+    available_commands = ["app",  "mux", "pg", "vertica"]
     args.unshift('app') unless available_commands.include? args.first # Default to app
     @command = args.first
     @args = args[1..-1]
@@ -331,6 +331,10 @@ class QuickConnect
     case @command
     when "app"
       App.new(@args)
+    when "mux"
+      command = "#{File.expand_path(File.dirname(__FILE__))}/sshmux #{@args.join(' ')}"
+      puts command
+      exec(command)
     when "pg"
       Postgres.new(@args)
     when "vertica"
