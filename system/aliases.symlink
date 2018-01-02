@@ -4,7 +4,7 @@
 alias aliases='less "$HOME"/.aliases'
 alias bash='exec bash -l'
 alias dbin='ls "$HOME"/.dotfiles/bin'
-alias dotedit='atom "$HOME"/.dotfiles'
+alias dotedit='e "$HOME"/.dotfiles'
 alias dotfiles='cd "$HOME"/.dotfiles'
 alias pubip='curl ifconfig.co'
 alias sshadd='ssh-add $HOME/.ssh/id_rsa'
