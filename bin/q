@@ -198,15 +198,29 @@ class Postgres < Command
     end
   end
 
+  def version
+    case @env
+    when 'corp', 'qa', 'sand'
+      '10'
+    when 'int', 'prod'
+      '9.5'
+    end
+  end
+
   ##
   # Command components
   #
   def pg_log_dir
-    "/var/lib/postgresql/9.5/postgres#{cluster_number}_#{environment}/pg_log"
+    "/var/lib/postgresql/#{version}/postgres#{cluster_number}_#{environment}/pg_log"
   end
 
   def psql_component
-    "psql -U postgres -h /var/run/postgresql/9.5/postgres#{cluster_number}_#{environment}/"
+    # path = "/var/run/postgresql"
+    # Dir.chdir(path)
+    # latest_version = Dir.glob("[1-9]*[0-9]").select { |f| File.directory?(f) && f[/^\d+\.?\d+$/] }.max_by(&:to_f)
+    # "#{path}/#{latest_version}/postgres#{cluster}_#{environment}/"
+
+    "psql -U postgres -h /var/run/postgresql/#{version}/postgres#{cluster_number}_#{environment}/"
   end
 
   def psql_database
