@@ -203,7 +203,7 @@ class Postgres < Command
     when 'corp', 'qa', 'sand'
       '10'
     when 'int', 'prod'
-      '9.5'
+      '10'
     end
   end
 
