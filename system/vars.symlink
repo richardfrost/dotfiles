@@ -21,16 +21,14 @@ export SSH_AUTH_SOCK=~/.ssh/ssh-agent.socket
 # ssh-add -l | grep "The agent has no identities" && ssh-add
 
 ##
-# Path
+# PATH:
 #
-export PATH="./bin:/usr/local/bin:/usr/local/sbin:$DOTFILES/bin:$PATH"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:./bin:$DOTFILES/bin:/usr/bin:/sbin:/bin:$PATH"
 export MANPATH="/usr/local/man:/usr/local/git/man:$MANPATH"
 
 if [ "$(uname -s)" = "Darwin" ]
 then
-  PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-  # Add vscode to path
-  PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
 # Add system ruby bin to path
@@ -44,3 +42,6 @@ if [ -d "$HOME/.rbenv" ]; then
   export RBENV_VERSION=2.4.1
   eval "$(rbenv init -)";
 fi
+
+# Remove duplicates in PATH
+export PATH=`printf %s "$PATH" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}'`
