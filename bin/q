@@ -3,35 +3,61 @@
 require 'optparse'
 
 ##
-# Example Commands
-#
-# List all dabases on se-prod-postgres201
-# qc pg list se-prod 1
-#
-# Start a psql session on se-prod-postgres201
-# qc pg [psql] se-prod 1
-#
-# Connect to the rails console on sb-sand-ballista1
-# qc app rails sb-sand-ballista
-# TODO:
-# Connect to the rails console on sb-sand-ballista1
-# qc app current rails sb-sand-ballista
-# TODO:
-# Connect to the rails console on sb-sand-ballista1
-# qc app current rails sb-sand-ballista
-# TODO: Switch to current on app?
-# TODO: mdtail - Maybe open up sshmux to all nodes and execute mdtail?
-# TODO: vertica
-
-##
 # Todo
 #
 # Support explicit database hostname instead of just master
+# mdtail - Maybe open up sshmux to all nodes and execute mdtail?
+# More support for named tmux title
 
-# Supported attributes:
-# app
-# hostname
+##
+# Supported Commands
 #
+# Note: All commands default to node 1 unless a number is specified
+#
+# SSH:
+# SSH to sz-env-node1
+# q sz-env-node
+#
+# App:
+# Tail log on sz-env-node2
+# q [app] log sz-env-node2
+# Start rails console on sz-env-node1
+# q [app] rails sz-env-node[1]
+# SSH to sz-env-node3
+# q [app] ssh sz-env-node3
+# SSH to sz-env-node1 and attach to TMUX session
+# q [app] tmux sz-env-node
+# SSH to sz-env-node1 and attach to TMUX session, if new session start rails console
+# q [app] tmux_rails sz-env-node
+#
+# Postgres:
+# Note: All commands will default to the slave (20x) node. to get 10x specify "master"
+#
+# PSQL to site-env-postgres10x and connect to the specified database
+# q pg [psql] site-env [database] master
+# PSQL to site-env-postgres202 and output list of databases
+# q pg list site-env 2
+# Tail PG log on site-env-postgres201
+# q pg log site-env
+# SSH to site-env-postgres102 (specified database on x02), attach TMUX and open PSQL
+# q pg tmux site-env database master
+#
+# SSHMUX:
+# Open SSHMUX to nodes 1-6 of sz-env-app
+# q mux sz-env-app{1..6}
+# Open SSHMUX to all nodes of sz-env-app
+# q mux sz-env-app
+#
+# Vertica:
+# SSH to sz-env-vertica1 and open VSQL (auth using your user and LDAP)
+# q vertica [vsql] sz-env [1]
+# SSH to sz-env-vertica2 and open VSQL as dbadmin
+# q vertica dbadmin 2
+# SSH to sz-env-vertica2, attach TMUX and start VSQL (auth using your user and LDAP)
+# q vertica tmux sz-env 2
+# SSH to sz-env-vertica2, attach TMUX and start VSQL as dbadmin
+# q vertica tmux_dbadmin sz-env 3
+
 class Command
   def environment
     case @env
@@ -52,7 +78,7 @@ class Command
     "#{@site}-#{@env}-#{@app}#{@node_number}"
   end
 
-  def logs
+  def log
     "#{ssh} -t 'mdtail || $SHELL -l'"
   end
 
@@ -96,7 +122,7 @@ class App < Command
     options = {}
     args.each do |arg|
       case arg
-      when /^(logs|rails|ssh|tmux|tmux_rails)$/i
+      when /^(log|rails|ssh|tmux|tmux_rails)$/i
         options['command'] = arg
       when /^\w{2,}-\w{2,4}-\w+$/
         site_env = arg.split('-')
@@ -149,6 +175,7 @@ class Postgres < Command
     options if options.has_key?('site') && options.has_key?('env')
   end
 
+  # VARS: Customize DB mapping
   def cluster_number
     case @env
     when 'prod'
@@ -198,6 +225,7 @@ class Postgres < Command
     end
   end
 
+  # VARS: Customize PG Versions per environment
   def version
     case @env
     when 'corp', 'qa', 'sand'
@@ -211,7 +239,11 @@ class Postgres < Command
   # Command components
   #
   def pg_log_dir
-    "/var/lib/postgresql/#{version}/postgres#{cluster_number}_#{environment}/pg_log"
+    if version.to_f < 10
+      "/var/lib/postgresql/#{version}/postgres#{cluster_number}_#{environment}/pg_log"
+    else
+      "/var/lib/postgresql/#{version}/postgres#{cluster_number}_#{environment}/log"
+    end
   end
 
   def psql_component
@@ -243,26 +275,13 @@ class Postgres < Command
   end
 
   def tmux
-    "#{ssh} -t 'tmux new-session -A -s psql \"#{psql_component} #{psql_database}; bash -l\" || $SHELL -l'"
+    "#{ssh} -t 'tmux new-session -A -s psql \"#{psql_component} #{psql_database}; /bin/bash -l\" || $SHELL -l'"
   end
-
-  # def ssh_echo_psql
-  #   "#{ssh} -t 'echo #{psql} #{psql_database}; $SHELL -l'"
-  # end
-  #
-  # def tmux_command
-  #   if @database
-  #     "#{ssh} -t '#{tmux} \"echo #{psql} #{psql_database}; #{psql} #{psql_database}; $SHELL -l\" || $SHELL -l'"
-  #   else
-  #     "#{ssh} -t '#{tmux} \"echo #{psql}; #{psql} #{list}; #{psql}; $SHELL -l\" || $SHELL -l'"
-  #   end
-  # end
 end
 
 class Vertica < Command
   def initialize(args)
     options = Vertica.parse_quick(args)
-    puts args
     if options
       @command = options.fetch('command', 'vsql')
       @site = options.fetch('site')
