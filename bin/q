@@ -64,6 +64,9 @@ q mux sz-env-app{1..6}
 Open SSHMUX to all nodes of sz-env-app
 q mux sz-env-app
 
+Open SSHMUX to all odd-numbered nodes of sz-env-app
+q mux sz-env-app odd
+
 --------
 Vertica:
 --------
