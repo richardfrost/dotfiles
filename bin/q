@@ -9,54 +9,76 @@ require 'optparse'
 # mdtail - Maybe open up sshmux to all nodes and execute mdtail?
 # More support for named tmux title
 
-##
-# Supported Commands
-#
-# Note: All commands default to node 1 unless a number is specified
-#
-# SSH:
-# SSH to sz-env-node1
-# q sz-env-node
-#
-# App:
-# Tail log on sz-env-node2
-# q [app] log sz-env-node2
-# Start rails console on sz-env-node1
-# q [app] rails sz-env-node[1]
-# SSH to sz-env-node3
-# q [app] ssh sz-env-node3
-# SSH to sz-env-node1 and attach to TMUX session
-# q [app] tmux sz-env-node
-# SSH to sz-env-node1 and attach to TMUX session, if new session start rails console
-# q [app] tmux_rails sz-env-node
-#
-# Postgres:
-# Note: All commands will default to the slave (20x) node. to get 10x specify "master"
-#
-# PSQL to site-env-postgres10x and connect to the specified database
-# q pg [psql] site-env [database] master
-# PSQL to site-env-postgres202 and output list of databases
-# q pg list site-env 2
-# Tail PG log on site-env-postgres201
-# q pg log site-env
-# SSH to site-env-postgres102 (specified database on x02), attach TMUX and open PSQL
-# q pg tmux site-env database master
-#
-# SSHMUX:
-# Open SSHMUX to nodes 1-6 of sz-env-app
-# q mux sz-env-app{1..6}
-# Open SSHMUX to all nodes of sz-env-app
-# q mux sz-env-app
-#
-# Vertica:
-# SSH to sz-env-vertica1 and open VSQL (auth using your user and LDAP)
-# q vertica [vsql] sz-env [1]
-# SSH to sz-env-vertica2 and open VSQL as dbadmin
-# q vertica dbadmin 2
-# SSH to sz-env-vertica2, attach TMUX and start VSQL (auth using your user and LDAP)
-# q vertica tmux sz-env 2
-# SSH to sz-env-vertica2, attach TMUX and start VSQL as dbadmin
-# q vertica tmux_dbadmin sz-env 3
+HELP = <<-HEREDOC
+Supported Commands
+
+Note: All commands default to node 1 unless a number is specified
+
+----
+SSH:
+----
+SSH to sz-env-node1
+q sz-env-node
+
+----
+App:
+----
+Tail log on sz-env-node2
+q [app] log sz-env-node2
+
+Start rails console on sz-env-node1
+q [app] rails sz-env-node[1]
+
+SSH to sz-env-node3
+q [app] ssh sz-env-node3
+
+SSH to sz-env-node1 and attach to TMUX session
+q [app] tmux sz-env-node
+
+SSH to sz-env-node1 and attach to TMUX session, if new session start rails console
+q [app] tmux_rails sz-env-node
+
+---------
+Postgres:
+---------
+Note: All commands will default to the slave (20x) node. to get 10x specify "master"
+
+PSQL to site-env-postgres10x and connect to the specified database
+q pg [psql] site-env [database] master
+
+PSQL to site-env-postgres202 and output list of databases
+q pg list site-env 2
+
+Tail PG log on site-env-postgres201
+q pg log site-env
+
+SSH to site-env-postgres102 (specified database on x02), attach TMUX and open PSQL
+q pg tmux site-env database master
+
+-------
+SSHMUX:
+-------
+Open SSHMUX to nodes 1-6 of sz-env-app
+q mux sz-env-app{1..6}
+
+Open SSHMUX to all nodes of sz-env-app
+q mux sz-env-app
+
+--------
+Vertica:
+--------
+SSH to sz-env-vertica1 and open VSQL (auth using your user and LDAP)
+q vertica [vsql] sz-env [1]
+
+SSH to sz-env-vertica2 and open VSQL as dbadmin
+q vertica dbadmin 2
+
+SSH to sz-env-vertica2, attach TMUX and start VSQL (auth using your user and LDAP)
+q vertica tmux sz-env 2
+
+SSH to sz-env-vertica2, attach TMUX and start VSQL as dbadmin
+q vertica tmux_dbadmin sz-env 3
+HEREDOC
 
 class Command
   def environment
@@ -354,7 +376,7 @@ end
 
 class QuickConnect
   def initialize(args)
-    available_commands = ["app",  "mux", "pg", "vertica"]
+    available_commands = ["app", "help", "mux", "pg", "vertica"]
     args.unshift('app') unless available_commands.include? args.first # Default to app
     @command = args.first
     @args = args[1..-1]
@@ -364,6 +386,8 @@ class QuickConnect
     case @command
     when "app"
       App.new(@args)
+    when "help"
+      puts HELP
     when "mux"
       command = "#{File.expand_path(File.dirname(__FILE__))}/sshmux #{@args.join(' ')}"
       puts command
