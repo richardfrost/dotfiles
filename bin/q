@@ -362,14 +362,13 @@ class Vertica < Command
   end
 
   def vsql
-    # Connect locally with my user account to host by IP
-    server_ip = `host #{hostname} | awk '/has address/ { print $4 }'`.strip
-    "#{ssh} -t '#{vsql_bin} -h #{server_ip}'"
+    # Deprecated: Connect locally with my user account to host by IP
+    # server_ip = `host #{hostname} | awk '/has address/ { print $4 }'`.strip
+    "#{ssh} -t '#{vsql_bin} -h $(hostname -i)'"
   end
 
   def tmux
-    server_ip = `host #{hostname} | awk '/has address/ { print $4 }'`.strip
-    "#{ssh} -t 'tmux new-session -A -s main \"#{vsql_bin} -h #{server_ip} || $SHELL -l\" || $SHELL -l'"
+    "#{ssh} -t 'tmux new-session -A -s main \"#{vsql_bin} -h $(hostname -i) || $SHELL -l\" || $SHELL -l'"
   end
 
   def tmux_dbadmin
