@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Use to completely remove a record from letsencrypt
+# Usage: cleanup-letsencrypt www.example.com
+#
+# Get list of domains: sudo /usr/bin/certbot renew --agree-tos
+#
+# Find all files/directories to remove
+# sudo find /etc/letsencrypt | grep 'www.example.com'
+
+record=$1
+
+if [ -n "$record" ]; then
+  $(sudo rm -i /etc/letsencrypt/renewal/${record}.conf)
+  $(sudo rm -i /etc/letsencrypt/archive/${record}/*)
+  $(sudo rm -i /etc/letsencrypt/live/${record}/*)
+  $(sudo rmdir /etc/letsencrypt/archive/${record})
+  $(sudo rmdir /etc/letsencrypt/live/${record})
+else
+  echo "USAGE: cleanup-letsencrypt www.example.com"
+fi
