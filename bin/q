@@ -212,8 +212,18 @@ class Postgres < Command
           1
         when 'ballista'
           2
-        when 'abacus'
-          3
+        when 'abacus', 'abacus1'
+          @database = 'abacus1001'
+          @node_number = 3
+        when 'abacus2'
+          @database = 'abacus1002'
+          @node_number = 4
+        when 'abacus3'
+          @database = 'abacus1003'
+          @node_number = 5
+        when 'abacus4'
+          @database = 'abacus1004'
+          @node_number = 7
         when 'batcave', 'bullseye', 'dispatch', 'newman', 'sherlock', 'synchronicity' #, 'vault'
           6
         end
