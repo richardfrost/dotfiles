@@ -101,8 +101,8 @@ DEFAULT_USER=$USERNAME
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-
+# common-aliases git-extras history-substring-search jsontools systemadmin tmux
+plugins=(git history)
 
 ##
 # User configuration

@@ -32,7 +32,7 @@ setopt HIST_REDUCE_BLANKS
 
 # don't expand aliases _before_ completion has finished
 #   like: git comm-[tab]
-setopt complete_aliases
+# setopt complete_aliases # This breaks git autocomplete for aliases
 
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
