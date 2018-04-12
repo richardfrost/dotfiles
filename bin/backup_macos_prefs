@@ -26,3 +26,7 @@ backup_pref "$karabiner_src" "$karabiner_dest"
 btt_src="$HOME/Library/Application Support/BetterTouchTool/bttdata2"
 btt_dest="$DOTFILE_PREFS/bttdata2"
 backup_pref "$btt_src" "$btt_dest"
+
+btt_pref_src="$HOME/Library/Preferences/com.hegenberg.BetterTouchTool.plist"
+btt_pref_dest="$DOTFILE_PREFS/BetterTouchTool.plist"
+backup_pref "$btt_pref_src" "$btt_pref_dest"
