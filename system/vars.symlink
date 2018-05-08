@@ -1,5 +1,5 @@
 # Set editor for both BASH and ZSH
-export EDITOR='sublime'
+export EDITOR='vscode'
 
 # Setup locale
 export LANG=en_US.UTF-8
