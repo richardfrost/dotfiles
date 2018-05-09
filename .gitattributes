@@ -10,6 +10,8 @@
 *.cson text eol=lf
 *.json text eol=lf
 *.sublime-settings text eol=lf
+*.sh text eol=lf
+bin/* text eol=lf
 
 # Declare files that will always have CRLF line endings on checkout.
 *.bat text eol=crlf

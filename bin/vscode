@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Open arg or current directory "${1:-.}"
-
 if command -v code > /dev/null 2>&1; then
     # exec "code" "${1:-.}"
     [[ -z "${1}" ]] && exec "code" || exec "code" "${1}"
