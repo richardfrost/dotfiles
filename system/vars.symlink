@@ -18,7 +18,7 @@ if [ ! -S ~/.ssh/ssh-agent.socket ]; then
   ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh-agent.socket
 fi
 export SSH_AUTH_SOCK=~/.ssh/ssh-agent.socket
-# ssh-add -l | grep "The agent has no identities" && ssh-add
+ssh-add -l | grep "The agent has no identities" && ssh-add
 
 ##
 # PATH:
