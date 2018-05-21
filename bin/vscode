@@ -2,9 +2,21 @@
 
 if command -v code > /dev/null 2>&1; then
     # exec "code" "${1:-.}"
-    [[ -z "${1}" ]] && exec "code" || exec "code" "${1}"
+    # [[ -z "${1}" ]] && exec "code" || exec "code" "${1}"
+    if [[ -z "${1}" ]]
+    then
+        exec "code" >/dev/null 2>&1 &
+    else
+        exec "code" "${1}" >/dev/null 2>&1 &
+    fi
 elif [ -f "/mnt/c/Program Files/Microsoft VS Code/bin/code" ]; then
     # exec "/mnt/c/Program Files/Microsoft VS Code/bin/code" "${1:-.}"
     bin="/mnt/c/Program Files/Microsoft VS Code/bin/code"
-    [[ -z "${1}" ]] && exec "$bin" || exec "$bin" "${1}"
+    # [[ -z "${1}" ]] && exec "$bin" || exec "$bin" "${1}"
+    if [[ -z "${1}" ]]
+    then
+        exec "$bin" >/dev/null 2>&1 &
+    else
+        exec "$bin" "${1}" >/dev/null 2>&1 &
+    fi
 fi
