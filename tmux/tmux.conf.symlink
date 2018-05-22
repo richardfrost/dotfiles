@@ -18,7 +18,7 @@
 # O - Mouse Off (Pre 2.1)
 
 # Set default prefix - (usually don't need this)
-set prefix C-b
+set -g prefix C-b
 bind-key C-b send-prefix
 
 # ^B ^B to passthrough a ^B
