@@ -5,7 +5,8 @@ SetLocal EnableDelayedExpansion
 :Check_Permissions
 net session >nul 2>&1
 if %errorLevel% == 0 (
-	GOTO EnvVars
+	REM GOTO EnvVars
+	GOTO Git
 ) else (
 	COLOR 0C
 	ECHO Admin privelages required. Please Re-run as Administrator.
@@ -40,12 +41,12 @@ ECHO ==============================
 ECHO Setup Executor
 ECHO ==============================
 ECHO.
-IF NOT EXIST "%AppData%\Executor" (
-	mkdir "%AppData%\Executor"
-)
-IF NOT EXIST "%AppData%\Executor\Executor.ini" (
-	copy "%Apps%\Executor\Executor-Defaults.ini" "%AppData%\Executor\Executor.ini"
-)
+REM IF NOT EXIST "%AppData%\Executor" (
+REM 	mkdir "%AppData%\Executor"
+REM )
+REM IF NOT EXIST "%AppData%\Executor\Executor.ini" (
+REM 	copy "%Apps%\Executor\Executor-Defaults.ini" "%AppData%\Executor\Executor.ini"
+REM )
 
 
 
@@ -73,16 +74,16 @@ ECHO ==============================
 ECHO Import Registry Keys
 ECHO ==============================
 ECHO.
-:: Sysinternals EULA
-reg import "%Apps%\Windows\Sysinternals\Info\Sysinternals-EULA.reg"
+REM :: Sysinternals EULA
+REM reg import "%Apps%\Windows\Sysinternals\Info\Sysinternals-EULA.reg"
 
-:: Custom registry keys
-reg query "HKEY_CLASSES_ROOT\DesktopBackground\Shell\Power Menu" > nul 2>&1
-IF %ERRORLEVEL%==1 start Explorer.exe "%Apps%\Windows\RegistryKeys\Combined"
+REM :: Custom registry keys
+REM reg query "HKEY_CLASSES_ROOT\DesktopBackground\Shell\Power Menu" > nul 2>&1
+REM IF %ERRORLEVEL%==1 start Explorer.exe "%Apps%\Windows\RegistryKeys\Combined"
 
-:: Mouse Sensitivity
-:: reg import "%Apps%\Windows\RegistryKeys\Enable-Mouse_Sensitivity.reg"
-reg add "HKCU\Control Panel\Mouse" /v MouseSensitivity /t REG_SZ /d 14
+REM :: Mouse Sensitivity
+REM :: reg import "%Apps%\Windows\RegistryKeys\Enable-Mouse_Sensitivity.reg"
+REM reg add "HKCU\Control Panel\Mouse" /v MouseSensitivity /t REG_SZ /d 14
 
 
 
@@ -92,8 +93,8 @@ ECHO ==============================
 ECHO Starting applications
 ECHO ==============================
 ECHO.
-tasklist /FI "IMAGENAME eq Executor.exe" 2>NUL | find /I /N "Executor.exe">NUL
-IF NOT "%ERRORLEVEL%"=="0" start %Apps%\Executor\Executor.exe
+REM tasklist /FI "IMAGENAME eq Executor.exe" 2>NUL | find /I /N "Executor.exe">NUL
+REM IF NOT "%ERRORLEVEL%"=="0" start %Apps%\Executor\Executor.exe
 
 :: tasklist /FI "IMAGENAME eq VoluMouse.exe" 2>NUL | find /I /N "VoluMouse.exe">NUL
 :: IF NOT "%ERRORLEVEL%"=="0" start %Apps%\Media\Audio\VoluMouse\VoluMouse.exe
@@ -121,9 +122,24 @@ ECHO ==============================
 ECHO Other Settings
 ECHO ==============================
 ECHO Make sure to setup desired library locations such as Documents, Pictures, etc!
-ECHO MSI stuffx
 ECHO.
 
+
+:Git
+ECHO.
+ECHO ==============================
+ECHO Git Settings
+ECHO ==============================
+ECHO.
+
+
+FOR /F "tokens=*" %%g IN ('git config --global user.name') do (SET check=%%g)
+IF "%check%" == "" (
+	SET /P GitName="Git Name: "
+	git config --global user.name "%GitName%"
+	SET /P GitEmail="Git Email: "
+	git config --global user.email "%GitEmail%"
+)
 
 :End
 ECHO.
