@@ -5,13 +5,6 @@ function current_branch { git symbolic-ref --short HEAD; }
 
 
 ##
-# MX Specific
-#
-function dev { git clone "git@git.moneydesktop.com:dev/$1" "$PROJECTS/$1"; }
-function ops { git clone "git@git.moneydesktop.com:it-infrastructure/$1" "$PROJECTS/$1"; }
-
-
-##
 # Other functions
 #
 # Rename a git branch name
@@ -79,9 +72,3 @@ function sshtmux {
 function vcp {
   rsync -ah --progress "$@"
 }
-
-
-##
-# Thor Wrappers
-#
-function provision_vms { ~/code/puppet/bin/csv_to_provision provision --site="$1" --env="$2" --rebuild; }

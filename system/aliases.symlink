@@ -74,22 +74,6 @@ alias readlink=greadlink
 
 
 ##
-# MX Specific
-#
-alias up="bin/up"
-alias down="bin/down"
-alias sc="bin/syntaxcheck"
-alias ssha="ssh-add && ssh-add ~/.ssh/provisioner_rsa"
-alias ssht="echo ssh -TL 127.0.0.1:9200:127.0.0.1:9200 sa-sand-logmill1"
-
-# Development
-alias rails-pipeline="RAILS_ENV=test rake db:migrate && rspec ; rubocop && brakeman"
-
-# Thor wrapppers
-alias unseal="mx_vault_unseal"
-
-
-##
 # System
 #
 alias dmesgw='watch -n 0.1 "dmesg | tail -n $((LINES-6))"'
