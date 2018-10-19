@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if command -v explorer > /dev/null 2>&1; then
+  if [[ -z "${1}" ]]; then
+    exec "explorer" >/dev/null 2>&1 &
+  else
+    exec "explorer" "${1}" >/dev/null 2>&1 &
+  fi
+elif grep -q Microsoft /proc/version ; then # WSL
+  if [[ -z "${1}" ]]; then
+    exec "/mnt/c/Windows/explorer.exe" >/dev/null 2>&1 &
+  else
+    exec "/mnt/c/Windows/explorer.exe" "${1}" >/dev/null 2>&1 &
+  fi
+fi
