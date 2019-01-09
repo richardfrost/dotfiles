@@ -30,6 +30,7 @@ alias gpom="git pull origin master"
 alias gd="git diff"
 alias gc="git commit -v"
 alias gcn='git commit -v --no-verify'
+alias gmc='git diff --cached && gitmoji -c'
 alias ga="git add"
 alias gadd="git add ."
 alias gr="git reset"
