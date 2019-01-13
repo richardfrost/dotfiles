@@ -6,8 +6,7 @@
 # to make sure you're on the latest and greatest.
 export DOTFILES=$HOME/.dotfiles
 
-if [ "$(uname -s)" = "Darwin" ]
-then
+if [ "$(uname -s)" == "Darwin" ]; then
   # Set macOS defaults
   echo "› OSX defaults"
   "$DOTFILES/macos/set-defaults.sh"

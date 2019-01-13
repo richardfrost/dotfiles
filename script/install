@@ -7,8 +7,7 @@ set -e
 cd "$(dirname $0)"/..
 
 # Run Homebrew through the Brewfile
-if [ "$(uname -s)" = "Darwin" ]
-then
+if [ "$(uname -s)" == "Darwin" ]; then
   echo "› brew bundle"
   brew bundle
 fi
