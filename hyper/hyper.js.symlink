@@ -156,14 +156,16 @@ module.exports = {
     },
 
     hyperBorder: {
-      // borderColors: ['#fc1da7', '#fba506'], // Icon
-      borderColors: ['#4086a2', '#4c1b76'], // Blue & Purple
+      // borderColors: ['#fc1da7', '#fba506'], // Default (Icon)
       // borderColors: ['random', 'random'],   // Random
-      borderWidth: '6px', // default is 8px
-      borderRadiusOuter: '3px',
-      borderRadiusInner: '3px',
-      animate: {
-        duration: '8s', // default is 16s
+      adminBorderColors: ['#fc1da7', '#fba506'], // Default (Icon)
+      borderColors: ['#4086a2', '#4c1b76'], // Blue & Purple
+      borderWidth: '4px', // default: 4px
+      borderRadiusInner: '3px', // default: 4px
+      borderRadiusOuter: '3px', // default: 0
+      borderAngle: '180deg', // default: 180deg
+      animate: { // default: false
+        duration: '8s',
       }
     },
 
