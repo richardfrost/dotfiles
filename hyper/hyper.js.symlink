@@ -167,17 +167,6 @@ module.exports = {
       }
     },
 
-    // hyper-tabs-enhanced
-    hyperTabs: {
-      border: true,
-      trafficButtons: false,
-      tabIcons: true,
-      tabIconsColored: true,
-      activityColor: 'salmon',
-      closeAlign: 'right',
-      activityPulse: true,
-    },
-
     hyperTransparentDynamic: {
       alpha: 0.5 // default 50%
     },
@@ -254,7 +243,7 @@ module.exports = {
     // 'hyper-snazzy',
     // 'hyper-solarized-dark',
     // ----------------------------- //
-    // 'hyper-active-tab',
+    // 'hyper-active-tab', // Adjust tab display
     'hyper-broadcast',
     'hyper-fading-scrollbar',
     'hyper-launch-menu',
@@ -262,9 +251,9 @@ module.exports = {
     'hyper-pane',
     'hyper-savetext',
     'hyper-search',
-    'hyper-tabs-enhanced',
     'hyperborder',
     'hyperlinks',
+    'hyper-tab-icons', // Adjust tab display
     'hyperterm-paste',
     'hyperterm-summon', // Global shortcut
     'hyperterm-tabs', // Reorder tabs
@@ -274,6 +263,7 @@ module.exports = {
     // 'hyper-single-instance',
     // 'hyper-systray', // Global shortcut
     // 'hyper-transparent-dynamic', // Transparent/Opacity - Looks awesome!
+    // 'hyper-tabs-enhanced', // Bad - Breaks Win+Arrow shortcut
   ],
 
   // in development, you can create a directory under
