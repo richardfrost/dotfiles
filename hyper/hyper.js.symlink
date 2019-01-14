@@ -1,3 +1,11 @@
+//////////////
+// Shortcuts
+//////////////
+// Preferences: CTRL+,
+// Update Plugins: CTRL+SHIFT+U
+// Reload: CTRL+SHIFT+R
+// Move Tabs: CTRL+ALT+SHIFT+LEFT/RIGHT
+
 // Future versions of Hyper may add additional config options,
 // which will not automatically be merged into this file.
 // See https://hyper.is#cfg for all currently supported options.
@@ -126,6 +134,8 @@ module.exports = {
 
     ////
     // Plugin Configuration
+    activeTab: '🍕',
+
     broadcast: {
       debug: false,
       hotkeys: {
@@ -157,6 +167,33 @@ module.exports = {
       }
     },
 
+    // hyper-tabs-enhanced
+    hyperTabs: {
+      border: true,
+      trafficButtons: false,
+      tabIcons: true,
+      tabIconsColored: true,
+      activityColor: 'salmon',
+      closeAlign: 'right',
+      activityPulse: true,
+    },
+
+    hyperTransparentDynamic: {
+      alpha: 0.5 // default 50%
+    },
+
+    // hyper-opacity
+    opacity: {
+      focus: 0.97,
+      blur: 0.85,
+    },
+
+    otherShells: [
+      {shell: "C:\\Windows\\System32\\cmd.exe", shellArgs: [], shellName: "CMD"},
+      {shell: "powershell.exe", shellArgs: [], shellName: "Powershell"},
+      {shell: "C:\\Windows\\System32\\wsl.exe", shellArgs: [], shellName: "WSL"},
+    ],
+
     paneNavigation: {
       debug: false,
       hotkeys: {
@@ -182,11 +219,20 @@ module.exports = {
       inactivePaneOpacity: 0.9 // Set to 1 to disable inactive panes dimming
     },
 
+    // hyper-fading-scrollbar
+    scrollbarColor: 'grey', // any valid css color
+    scrollbarOpacity: 0.6, // value between 0 and 1
+
     summon: {
       hideDock: false,
       hideOnBlur: false,
       hotkey: 'Ctrl+`'
-    }
+    },
+
+    // hyper-systray
+    systray: {
+      hotkey: 'Ctrl+Space'
+    },
   },
 
   // a list of plugins to fetch and install from npm
@@ -196,24 +242,39 @@ module.exports = {
   //   `@company/project`0
   //   `project#1.0.1`
 
-  // Themes
-  // 'hyper-dracula',
-  // 'hyper-flat',
-  // 'hyper-snazzy',
-  // 'hyper-solarized-dark',
-  // 'hyperterm-material',
   plugins: [
-    'hyperterm-material',
+    // ----------------------------- //
+    // Theme needs to run first:     //
+    'hyper-chesterish', // *
+    // 'hyper-snazzy', // *
+    // 'hyperterm-material', // *
+    // 'hyper-dracula',
+    // 'hyper-flat',
+    // 'hyper-materialshell',
+    // 'hyper-snazzy',
+    // 'hyper-solarized-dark',
+    // ----------------------------- //
+    // 'hyper-active-tab',
     'hyper-broadcast',
+    'hyper-fading-scrollbar',
+    'hyper-launch-menu',
+    'hyper-opacity', // Transparent/Opacity
     'hyper-pane',
+    'hyper-savetext',
     'hyper-search',
+    'hyper-tabs-enhanced',
     'hyperborder',
     'hyperlinks',
     'hyperterm-paste',
-    'hyperterm-summon',
-    'hyperterm-tabs',
+    'hyperterm-summon', // Global shortcut
+    'hyperterm-tabs', // Reorder tabs
+    // 'hyper-background',
+    // 'hyper-hide-title',
+    // 'hyper-postprocessing',
+    // 'hyper-single-instance',
+    // 'hyper-systray', // Global shortcut
+    // 'hyper-transparent-dynamic', // Transparent/Opacity - Looks awesome!
   ],
-  // 'hypercwd',
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here
