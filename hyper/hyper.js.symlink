@@ -5,6 +5,12 @@
 // Update Plugins: CTRL+SHIFT+U
 // Reload: CTRL+SHIFT+R
 // Move Tabs: CTRL+ALT+SHIFT+LEFT/RIGHT
+//
+// Pane Management:
+// Split horizontal/verical panes: CTRL+SHIFT+E/D
+// Navigate panes: CTRL+ALT+Arrows
+// Broadcast to current panes: CTRL+ALT+B
+// Turn off broadcast: CTRL+ALT+Shift+B
 
 // Future versions of Hyper may add additional config options,
 // which will not automatically be merged into this file.
@@ -105,7 +111,8 @@ module.exports = {
     //
     // PowerShell on Windows
     // - Example: `C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`
-    shell: 'C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+    // shell: 'C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+    shell: 'C:\\Windows\\System32\\wsl.exe',
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
     // by default `['--login']` will be used
@@ -141,8 +148,8 @@ module.exports = {
       hotkeys: {
         selectCurrentPane: 'Control+Alt+Shift+B',
         selectCurrentTabPanes: 'Control+Alt+B',
-        selectAllPanes: 'Control+Shift+B',
-        toggleCurrentPane: 'Control+Alt+Shift+B'
+        // selectAllPanes: 'Control+Shift+B',
+        // toggleCurrentPane: 'Control+Alt+Shift+B'
       },
       indicatorStyle: {
         position: 'absolute',
