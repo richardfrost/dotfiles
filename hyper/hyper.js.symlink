@@ -116,7 +116,8 @@ module.exports = {
 
     // for setting shell arguments (i.e. for using interactive shellArgs: `['-i']`)
     // by default `['--login']` will be used
-    shellArgs: [],
+    // Use '~' on WSL to start WSL in the user's home directoy
+    shellArgs: ['~'],
 
     // for environment variables
     env: {},
@@ -189,7 +190,7 @@ module.exports = {
     otherShells: [
       {shell: "C:\\Windows\\System32\\cmd.exe", shellArgs: [], shellName: "CMD"},
       {shell: "powershell.exe", shellArgs: [], shellName: "Powershell"},
-      {shell: "C:\\Windows\\System32\\wsl.exe", shellArgs: [], shellName: "WSL"},
+      {shell: "C:\\Windows\\System32\\wsl.exe", shellArgs: ['~'], shellName: "WSL"},
     ],
 
     paneNavigation: {
@@ -285,3 +286,4 @@ module.exports = {
     // 'window:devtools': 'cmd+alt+o',
   },
 };
+
