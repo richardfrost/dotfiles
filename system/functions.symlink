@@ -68,13 +68,15 @@ function sshtmux {
   ssh "$@" -q -t 'tmux new-session -A -s main || $SHELL -l'
 }
 
-function start-nvm {
+# Init NVM
+function invm {
   export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+  . "$NVM_DIR/nvm.sh"
+  . "$NVM_DIR/bash_completion"
 }
 
 # Verbose Copy - Show progress and rate on local copy
 function vcp {
   rsync -ah --progress "$@"
 }
+
