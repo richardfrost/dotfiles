@@ -9,14 +9,10 @@ if command -v code > /dev/null 2>&1; then
     exec "code" "${1}" >/dev/null 2>&1 &
   fi
 elif grep -q Microsoft /proc/version ; then # WSL
-  WINDOWS_USER=$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERNAME%' | sed -e 's/\r//g')
-  # sed comments: Lowercase, remove \r & :, Replace with forward slashes
-  # Example: c/users/user.name
-  # WINDOWS_USER_HOME=$(/mnt/c/Windows/System32/cmd.exe /c 'echo %USERPROFILE%' | sed -e 's/\(.*\)/\L\1/' | sed -e 's/[\r:]//g' | sed -e 's/\\/\//g')
-
-  if [ -f "/mnt/c/Users/$WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code/code.exe" ]; then # User Install
-    # exec "/mnt/c/Users/$WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code/code.exe" "${1:-.}"
-    bin="/mnt/c/Users/$WINDOWS_USER/AppData/Local/Programs/Microsoft VS Code/code.exe"
+  WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%"))
+  if [ -f "$WINHOME/AppData/Local/Programs/Microsoft VS Code/code.exe" ]; then # User Install
+    # exec "$WINHOME/AppData/Local/Programs/Microsoft VS Code/code.exe" "${1:-.}"
+    bin="$WINHOME/AppData/Local/Programs/Microsoft VS Code/code.exe"
     # [[ -z "${1}" ]] && exec "$bin" || exec "$bin" "${1}"
     if [[ -z "${1}" ]]; then
       exec "$bin" >/dev/null 2>&1 &
