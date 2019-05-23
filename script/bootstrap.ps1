@@ -1,3 +1,4 @@
+$appData = "$env:AppData"
 $dotfiles = "$home/.dotfiles"
 
 ##
@@ -39,7 +40,13 @@ If (symlinkReady -path "$profile") {
   New-Item -ItemType SymbolicLink -Path "$profile" -Target "$dotfiles/windows/Microsoft.PowerShell_profile.ps1"
 }
 
+
+
+
 # Hyper.js
-If (symlinkReady -path "$home/.hyper.js") {
-  New-Item -ItemType SymbolicLink -Path "$home/.hyper.js" -Target "$dotfiles/hyper/hyper.js.symlink"
+If (!(Test-Path -PathType Container -Path "$appData\hyper")) {
+    New-Item -ItemType Directory -Path "$appData\hyper"
+}
+If (symlinkReady -path "$appData/hyper/.hyper.js") {
+  New-Item -ItemType SymbolicLink -Path "$appData/hyper/.hyper.js" -Target "$dotfiles/hyper/hyper.js.symlink"
 }
