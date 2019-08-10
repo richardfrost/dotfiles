@@ -61,11 +61,11 @@ setup_gitconfig () {
 }
 
 install_ohmyzsh () {
-  info 'installing ohmyzsh'
-  if [ ! -d "$HOME/.ohmyzsh" ]; then
+  info 'installing oh-my-zsh'
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
   fi
-  success "ohmyzsh installed"
+  success "oh-my-zsh installed"
 }
 
 link_file () {
