@@ -78,3 +78,4 @@ alias readlink=greadlink
 # System
 #
 alias dmesgw='watch -n 0.1 "dmesg | tail -n $((LINES-6))"'
+alias Syu='sudo pacman -Syu'
