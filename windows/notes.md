@@ -4,10 +4,12 @@
   - Chrome
   - Firefox
 - [VSCode](https://code.visualstudio.com/download) (User Install)
+  - Settings Sync (Shan Khan)
 - [Keybase.io](https://keybase.io/)
   - GPG key
 - Windows Terminal (Windows Store)
   - Import settings
+- [git](https://git-scm.com/download/win)
 
 # Other Settings
 - SSH keys
@@ -88,3 +90,21 @@ options = "metadata,umask=22,fmask=11"
 generateHosts = true
 generateResolvConf = true
 ```
+
+# GPG
+### Keybase
+```shell
+sudo pacman -S keybase
+
+# Export key from keybase
+keybase login
+keybase pgp export > keybase-public.key
+keybase pgp export --secret > keybase-private.key
+
+# Import to local gpg
+gpg-agent
+gpg --allow-secret-key-import --import keybase-private.key
+gpg --import keybase-public.key
+
+# Cleanup
+rm keybase-p*
