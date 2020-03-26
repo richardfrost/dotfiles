@@ -10,6 +10,7 @@
 - Windows Terminal (Windows Store)
   - Import settings
 - [git](https://git-scm.com/download/win)
+- Quicklook (Windows Store)
 
 # Other Settings
 - SSH keys
