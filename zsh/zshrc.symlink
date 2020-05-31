@@ -149,12 +149,5 @@ compdef sshmux=ssh
 #   fi
 # }
 
-
-# Import variables
-. ~/.vars
-
-# Import functions
-. ~/.functions
-
-# Import common aliases
-. ~/.aliases
+# Import aliases, functions, and variables
+. ~/.imports

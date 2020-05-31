@@ -1,0 +1,11 @@
+# Import variables
+. ~/.vars
+
+# Import functions
+. ~/.functions
+
+# Import aliases
+. ~/.aliases
+
+# Import docker aliases and functions
+. ~/.docker

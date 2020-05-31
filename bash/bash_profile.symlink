@@ -63,11 +63,5 @@ complete -F _c c
 # load ssh agent
 # ssh-add -K ~/.ssh/id_rsa 2>/dev/null
 
-# Import variables
-. ~/.vars
-
-# Import functions
-. ~/.functions
-
-# Import common aliases
-. ~/.aliases
+# Import aliases, functions, and variables
+. ~/.imports
