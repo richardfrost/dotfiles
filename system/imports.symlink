@@ -8,4 +8,4 @@
 . ~/.aliases
 
 # Import docker aliases and functions
-. ~/.docker
+. ~/.docker_aliases
