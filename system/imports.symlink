@@ -9,3 +9,8 @@
 
 # Import docker aliases and functions
 . ~/.docker_aliases
+
+# Import any custom vars/functions
+if [ -f "$HOME/.custom" ]; then
+  . ~/.custom
+fi
