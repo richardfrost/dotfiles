@@ -1,16 +1,16 @@
 # Import variables
-. ~/.vars
+. "$HOME/.vars"
 
 # Import functions
-. ~/.functions
+. "$HOME/.functions"
 
 # Import aliases
-. ~/.aliases
+. "$HOME/.aliases"
 
 # Import docker aliases and functions
-. ~/.docker_aliases
+. "$HOME/.docker_aliases"
 
 # Import any custom vars/functions
 if [ -f "$HOME/.custom" ]; then
-  . ~/.custom
+  . "$HOME/.custom"
 fi
