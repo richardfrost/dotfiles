@@ -1,3 +1,6 @@
+# shortcut to this dotfiles path is $DOTFILES
+export DOTFILES=$HOME/.dotfiles
+
 # Set editor for both BASH and ZSH
 export EDITOR='vscode'
 
