@@ -5,9 +5,9 @@
 alias ddir='cd /home/phermium/docker'
 
 # Container Management
-function dbash { docker exec -it $1 /bin/bash }
+function dbash { docker exec -it "$1" /bin/bash; }
 alias dcmd='docker exec -it $*'
-function dsh { docker exec -it $1 /bin/sh }
+function dsh { docker exec -it "$1" /bin/sh; }
 
 ##
 # Source: https://github.com/htpcBeginner/docker-traefik/blob/master/.bash_aliases.example
