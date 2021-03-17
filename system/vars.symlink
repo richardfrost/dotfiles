@@ -62,7 +62,7 @@ fi
 if [[ -z "$ZSH_NAME" && -d "$HOME/.rbenv" ]]; then
   echo "Initializing rbenv..."
   export PATH="$PATH:$HOME/.rbenv/bin"
-  export RBENV_VERSION=2.7.1
+  export RBENV_VERSION=2.7.2
   eval "$(rbenv init -)";
 fi
 
