@@ -95,12 +95,12 @@ fi
 
 echo -n "Checking \`rbenv install' support: "
 rbenv_installs="$({ ls "$RBENV_ROOT"/plugins/*/bin/rbenv-install 2>/dev/null || true
-                    which -a rbenv-install || true
+                    which -a rbenv-install 2>/dev/null || true
                   } | uniq)"
 num_installs="$(wc -l <<<"$rbenv_installs")"
-if [ $num_installs -eq 0 ]; then
+if [ -z "$rbenv_installs" ]; then
   printc red "not found\n"
-  { echo "Unless to plan to add Ruby versions manually, you should install ruby-build."
+  { echo "Unless you plan to add Ruby versions manually, you should install ruby-build."
     echo "Please refer to https://github.com/rbenv/ruby-build#installation"
   }
   echo
@@ -141,7 +141,7 @@ fi
 echo -n "Checking RubyGems settings: "
 gem_broken=0
 for gemrc in ~/.gemrc /etc/gemrc; do
-  if grep -q -e --user-install "$gemrc" 2>/dev/null; then
+  if grep -v '^#' "$gemrc" 2>/dev/null | grep -q -e --user-install; then
     [ "$((gem_broken++))" -gt 0 ] || printc yellow "warning\n"
     echo "Please remove \`--user-install' flag from \`$gemrc'." | indent
     : $((warnings++))
