@@ -54,7 +54,13 @@ fi
 ##
 # Ruby
 # Add system ruby bin to path
-if command -v ruby > /dev/null 2>&1 && command -v gem > /dev/null 2>&1; then
+if (
+  ! command -v rbenv > /dev/null 2>&1 &&
+  command -v ruby > /dev/null 2>&1 &&
+  command -v gem > /dev/null 2>&1
+)
+then
+  echo "Adding system ruby to path..."
   export PATH="$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
 
