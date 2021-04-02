@@ -35,7 +35,7 @@ alias dcrun='cd /home/$USER/docker ; docker-compose -f /home/$USER/docker/docker
 alias dclogs='cd /home/$USER/docker ; docker-compose -f /home/$USER/docker/docker-compose.yml logs -tf --tail="50" '
 alias dcup='dcrun up -d'
 alias dcdown='dcrun down'
+alias dcpull='dcrun pull'
 alias dcrec='dcrun up -d --force-recreate'
 alias dcstop='dcrun stop'
 alias dcrestart='dcrun restart '
-alias dcpull='cd /home/$USER/docker ; docker-compose -f /home/$USER/docker/docker-compose.yml pull'
