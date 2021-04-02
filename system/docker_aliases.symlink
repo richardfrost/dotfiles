@@ -2,11 +2,12 @@
 # Docker
 
 # General
-alias ddir='cd /home/phermium/docker'
+docker_dir="/home/$USER/docker"
+alias ddir="cd $docker_dir"
 
 # Container Management
 function dbash { docker exec -it "$1" /bin/bash; }
-alias dcmd='docker exec -it $*'
+alias dcmd="docker exec -it $*"
 function dsh { docker exec -it "$1" /bin/sh; }
 
 ##
@@ -23,20 +24,16 @@ alias docerase='dstopcont ; drmcont ; ddelimages ; dvolprune ; dsysprune'
 alias docprune='ddelimages ; dvolprune ; dsysprune'
 alias dexec='docker exec -ti'
 alias docps='docker ps -a'
-alias dcrm='dcrun rm'
 alias docdf='docker system df'
 
-# STACK UP AND DOWN
-alias dcdown='cd /home/$USER/docker ; dcdownv ; dcdown'
-alias dcup='cd /home/$USER/docker ; docker network create --gateway 192.168.90.1 --subnet 192.168.90.0/24 t2_proxy ; dcrec plexms ; dcup'
-
-# DOCKER TRAEFIK 2
-alias dcrun='cd /home/$USER/docker ; docker-compose -f /home/$USER/docker/docker-compose.yml '
-alias dclogs='cd /home/$USER/docker ; docker-compose -f /home/$USER/docker/docker-compose.yml logs -tf --tail="50" '
-alias dcup='dcrun up -d'
-alias dcdown='dcrun down'
-alias dcpull='dcrun pull'
-alias dcrec='dcrun up -d --force-recreate'
-alias dcrestart='dcrun restart'
-alias dcstart='dcrun start'
-alias dcstop='dcrun stop'
+# Docker Compose
+alias dccmd="docker-compose --file $docker_dir/docker-compose.yml --env-file $docker_dir/.env"
+alias dcdown='dccmd down'
+alias dclogs='dccmd logs -tf --tail="50"'
+alias dcpull='dccmd pull'
+alias dcrec='dccmd up -d --force-recreate'
+alias dcrestart='dccmd restart'
+alias dcrm='dccmd rm'
+alias dcstart='dccmd start'
+alias dcstop='dccmd stop'
+alias dcup='dccmd up -d'
