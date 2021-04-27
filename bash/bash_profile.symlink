@@ -1,8 +1,16 @@
 # export PS1="\h \W \$ "
 export PS1='\[\033[1;42m\]\h\[\033[0m\] \W \$ '
 # export RBENV_ROOT=/usr/local/var/rbenv
-export HISTTIMEFORMAT="%s "
-export HISTCONTROL=ignoredups:ignorespace
+
+# History
+export HISTFILE=$HOME/.bash_history
+export HISTCONTROL=ignoredups:erasedups:ignorespace
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+export HISTTIMEFORMAT="%s " # Unix timestamp
+# export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S.%L " # YYYY-MM-DD HH:MM:SS.mmm
+shopt -s histappend
+
 # PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER \ "$(history 1)" >> ~/.bash_permanent_history'
 
 ##
