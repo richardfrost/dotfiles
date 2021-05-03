@@ -20,7 +20,7 @@ if [ "$(uname -s)" == "Darwin" ]
 then
   # Bash completion
   if [ -f `brew --prefix`/etc/bash_completion ]; then
-      . `brew --prefix`/etc/bash_completion
+      source `brew --prefix`/etc/bash_completion
   fi
 
   # Git prompt
@@ -31,8 +31,8 @@ then
 fi
 
 # Git completion
-if [ -f ~/.git-completion.bash ]; then
-  source ~/.git-completion.bash
+if [ -f "$HOME/.git-completion.bash" ]; then
+  source "$HOME/.git-completion.bash"
 fi
 
 ##
@@ -46,18 +46,18 @@ fi
 # " ssh
 
 # Completion from custom_hosts list: "$HOME/.ssh/custom_hosts"
-[[ -r $HOME/.ssh/custom_hosts ]] && complete -W "$(cat $HOME/.ssh/custom_hosts))" ssh scp sftp sshmux
+[[ -r "$HOME/.ssh/custom_hosts" ]] && complete -W "$(cat $HOME/.ssh/custom_hosts))" ssh scp sftp sshmux
 
 
 ##
 # Richard's Aliases
 #
 # Aliases
-alias aliases="less ~/.bash_profile"
-alias reload_aliases="source ~/.bash_profile"
+alias aliases="less $HOME/.bash_profile"
+alias reload_aliases="source $HOME/.bash_profile"
 
 # Go to code folder
-export PROJECTS=~/code
+export PROJECTS="$HOME/code"
 function c { cd "$PROJECTS/$1"; }
 
 _c() {
@@ -72,4 +72,4 @@ complete -F _c c
 # ssh-add -K ~/.ssh/id_rsa 2>/dev/null
 
 # Import aliases, functions, and variables
-. ~/.imports
+source "$HOME/.imports"
