@@ -26,9 +26,9 @@ export GPG_TTY=$(tty)
 export SSH_AUTH_SOCK="$HOME/.ssh/ssh-agent.socket"
 
 # If the socket is old (WSL)
-if [ -S "$HOME/.ssh/ssh-agent.socket" ]; then
+if [[ -S "$HOME/.ssh/ssh-agent.socket" ]]; then
   ssh-add -l > /dev/null 2>&1
-  if [ "$?" -eq 2 ]; then
+  if [[ "$?" -eq 2 ]]; then
     $(rm "$HOME/.ssh/ssh-agent.socket")
   fi
 fi
@@ -46,8 +46,7 @@ ssh-add -l | grep "The agent has no identities" && ssh-add
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:./bin:$DOTFILES/bin:/usr/bin:/sbin:/bin:$PATH"
 export MANPATH="/usr/local/man:/usr/local/git/man:$MANPATH"
 
-if [ "$(uname -s)" = "Darwin" ]
-then
+if [[ "$(uname -s)" == "Darwin" ]]; then
   export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
@@ -58,8 +57,7 @@ if (
   ! command -v rbenv > /dev/null 2>&1 &&
   command -v ruby > /dev/null 2>&1 &&
   command -v gem > /dev/null 2>&1
-)
-then
+); then
   echo "Adding system ruby to path..."
   export PATH="$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
 fi
@@ -75,7 +73,7 @@ fi
 ##
 # Node
 # 'Start nvm if ~/.nvm is present'
-# if [ -d "$HOME/.nvm" ]; then
+# if [[ -d "$HOME/.nvm" ]]; then
 #   export NVM_DIR="$HOME/.nvm"
 #   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 #   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion

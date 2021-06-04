@@ -17,7 +17,7 @@ _sshmux () {
   local tty=$(tty)
   local session="sshmux-$RANDOM"
 
-  if [ -z "$hosts" ]; then
+  if [[ -z "$hosts" ]]; then
     echo "usage: sshmux host1 host2 host3"
     echo
     echo "examples"
@@ -40,7 +40,7 @@ _sshmux () {
 
   tmux setw synchronize-panes on > /dev/null
 
-  if [ "$TERM_PROGRAM" == "iTerm.app" ]; then
+  if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
     tmux -CC attach -t $session
   else
     tmux attach -t $session

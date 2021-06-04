@@ -7,8 +7,7 @@ set -e
 # Linux $HOME/.config/Code/User/settings.json
 
 # Link VS Code User configs
-# if [ "$(uname -s)" = "Darwin" ]
-# then
+# if [[ "$(uname -s)" == "Darwin" ]]; then
 #   echo "› Setup VSCode Config for MacOS"
 #   ln -s "$DOTFILES/vscode/User" "$HOME/Library/Application Support/Code/User"
 # else
