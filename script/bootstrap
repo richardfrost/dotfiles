@@ -37,7 +37,7 @@ setup_gitconfig () {
     info 'setup gitconfig'
 
     git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]
+    if [[ "$(uname -s)" == "Darwin" ]]
     then
       git_credential='osxkeychain'
     fi
@@ -168,7 +168,7 @@ install_ohmyzsh
 install_dotfiles "$1"
 
 # If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]
+if [[ "$(uname -s)" == "Darwin" ]]
 then
   info "installing dependencies"
   if source bin/dot > /tmp/dotfiles-dot 2>&1

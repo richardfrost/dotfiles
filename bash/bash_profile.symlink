@@ -16,7 +16,7 @@ shopt -s histappend
 ##
 # Functions
 #
-if [ "$(uname -s)" == "Darwin" ]
+if [[ "$(uname -s)" == "Darwin" ]]
 then
   # Bash completion
   if [ -f `brew --prefix`/etc/bash_completion ]; then
