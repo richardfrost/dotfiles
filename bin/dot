@@ -25,3 +25,7 @@ fi
 # Install software
 echo "› $DOTFILES/script/install"
 "$DOTFILES/script/install"
+
+# Update symlinks
+echo "› $DOTFILES/script/bootstrap"
+"$DOTFILES/script/bootstrap"
