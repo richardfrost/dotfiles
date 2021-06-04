@@ -75,3 +75,8 @@ inspired from Ryan's original project.
 brew uninstall --force rbenv
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv && git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 ```
+
+### Cleanup Removed Items
+```sh
+rm ~/.atom; rm ~/.hyper.js
+```
