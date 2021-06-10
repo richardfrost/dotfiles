@@ -66,8 +66,8 @@ fi
 if [[ -d "$HOME/.rbenv" ]]; then
   echo "Initializing rbenv..."
   export PATH="$PATH:$HOME/.rbenv/bin"
-  export RBENV_VERSION=2.7.2
   eval "$(rbenv init -)";
+  rbenv global 3.0.1 # Default unless .ruby-version file is present
 fi
 
 ##
