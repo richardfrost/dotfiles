@@ -10,7 +10,7 @@ if command -v code > /dev/null 2>&1; then
   fi
 elif grep -q Microsoft /proc/version ; then # WSL
   WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%"))
-  if [ -f "$WINHOME/AppData/Local/Programs/Microsoft VS Code/code.exe" ]; then # User Install
+  if [[ -f "$WINHOME/AppData/Local/Programs/Microsoft VS Code/code.exe" ]]; then # User Install
     # exec "$WINHOME/AppData/Local/Programs/Microsoft VS Code/code.exe" "${1:-.}"
     bin="$WINHOME/AppData/Local/Programs/Microsoft VS Code/code.exe"
     # [[ -z "${1}" ]] && exec "$bin" || exec "$bin" "${1}"
@@ -19,7 +19,7 @@ elif grep -q Microsoft /proc/version ; then # WSL
     else
       exec "$bin" "${1}" >/dev/null 2>&1 &
     fi
-  elif [ -f "/mnt/c/Program Files/Microsoft VS Code/bin/code" ]; then # System Install
+  elif [[ -f "/mnt/c/Program Files/Microsoft VS Code/bin/code" ]]; then # System Install
     # exec "/mnt/c/Program Files/Microsoft VS Code/bin/code" "${1:-.}"
     bin="/mnt/c/Program Files/Microsoft VS Code/bin/code"
     # [[ -z "${1}" ]] && exec "$bin" || exec "$bin" "${1}"

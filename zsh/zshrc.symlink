@@ -2,17 +2,16 @@
 # Dotfiles
 #
 # shortcut to this dotfiles path is $DOTFILES
-export DOTFILES=$HOME/.dotfiles
+export DOTFILES="$HOME/.dotfiles"
 
 # your project folder that we can `c [tab]` to
-export PROJECTS=~/code
+export PROJECTS="$HOME/code"
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
-if [[ -a ~/.localrc ]]
-then
-  source ~/.localrc
+if [[ -a "$HOME/.localrc" ]]; then
+  source "$HOME/.localrc"
 fi
 
 # all of our zsh files
@@ -48,7 +47,7 @@ unset config_files
 # Oh-my-zsh
 #
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -57,7 +56,7 @@ export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="agnoster"
 
 # Hide username in 'agnoster' prompt
-DEFAULT_USER=$USERNAME
+DEFAULT_USER="$USERNAME"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -110,7 +109,7 @@ plugins=(git history)
 # NOTE: Path is being loaded in system/_path.zsh
 
 # Run oh-my-zsh
-source $ZSH/oh-my-zsh.sh
+source "$ZSH/oh-my-zsh.sh"
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -150,4 +149,4 @@ compdef sshmux=ssh
 # }
 
 # Import aliases, functions, and variables
-. ~/.imports
+source "$HOME/.imports"

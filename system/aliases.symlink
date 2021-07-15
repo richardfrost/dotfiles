@@ -64,6 +64,7 @@ alias b='bundle'
 alias be='bundle exec'
 alias bx='bundle exec'
 alias irbl="irb -I . -r"
+alias rbenv-update="git -C $HOME/.rbenv pull && git -C $HOME/.rbenv/plugins/ruby-build pull"
 
 
 ##

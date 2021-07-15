@@ -1,30 +1,37 @@
 # export PS1="\h \W \$ "
 export PS1='\[\033[1;42m\]\h\[\033[0m\] \W \$ '
 # export RBENV_ROOT=/usr/local/var/rbenv
-export HISTTIMEFORMAT="%s "
-export HISTCONTROL=ignoredups:ignorespace
+
+# History
+export HISTFILE=$HOME/.bash_history
+export HISTCONTROL=ignoredups:erasedups:ignorespace
+export HISTSIZE=100000
+export HISTFILESIZE=100000
+export HISTTIMEFORMAT="%s " # Unix timestamp
+# export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S.%L " # YYYY-MM-DD HH:MM:SS.mmm
+shopt -s histappend
+
 # PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND ; }"'echo $$ $USER \ "$(history 1)" >> ~/.bash_permanent_history'
 
 ##
 # Functions
 #
-if [ "$(uname -s)" == "Darwin" ]
-then
+if [[ "$(uname -s)" == "Darwin" ]]; then
   # Bash completion
-  if [ -f `brew --prefix`/etc/bash_completion ]; then
-      . `brew --prefix`/etc/bash_completion
+  if [[ -f `brew --prefix`/etc/bash_completion ]]; then
+      source `brew --prefix`/etc/bash_completion
   fi
 
   # Git prompt
-  if [ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]; then
+  if [[ -f "$(brew --prefix bash-git-prompt)/share/gitprompt.sh" ]]; then
     GIT_PROMPT_THEME=Default
     source "$(brew --prefix bash-git-prompt)/share/gitprompt.sh"
   fi
 fi
 
 # Git completion
-if [ -f ~/.git-completion.bash ]; then
-  source ~/.git-completion.bash
+if [[ -f "$HOME/.git-completion.bash" ]]; then
+  source "$HOME/.git-completion.bash"
 fi
 
 ##
@@ -38,18 +45,18 @@ fi
 # " ssh
 
 # Completion from custom_hosts list: "$HOME/.ssh/custom_hosts"
-[[ -r $HOME/.ssh/custom_hosts ]] && complete -W "$(cat $HOME/.ssh/custom_hosts))" ssh scp sftp sshmux
+[[ -r "$HOME/.ssh/custom_hosts" ]] && complete -W "$(cat $HOME/.ssh/custom_hosts))" ssh scp sftp sshmux
 
 
 ##
 # Richard's Aliases
 #
 # Aliases
-alias aliases="less ~/.bash_profile"
-alias reload_aliases="source ~/.bash_profile"
+alias aliases="less $HOME/.bash_profile"
+alias reload_aliases="source $HOME/.bash_profile"
 
 # Go to code folder
-export PROJECTS=~/code
+export PROJECTS="$HOME/code"
 function c { cd "$PROJECTS/$1"; }
 
 _c() {
@@ -64,4 +71,4 @@ complete -F _c c
 # ssh-add -K ~/.ssh/id_rsa 2>/dev/null
 
 # Import aliases, functions, and variables
-. ~/.imports
+source "$HOME/.imports"

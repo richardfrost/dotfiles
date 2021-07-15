@@ -2,8 +2,7 @@ autoload colors && colors
 # cheers, @ehrenmurdick
 # http://github.com/ehrenmurdick/config/blob/master/zsh/prompt.zsh
 
-if (( $+commands[git] ))
-then
+if (( $+commands[git] )); then
   git="$commands[git]"
 else
   git="/usr/bin/git"
@@ -14,12 +13,10 @@ git_branch() {
 }
 
 git_dirty() {
-  if $(! $git status -s &> /dev/null)
-  then
+  if $(! $git status -s &> /dev/null); then
     echo ""
   else
-    if [[ $($git status --porcelain) == "" ]]
-    then
+    if [[ $($git status --porcelain) == "" ]]; then
       echo "on %{$fg_bold[green]%}$(git_prompt_info)%{$reset_color%}"
     else
       echo "on %{$fg_bold[red]%}$(git_prompt_info)%{$reset_color%}"
@@ -37,12 +34,10 @@ git_prompt_info () {
 # care about one specific origin. If this is not the case, you might want to use
 # `$git cherry -v @{upstream}` instead.
 need_push () {
-  if [ $($git rev-parse --is-inside-work-tree 2>/dev/null) ]
-  then
+  if [[ $($git rev-parse --is-inside-work-tree 2>/dev/null) ]]; then
     number=$($git cherry -v origin/$(git symbolic-ref --short HEAD) | wc -l | bc)
 
-    if [[ $number == 0 ]]
-    then
+    if [[ $number == 0 ]]; then
       echo " "
     else
       echo " with %{$fg_bold[magenta]%}$number unpushed%{$reset_color%}"

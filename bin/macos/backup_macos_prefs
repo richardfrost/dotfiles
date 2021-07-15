@@ -4,7 +4,7 @@ function backup_pref() {
   if [[ -z $1 || -z $2 ]]; then
     echo "Error, backup_pref() requires a source and destination argument"
   else
-    if [ -e "$1" ]; then
+    if [[ -e "$1" ]]; then
       echo "Backing up $1..."
       cp "$1" "$2";
     else

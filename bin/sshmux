@@ -19,17 +19,17 @@ _sshmux () {
   skip=false
   start=1
   last=${*: -1}
-  if [ "$last" == "even" ] || [ "$last" == "odd" ]; then
+  if [[ "$last" == "even" ]] || [[ "$last" == "odd" ]]; then
     set -- "${@:1:$(($#-1))}" # Remove last argument from arguments
     skip=true
-    if [ "$last" == "even" ] ; then start=2 ; fi
+    if [[ "$last" == "even" ]] ; then start=2 ; fi
   fi
 
   # Open several nodes if only 1 argument without a number is specified
   if [[ $# -eq 1 ]] && [[ ! "$*" =~ [0-9] ]]; then
     for (( n = start ; n <= 24 ; n++ )); do
       hosts+=("$1$n")
-      if [ "$skip" = true ] ; then ((n++)) ; fi # If even/odd, skip to next number
+      if [[ "$skip" == true ]] ; then ((n++)) ; fi # If even/odd, skip to next number
     done
     _sshmux "${hosts[@]}"
   else
@@ -39,7 +39,7 @@ _sshmux () {
     local tty=$(tty)
     local session="sshmux-$RANDOM"
 
-    if [ -z "$hosts" ]; then
+    if [[ -z "$hosts" ]]; then
       echo "usage: sshmux host1 host2 host3"
       echo
       echo "examples"
@@ -66,7 +66,7 @@ _sshmux () {
 
     tmux setw synchronize-panes on > /dev/null
 
-    # if [ "$TERM_PROGRAM" == "iTerm.app" ]; then
+    # if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
     #   tmux -CC attach -t $session
     # else
     #  tmux attach -t $session

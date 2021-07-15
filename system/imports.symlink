@@ -11,6 +11,6 @@
 . "$HOME/.docker_aliases"
 
 # Import any custom vars/functions
-if [ -f "$HOME/.custom" ]; then
+if [[ -f "$HOME/.custom" ]]; then
   . "$HOME/.custom"
 fi
