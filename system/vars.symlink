@@ -82,3 +82,4 @@ fi
 # Remove duplicates in PATH
 export PATH=`printf %s "$PATH" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}'`
 
+set_system_type

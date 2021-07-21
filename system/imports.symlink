@@ -1,8 +1,8 @@
-# Import variables
-. "$HOME/.vars"
-
 # Import functions
 . "$HOME/.functions"
+
+# Import variables
+. "$HOME/.vars"
 
 # Import aliases
 . "$HOME/.aliases"

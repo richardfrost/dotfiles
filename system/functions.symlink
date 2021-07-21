@@ -3,6 +3,24 @@
 #
 function current_branch { git symbolic-ref --short HEAD; }
 
+##
+# System
+#
+# Sets a variable `SYSTEM_TYPE` that stores the type of system the shell is running on
+# Note: For better performance, put the most common/used system type first
+function set_system_type {
+  if [ -z ${SYSTEM_TYPE} ]; then
+    if grep -qi microsoft /proc/version; then # WSL
+      export SYSTEM_TYPE=wsl
+      # microsoft-standard-WSL2
+    # elif [[ "$(uname -s)" == "Darwin" ]]; then # macOS
+    elif [[ "$OSTYPE" == "darwin"* ]]; then # macOS
+      export SYSTEM_TYPE=mac
+    elif command -v explorer > /dev/null 2>&1; then # Windows Bash
+      export SYSTEM_TYPE=winbash
+    fi
+  fi
+}
 
 ##
 # Other functions
@@ -79,4 +97,3 @@ function invm {
 function vcp {
   rsync -ah --progress "$@"
 }
-

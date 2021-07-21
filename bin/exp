@@ -3,21 +3,22 @@
 cmd=""
 path="${1}"
 
-if command -v explorer > /dev/null 2>&1; then # Windows Bash
-  cmd="explorer"
-elif grep -qi microsoft /proc/version ; then # WSL
-  # microsoft-standard-WSL2
-  cmd="/mnt/c/Windows/explorer.exe"
-
-  # Convert path to wsl path (Seems to be automatic now)
-  # if [[ ! -z "$path" ]]; then
-  #   if (command -v wslpath > /dev/null 2>&1); then
-  #     path2="$(wslpath -aw $path)"
-  #   fi
-  # fi
+# Populate the `SYSTEM_TYPE` variable
+if [[ -z "$SYSTEM_TYPE" ]]; then
+  echo '$SYSTEM_TYPE not found.'
+  . "$HOME/.functions"
+  set_system_type
 fi
 
-# Run explorer if it is present
-if [[ ! -z "$cmd" ]]; then
+if [[ "$SYSTEM_TYPE" == "mac" ]]; then
+  open "$path"
+elif [[ "$SYSTEM_TYPE" == "wsl" ]]; then
+  cmd="/mnt/c/Windows/explorer.exe"
+elif [[ "$SYSTEM_TYPE" == "winbash" ]]; then
+  cmd="explorer"
+fi
+
+# Run cmd if it is present
+if [[ -n "$cmd" ]]; then
   eval "$cmd '$path' > /dev/null 2>&1 &"
 fi
