@@ -1,2 +1,2 @@
 #!/bin/bash
-brew link --force srm
+# brew link --force srm

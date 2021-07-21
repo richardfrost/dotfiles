@@ -15,8 +15,8 @@
 # TODO: Check for Homebrew
 # Install Homebrew only for macOS
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  echo "  Installing Homebrew for you."
-  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  echo "  Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 exit 0
