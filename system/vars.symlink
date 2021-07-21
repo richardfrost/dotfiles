@@ -59,7 +59,7 @@ if (
   command -v gem > /dev/null 2>&1
 ); then
   echo "Adding system ruby to path..."
-  export PATH="$PATH:$(ruby -rubygems -e 'puts Gem.user_dir')/bin"
+  export PATH="$PATH:$(ruby -e 'puts Gem::RUBYGEMS_DIR')/bin"
 fi
 
 # 'rbenv init -'
