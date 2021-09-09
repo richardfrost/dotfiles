@@ -8,7 +8,7 @@ if command -v code > /dev/null 2>&1; then
   else
     exec "code" "${1}" >/dev/null 2>&1 &
   fi
-elif grep -q Microsoft /proc/version ; then # WSL
+elif test -f "/proc/version" && grep -qi microsoft "/proc/version" ; then # WSL
   WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%"))
   if [[ -f "$WINHOME/AppData/Local/Programs/Microsoft VS Code/code.exe" ]]; then # User Install
     # exec "$WINHOME/AppData/Local/Programs/Microsoft VS Code/code.exe" "${1:-.}"

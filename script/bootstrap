@@ -28,7 +28,7 @@ fail () {
 }
 
 running_wsl () {
-  if grep -q Microsoft /proc/version; then return 0; else return 1; fi
+  if test -f "/proc/version" && grep -qi microsoft "/proc/version"; then return 0; else return 1; fi
 }
 
 setup_gitconfig () {

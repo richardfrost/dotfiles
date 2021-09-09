@@ -10,7 +10,7 @@ function current_branch { git symbolic-ref --short HEAD; }
 # Note: For better performance, put the most common/used system type first
 function set_system_type {
   if [ -z ${SYSTEM_TYPE} ]; then
-    if grep -qi microsoft /proc/version; then # WSL
+    if test -f "/proc/version" && grep -qi microsoft "/proc/version"; then # WSL
       export SYSTEM_TYPE=wsl
       # microsoft-standard-WSL2
     # elif [[ "$(uname -s)" == "Darwin" ]]; then # macOS
