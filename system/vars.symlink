@@ -70,16 +70,5 @@ if [[ -d "$HOME/.rbenv" ]]; then
   rbenv global 3.0.1 # Default unless .ruby-version file is present
 fi
 
-##
-# Node
-# 'Start nvm if ~/.nvm is present'
-# if [[ -d "$HOME/.nvm" ]]; then
-#   export NVM_DIR="$HOME/.nvm"
-#   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-#   [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-# fi
-
 # Remove duplicates in PATH
 export PATH=`printf %s "$PATH" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}'`
-
-set_system_type

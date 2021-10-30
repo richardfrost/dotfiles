@@ -88,9 +88,13 @@ function sshtmux {
 
 # Init NVM
 function invm {
-  export NVM_DIR="$HOME/.nvm"
-  . "$NVM_DIR/nvm.sh"
-  . "$NVM_DIR/bash_completion"
+  if [[ -d "$HOME/.nvm" ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    . "$NVM_DIR/nvm.sh"
+    . "$NVM_DIR/bash_completion"
+  else
+    echo "$HOME/.nvm not present."
+  fi
 }
 
 # Verbose Copy - Show progress and rate on local copy
