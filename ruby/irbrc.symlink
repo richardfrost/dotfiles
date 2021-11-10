@@ -50,3 +50,17 @@ end
 def r
   reload!
 end
+
+# Rails
+def disable_ar_debug
+  ActiveRecord::Base.logger = Rails.logger
+  puts 'Original ActiveRecord logging restored'
+end
+
+def enable_ar_debug
+  ActiveRecord::Base.logger = Logger.new($stdout)
+  puts 'ActiveRecord debug logging enabled'
+end
+
+# Automatically enable ActiveRecord logging (SQL)
+enable_ar_debug if ENV['RAILS_ENV']
