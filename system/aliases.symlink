@@ -17,6 +17,7 @@ alias zsh='exec zsh -l'
 ##
 # Development Aliases
 #
+# Git
 alias g='git'
 alias cb="current_branch"
 alias gs="git status"
@@ -58,6 +59,9 @@ alias gssave='git stash save'
 alias gspop='git stash pop'
 # alias gsapply='git stash apply stash@{$1}'
 # alias gsdrop='git stash drop stash@{$1}'
+
+# Use `git diff` without a repo
+alias diff='git diff --no-index'
 
 # Ruby
 alias b='bundle'
