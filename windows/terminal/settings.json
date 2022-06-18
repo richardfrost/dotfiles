@@ -16,107 +16,11 @@
             "keys": "ctrl+c"
         },
         {
-            "command": "unbound",
-            "keys": "alt+9"
-        },
-        {
-            "command": "unbound",
-            "keys": "1"
-        },
-        {
-            "command": "unbound",
-            "keys": "alt+8"
-        },
-        {
-            "command": "unbound",
-            "keys": "alt+6"
-        },
-        {
-            "command": "unbound",
-            "keys": "alt+5"
-        },
-        {
-            "command": "unbound",
-            "keys": "alt+7"
-        },
-        {
-            "command": "unbound",
-            "keys": "alt+3"
-        },
-        {
-            "command": "unbound",
-            "keys": "alt+2"
-        },
-        {
-            "command": "unbound",
-            "keys": "alt+1"
-        },
-        {
-            "command": "unbound",
-            "keys": "alt+4"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+alt+1"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+alt+2"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+alt+3"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+alt+4"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+alt+5"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+alt+6"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+alt+7"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+alt+8"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+alt+9"
-        },
-        {
-            "command": 
-            {
-                "action": "switchToTab",
-                "index": 2
-            },
-            "keys": "ctrl+3"
+            "command": "unbound"
         },
         {
             "command": "find",
             "keys": "ctrl+shift+f"
-        },
-        {
-            "command": 
-            {
-                "action": "switchToTab",
-                "index": 4294967295
-            },
-            "keys": "ctrl+9"
-        },
-        {
-            "command": 
-            {
-                "action": "closeTab"
-            },
-            "keys": "ctrl+w"
         },
         {
             "command": 
@@ -130,139 +34,56 @@
         {
             "command": 
             {
-                "action": "newTab"
+                "action": "newTab",
+                "index": 2
             },
             "keys": "ctrl+t"
-        },
-        {
-            "command": 
-            {
-                "action": "switchToTab"
-            },
-            "keys": "ctrl+1"
-        },
-        {
-            "command": "openNewTabDropdown",
-            "keys": "ctrl+shift+t"
-        },
-        {
-            "command": 
-            {
-                "action": "switchToTab",
-                "index": 1
-            },
-            "keys": "ctrl+2"
-        },
-        {
-            "command": 
-            {
-                "action": "switchToTab",
-                "index": 3
-            },
-            "keys": "ctrl+4"
-        },
-        {
-            "command": 
-            {
-                "action": "switchToTab",
-                "index": 4
-            },
-            "keys": "ctrl+5"
-        },
-        {
-            "command": 
-            {
-                "action": "switchToTab",
-                "index": 5
-            },
-            "keys": "ctrl+6"
-        },
-        {
-            "command": 
-            {
-                "action": "switchToTab",
-                "index": 6
-            },
-            "keys": "ctrl+7"
-        },
-        {
-            "command": 
-            {
-                "action": "switchToTab",
-                "index": 7
-            },
-            "keys": "ctrl+8"
         }
     ],
-    "alwaysShowTabs": true,
     "copyFormatting": "none",
     "copyOnSelect": false,
-    "defaultProfile": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
-    "experimental.rendering.software": false,
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
     "profiles": 
     {
         "defaults": 
         {
-            "closeOnExit": "graceful",
-            "cursorShape": "bar",
-            "font": 
-            {
-                "size": 10
-            },
-            "historySize": 9001,
-            "padding": "0, 0, 0, 0",
-            "snapOnInput": true
+            "bellStyle": 
+            [
+                "audible",
+                "window",
+                "taskbar"
+            ],
+            "historySize": 10000
         },
         "list": 
         [
             {
-                "background": "#012456",
-                "colorScheme": "Campbell",
-                "cursorColor": "#FFFFFF",
-                "font": 
-                {
-                    "face": "Consolas"
-                },
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                "icon": "ms-appx:///ProfileIcons/{61c54bbd-c2c6-5271-96e7-009a87ff44bf}.png",
-                "name": "Windows PowerShell",
-                "opacity": 60,
-                "startingDirectory": "%USERPROFILE%",
-                "useAcrylic": true
+                "hidden": false,
+                "name": "Windows PowerShell"
             },
             {
-                "colorScheme": "Solarized Dark",
-                "cursorColor": "#FFFFFF",
-                "font": 
-                {
-                    "face": "Consolas"
-                },
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
-                "icon": "ms-appx:///ProfileIcons/{0caa0dad-35be-5f56-a8ff-afceeeaa6101}.png",
-                "name": "cmd",
-                "opacity": 75,
-                "startingDirectory": "%USERPROFILE%",
-                "useAcrylic": true
+                "hidden": false,
+                "name": "Command Prompt"
             },
             {
                 "colorScheme": "Solarized Dark",
-                "commandline": "wsl.exe ~ -d Arch",
-                "cursorColor": "#FFFFFF",
-                "experimental.retroTerminalEffect": false,
                 "font": 
                 {
-                    "face": "Roboto Mono for Powerline"
+                    "face": "Roboto Mono for Powerline",
+                    "size": 10
                 },
                 "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
                 "hidden": false,
                 "name": "Arch",
-                "opacity": 60,
-                "source": "Windows.Terminal.Wsl",
-                "useAcrylic": true
+                "source": "Windows.Terminal.Wsl"
             },
             {
                 "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": false,
+                "hidden": true,
                 "name": "Azure Cloud Shell",
                 "source": "Windows.Terminal.Azure"
             }
@@ -284,7 +105,7 @@
             "brightYellow": "#F9F1A5",
             "cursorColor": "#FFFFFF",
             "cyan": "#3A96DD",
-            "foreground": "#F2F2F2",
+            "foreground": "#CCCCCC",
             "green": "#13A10E",
             "name": "Campbell",
             "purple": "#881798",
@@ -374,7 +195,7 @@
             "brightRed": "#DF6C75",
             "brightWhite": "#FFFFFF",
             "brightYellow": "#E4C07A",
-            "cursorColor": "#FFFFFF",
+            "cursorColor": "#4F525D",
             "cyan": "#0997B3",
             "foreground": "#383A42",
             "green": "#50A14F",
@@ -386,10 +207,10 @@
             "yellow": "#C18301"
         },
         {
-            "background": "#073642",
-            "black": "#073642",
+            "background": "#002B36",
+            "black": "#002B36",
             "blue": "#268BD2",
-            "brightBlack": "#002B36",
+            "brightBlack": "#073642",
             "brightBlue": "#839496",
             "brightCyan": "#93A1A1",
             "brightGreen": "#586E75",
@@ -399,20 +220,20 @@
             "brightYellow": "#657B83",
             "cursorColor": "#FFFFFF",
             "cyan": "#2AA198",
-            "foreground": "#FDF6E3",
+            "foreground": "#839496",
             "green": "#859900",
             "name": "Solarized Dark",
             "purple": "#D33682",
-            "red": "#D30102",
+            "red": "#DC322F",
             "selectionBackground": "#FFFFFF",
             "white": "#EEE8D5",
             "yellow": "#B58900"
         },
         {
             "background": "#FDF6E3",
-            "black": "#073642",
+            "black": "#002B36",
             "blue": "#268BD2",
-            "brightBlack": "#002B36",
+            "brightBlack": "#073642",
             "brightBlue": "#839496",
             "brightCyan": "#93A1A1",
             "brightGreen": "#586E75",
@@ -420,13 +241,13 @@
             "brightRed": "#CB4B16",
             "brightWhite": "#FDF6E3",
             "brightYellow": "#657B83",
-            "cursorColor": "#FFFFFF",
+            "cursorColor": "#002B36",
             "cyan": "#2AA198",
-            "foreground": "#073642",
+            "foreground": "#657B83",
             "green": "#859900",
             "name": "Solarized Light",
             "purple": "#D33682",
-            "red": "#D30102",
+            "red": "#DC322F",
             "selectionBackground": "#FFFFFF",
             "white": "#EEE8D5",
             "yellow": "#B58900"
@@ -523,8 +344,5 @@
             "white": "#C0C0C0",
             "yellow": "#808000"
         }
-    ],
-    "showTabsInTitlebar": true,
-    "showTerminalTitleInTitlebar": true,
-    "wordDelimiters": " ./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}~?\u2502"
+    ]
 }
