@@ -11,6 +11,9 @@ atom.symlink/recovery
 
 git/gitconfig.local.symlink
 
+gnupg/gnupg.symlink/*
+!gnupg/gnupg.symlink/gpg-agent.conf
+
 sublime/User/Package Control.cache/
 sublime/User/oscrypto-ca-bundle.crt
 sublime/User/Package Control.last-run
