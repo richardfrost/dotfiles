@@ -1,0 +1,73 @@
+Windows Registry Editor Version 5.00
+
+;;;; Add-Take_Ownership.reg
+[HKEY_CLASSES_ROOT\*\shell\runas]
+@="Take Ownership"
+"NoWorkingDirectory"=""
+"Extended"=""
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\*\shell\runas\command]
+@="cmd.exe /c takeown /f \"%1\" && icacls \"%1\" /grant administrators:F"
+"IsolatedCommand"="cmd.exe /c takeown /f \"%1\" && icacls \"%1\" /grant administrators:F"
+
+[HKEY_CLASSES_ROOT\Directory\shell\runas]
+@="Take Ownership"
+"NoWorkingDirectory"=""
+"Extended"=""
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\Directory\shell\runas\command]
+@="cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant administrators:F /t"
+"IsolatedCommand"="cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant administrators:F /t"
+
+;;;; Disable-Aero_Shake.reg
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
+"NoWindowMinimizingShortcuts"=dword:00000001
+
+;;;; Disable-Hide_File_Extensions.reg
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"HideFileExt"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowFrequent"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowRecent"=dword:00000000
+
+[HKEY_LOCAL_USER\Software\Policies\Microsoft\Windows\Explorer]
+"HideRecommendedSection"=dword:00000001
+
+;;;; Enable-Explorer_This_PC.reg
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"LaunchTo"=dword:00000001
+
+;;;; Run.reg
+; * History marked with MRUList ("abc" = "a" last typed in history)
+; * Adds new entries on the end (after last used letter)
+; * No new entries after z (doesn't record history any more)
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU]
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU]
+"MRUList"="abcdefghijklmnopqrstu"
+"a"="AppWiz.cpl\\1"
+"b"="CertLM.msc\\1"
+"c"="CertMGR.msc\\1"
+"d"="CMD\\1"
+"e"="CompMgmt.msc\\1"
+"f"="Control\\1"
+"g"="DevMgmt.msc\\1"
+"h"="DiskMgmt.msc\\1"
+"i"="EventVwr.msc\\1"
+"j"="GPEdit.msc\\1"
+"k"="GPMC.msc\\1"
+"l"="MSTSC\\1"
+"m"="NCPA.cpl\\1"
+"n"="NSLookup\\1"
+"o"="PowerShell\\1"
+"p"="RegEdit\\1"
+"q"="SecPol.msc\\1"
+"r"="Services.msc\\1"
+"s"="SysDM.cpl\\1"
+"t"="TaskSchd.msc\\1"
+"u"="WF.msc\\1"

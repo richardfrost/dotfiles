@@ -1,0 +1,277 @@
+Windows Registry Editor Version 5.00
+
+;;;; Add-Copy_TXT_To_Clipboard-Expanded.reg
+[HKEY_CLASSES_ROOT\txtfile\shell\copytoclip]
+@="Copy to Clipboard"
+
+[HKEY_CLASSES_ROOT\txtfile\shell\copytoclip\command]
+@="cmd /c clip < \"%1\""
+
+;;;; Add-Power_Desktop_Sub_Menu.reg
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Power Menu]
+"MUIVerb"="Power Menu"
+"SubCommands"="lock;logoff;switch;|;sleep;hibernate;|;restart;safemode;shutdown;hybridshutdown"
+"Icon"="shell32.dll,215"
+"Position"="bottom"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\lock]
+@="Lock"
+"icon"="shell32.dll,47"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\lock\command]
+@="Rundll32 User32.dll,LockWorkStation"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\logoff]
+@="Log Off"
+"icon"="shell32.dll,211"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\logoff\command]
+@="Shutdown -l"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\switch]
+@="Switch User"
+"icon"="shell32.dll,170"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\switch\command]
+@="tsdiscon.exe"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\sleep]
+@="Sleep"
+"icon"="shell32.dll,25"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\sleep\command]
+@="rundll32.exe powrprof.dll,SetSuspendState Sleep"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\hibernate]
+@="Hibernate"
+"icon"="shell32.dll,217"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\hibernate\command]
+@="Shutdown -h"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\restart]
+@="Restart"
+"icon"="shell32.dll,238"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\restart\command]
+@="Shutdown -r -f -t 00"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\safemode]
+@="Restart with Boot Options Menu"
+"icon"="shell32.dll,207"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\safemode\command]
+@="Shutdown -r -o -f -t 00"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\shutdown]
+@="Shut Down"
+"icon"="shell32.dll,215"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\shutdown\command]
+@="Shutdown -s -f -t 00"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\hybridshutdown]
+@="Shut Down (Hybrid)"
+"icon"="shell32.dll,112"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\hybridshutdown\command]
+@="Shutdown -s -f -t 00 -hybrid"
+
+;;;; Add-Desktop_Run.reg
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Run]
+"icon"="shell32.dll,24"
+"Position"="Top"
+
+[HKEY_CLASSES_ROOT\DesktopBackground\Shell\Run\command]
+@="explorer.exe shell:::{2559a1f3-21d7-11d4-bdaf-00c04f60b9f0}"
+
+;;;; Add-Open_Command_Window_Here-Admin.reg
+[-HKEY_CLASSES_ROOT\Directory\shell\runas]
+[HKEY_CLASSES_ROOT\Directory\shell\runas]
+@="Open command window here"
+"Extended"=-
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\Directory\shell\runas\command]
+@="cmd.exe /s /k pushd \"%V\""
+
+
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\runas]
+[HKEY_CLASSES_ROOT\Directory\Background\shell\runas]
+@="Open command window here"
+"Extended"=-
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\runas\command]
+@="cmd.exe /s /k pushd \"%V\""
+
+
+[-HKEY_CLASSES_ROOT\Drive\shell\runas]
+[HKEY_CLASSES_ROOT\Drive\shell\runas]
+@="Open command window here"
+"Extended"=-
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\Drive\shell\runas\command]
+@="cmd.exe /s /k pushd \"%V\""
+
+;;;; Add-Open_Command_Window_Here-Icon.reg
+[HKEY_CLASSES_ROOT\Directory\Background\shell\cmd]
+@="@shell32.dll,-8506"
+"NoWorkingDirectory"=""
+"Extended"=-
+"Icon"="cmd.exe,0"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\cmd\command]
+@="cmd.exe /s /k pushd \"%V\""
+
+
+[HKEY_CLASSES_ROOT\Directory\shell\cmd]
+@="@shell32.dll,-8506"
+"NoWorkingDirectory"=""
+"Extended"=-
+"Icon"="cmd.exe,0"
+
+[HKEY_CLASSES_ROOT\Directory\shell\cmd\command]
+@="cmd.exe /s /k pushd \"%V\""
+
+
+[HKEY_CLASSES_ROOT\Drive\shell\cmd]
+@="@shell32.dll,-8506"
+"NoWorkingDirectory"=""
+"Extended"=-
+"Icon"="cmd.exe,0"
+
+[HKEY_CLASSES_ROOT\Drive\shell\cmd\command]
+@="cmd.exe /s /k pushd \"%V\""
+
+;;;; Add-Open_PowerShell_Here-Icon.reg
+[HKEY_CLASSES_ROOT\Directory\Background\shell\powershell]
+@="Open PowerShell here"
+"Extended"=-
+"Icon"="powershell.exe,0"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\powershell\command]
+@="powershell.exe -NoExit -Command Set-Location -LiteralPath '%V'"
+
+
+[HKEY_CLASSES_ROOT\Directory\shell\powershell]
+@="Open PowerShell here"
+"Extended"=-
+"Icon"="powershell.exe,0"
+
+[HKEY_CLASSES_ROOT\Directory\shell\powershell\command]
+@="powershell.exe -NoExit -Command Set-Location -LiteralPath '%V'"
+
+
+[HKEY_CLASSES_ROOT\Drive\shell\powershell]
+@="Open PowerShell here"
+"Extended"=-
+"Icon"="powershell.exe,0"
+
+[HKEY_CLASSES_ROOT\Drive\shell\powershell\command]
+@="powershell.exe -NoExit -Command Set-Location -LiteralPath '%V'"
+
+
+;;;; Add-Open_With_Notepad-Icon.reg
+[HKEY_CLASSES_ROOT\*\shell\Open with Notepad]
+"Icon"="notepad.exe,0"
+
+[HKEY_CLASSES_ROOT\*\shell\Open with Notepad\command]
+@="notepad.exe %1"
+
+;;;; Add-Take_Ownership.reg
+[HKEY_CLASSES_ROOT\*\shell\runas]
+@="Take Ownership"
+"NoWorkingDirectory"=""
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\*\shell\runas\command]
+@="cmd.exe /c takeown /f \"%1\" && icacls \"%1\" /grant administrators:F"
+"IsolatedCommand"="cmd.exe /c takeown /f \"%1\" && icacls \"%1\" /grant administrators:F"
+
+[HKEY_CLASSES_ROOT\Directory\shell\runas]
+@="Take Ownership"
+"NoWorkingDirectory"=""
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\Directory\shell\runas\command]
+@="cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant administrators:F /t"
+"IsolatedCommand"="cmd.exe /c takeown /f \"%1\" /r /d y && icacls \"%1\" /grant administrators:F /t"
+
+;;;; Add-VBS_as_Administrator.reg
+[HKEY_CLASSES_ROOT\VBSFile\Shell\runas]
+"HasLUAShield"=""
+
+[HKEY_CLASSES_ROOT\VBSFile\Shell\runas\Command]
+@=hex(2):22,00,25,00,53,00,79,00,73,00,74,00,65,00,6d,00,52,00,6f,00,6f,00,74,\
+  00,25,00,5c,00,53,00,79,00,73,00,74,00,65,00,6d,00,33,00,32,00,5c,00,57,00,\
+  53,00,63,00,72,00,69,00,70,00,74,00,2e,00,65,00,78,00,65,00,22,00,20,00,22,\
+  00,25,00,31,00,22,00,20,00,25,00,2a,00,00,00
+
+;;;; Disable-Aero_Shake.reg
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
+"NoWindowMinimizingShortcuts"=dword:00000001
+
+;;;; Disable-Hide_File_Extensions.reg
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"HideFileExt"=dword:00000000
+
+;;;; Disable-Internet_Open_With.reg
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"NoInternetOpenWith"=dword:00000001
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"NoInternetOpenWith"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowFrequent"=dword:00000000
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowRecent"=dword:00000000
+
+;;;; Disable-Shortcut_Text.reg
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"link"=hex:00,00,00,00
+
+[HKEY_LOCAL_USER\Software\Policies\Microsoft\Windows\Explorer]
+"HideRecommendedSection"=dword:00000001
+
+;;;; Enable-Context_Menu_Actions-Additional.reg
+;;;;   (http://support.microsoft.com/kb/2022295)
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"MultipleInvokePromptMinimum"=dword:00000064
+
+;;;; Enable-Explorer_This_PC.reg
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"LaunchTo"=dword:00000001
+
+;;;; Run.reg
+; * History marked with MRUList ("abc" = "a" last typed in history)
+; * Adds new entries on the end (after last used letter)
+; * No new entries after z (doesn't record history any more)
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU]
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU]
+"MRUList"="abcdefghijklmnopqrstu"
+"a"="AppWiz.cpl\\1"
+"b"="CertLM.msc\\1"
+"c"="CertMGR.msc\\1"
+"d"="CMD\\1"
+"e"="CompMgmt.msc\\1"
+"f"="Control\\1"
+"g"="DevMgmt.msc\\1"
+"h"="DiskMgmt.msc\\1"
+"i"="EventVwr.msc\\1"
+"j"="GPEdit.msc\\1"
+"k"="GPMC.msc\\1"
+"l"="MSTSC\\1"
+"m"="NCPA.cpl\\1"
+"n"="NSLookup\\1"
+"o"="PowerShell\\1"
+"p"="RegEdit\\1"
+"q"="SecPol.msc\\1"
+"r"="Services.msc\\1"
+"s"="SysDM.cpl\\1"
+"t"="TaskSchd.msc\\1"
+"u"="WF.msc\\1"

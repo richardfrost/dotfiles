@@ -1,0 +1,115 @@
+Windows Registry Editor Version 5.00
+
+;;;; Run-Clear.reg
+[-HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU]
+
+;;;; Default-Aero_Shake.reg
+[HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Explorer]
+"NoWindowMinimizingShortcuts"=-
+
+;;;; Default-Context_Menu_Actions.reg
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"MultipleInvokePromptMinimum"=-
+
+;;;; Default-Explorer_Quick_Access.reg
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"LaunchTo"=dword:00000002
+
+;;;; Default-Hide_File_Extensions.reg
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+"HideFileExt"=dword:00000001
+
+;;;; Default-Internet_Open_With.reg
+[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"NoInternetOpenWith"=-
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"NoInternetOpenWith"=-
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowFrequent"=dword:00000001
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"ShowRecent"=dword:00000001
+
+;;;; Default-Shortcut_Text.reg
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer]
+"link"=hex:1e,00,00,00
+
+[HKEY_LOCAL_USER\Software\Policies\Microsoft\Windows\Explorer]
+"HideRecommendedSection"=dword:00000000
+
+;;;; Remove-Copy_TXT_To_Clipboard.reg
+[-HKEY_CLASSES_ROOT\txtfile\shell\copytoclip]
+
+;;;; Remove-Desktop_Power_Sub_Menu.reg
+[-HKEY_CLASSES_ROOT\DesktopBackground\Shell\Power Menu]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\lock]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\logoff]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\switch]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\sleep]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\hibernate]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\restart]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\safemode]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\shutdown]
+
+[-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\hybridshutdown]
+
+;;;; Remove-Desktop_Run.reg
+[-HKEY_CLASSES_ROOT\DesktopBackground\Shell\Run]
+
+;;;; Remove-Open_Command_Window_Here_as_Administrator.reg
+[-HKEY_CLASSES_ROOT\Directory\shell\runas]
+
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\runas]
+
+[-HKEY_CLASSES_ROOT\Drive\shell\runas]
+
+;;;; Remove-Open_Command_Window_Here.reg
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\cmd]
+[HKEY_CLASSES_ROOT\Directory\background\shell\cmd]
+@="@shell32.dll,-8506"
+"NoWorkingDirectory"=""
+"Extended"=""
+
+[-HKEY_CLASSES_ROOT\Directory\shell\cmd]
+[HKEY_CLASSES_ROOT\Directory\background\shell\cmd\command]
+@="cmd.exe /s /k pushd \"%V\""
+
+
+[HKEY_CLASSES_ROOT\Directory\shell\cmd]
+@="@shell32.dll,-8506"
+"NoWorkingDirectory"=""
+"Extended"=""
+
+[HKEY_CLASSES_ROOT\Directory\shell\cmd\command]
+@="cmd.exe /s /k pushd \"%V\""
+
+
+[-HKEY_CLASSES_ROOT\Drive\shell\cmd]
+[HKEY_CLASSES_ROOT\Drive\shell\cmd]
+@="@shell32.dll,-8506"
+"NoWorkingDirectory"=""
+"Extended"=""
+
+[HKEY_CLASSES_ROOT\Drive\shell\cmd\command]
+@="cmd.exe /s /k pushd \"%V\""
+
+;;;; Remove-Open_With_Notepad.reg
+[-HKEY_CLASSES_ROOT\*\shell\Open with Notepad]
+
+;;;; Remove-Take_Ownership.reg
+[-HKEY_CLASSES_ROOT\*\shell\runas]
+
+[-HKEY_CLASSES_ROOT\Directory\shell\runas]
+
+;;;; Remove-VBS_as_Administrator.reg
+[-HKEY_CLASSES_ROOT\VBSFile\Shell\runas]
