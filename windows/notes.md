@@ -15,8 +15,20 @@
 # Other Settings
 - SSH keys
 - MyAHK
-- Registry changes
 
+# Registry Settings
+- Standard: **Recommended** registry settings
+- Expanded: Same as standard + more in context menus
+- Revert: Restore to defaults
+
+## Naming
+| Verb           | Description                     |
+| -------------- | ------------------------------- |
+| Enable/Disable | Modify default system behavior  |
+| Default        | Restore default system behavior |
+| Add            | Add context menu entries        |
+| Desktop        | Adjust Desktop context menu     |
+| Remove         | Remove context menu entries     |
 
 # WSL
 ### Enable WSL
