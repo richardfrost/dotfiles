@@ -106,18 +106,31 @@ generateResolvConf = true
 
 # GPG
 ### Keybase
-```shell
+```sh
 sudo pacman -S keybase
 
 # Export key from keybase
 keybase login
 keybase pgp export > keybase-public.key
 keybase pgp export --secret > keybase-private.key
+# If you get this error: ERROR Failed to get getpin greeting: EOF
+# Run this: `keybase config set -b pinentry.disabled true`
 
 # Import to local gpg
 gpg-agent
 gpg --allow-secret-key-import --import keybase-private.key
 gpg --import keybase-public.key
+# If you need to restart gpg-agent
+# gpgconf --kill gpg-agent
 
 # Cleanup
 rm keybase-p*
+
+# Setup git
+git config --global user.signingkey [GPG key ID]
+
+# Auto-sign commits on a repo:
+# git config commit.gpgsign true
+
+# Auto-sign commits on all local repos:
+git config --global commit.gpgsign true
