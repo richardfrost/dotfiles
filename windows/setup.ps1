@@ -32,7 +32,7 @@ function Set-UserEnvVar {
 
 ## Setup System
 # Variables
-$SyncHomePath = 'D:\OneDrive'
+$SyncHomePath = $env:OneDrive
 $AppsPath = "$SyncHomePath\Apps"
 
 ## Environment Variables
@@ -46,6 +46,7 @@ Set-UserEnvVar -Name 'Apps' -Value $AppsPath
 ## Copy Files
 # Copy Shortcuts
 # C:\Users\phros\AppData\Roaming\Microsoft\Windows\Start Menu\Programs
-#
-Write-Host "Copying shortcut files to Start Menu..."
-Invoke-MirrorFolder -Source "$AppsPath\Windows\Shortcuts" -Destination "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Shortcuts"
+if (Test-Path -Path "$AppsPath\Windows\Shortcuts") {
+  Write-Host "Copying shortcut files to Start Menu..."
+  Invoke-MirrorFolder -Source "$AppsPath\Windows\Shortcuts" -Destination "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Shortcuts"
+}
