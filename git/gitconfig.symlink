@@ -17,6 +17,8 @@
 [core]
         excludesfile = ~/.gitignore
         editor = vim
+        # autocrlf = true # Recommended for Windows: Write CRLF > LF, Read LF > CRLF
+        autocrlf = input # Recommended for *nix: Write CRLF > LF
 [apply]
         whitespace = nowarn
 [mergetool]
