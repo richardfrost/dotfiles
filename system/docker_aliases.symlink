@@ -10,7 +10,7 @@ alias ddir="cd $docker_dir"
 
 # Docker
 alias ddelimages='sudo docker rmi $(docker images -q)'
-alias dexec='sudo docker exec -ti'
+alias dexec='sudo docker exec -it'
 alias docdf='sudo docker system df'
 alias docerase='dstopcont ; drmcont ; ddelimages ; dvolprune ; dsysprune'
 alias docprune='ddelimages ; dvolprune ; dsysprune'
