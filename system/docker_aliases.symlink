@@ -5,11 +5,6 @@
 docker_dir="/home/$USER/docker"
 alias ddir="cd $docker_dir"
 
-# Container Management
-function dbash { docker exec -it "$1" /bin/bash; }
-alias dcmd="docker exec -it $*"
-function dsh { docker exec -it "$1" /bin/sh; }
-
 ##
 # Source: https://github.com/htpcBeginner/docker-traefik/blob/master/.bash_aliases.example
 
@@ -37,3 +32,7 @@ alias dcrm='dccmd rm'
 alias dcstart='dccmd start'
 alias dcstop='dccmd stop'
 alias dcup='dccmd up -d'
+
+# Container Management
+function dbash { dexec "$1" /bin/bash; }
+function dsh { dexec "$1" /bin/sh; }
