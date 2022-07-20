@@ -22,12 +22,12 @@ alias dsysprune='sudo docker system prune -a'
 alias ddelimages='sudo docker rmi $(docker images -q)'
 alias docerase='dstopcont ; drmcont ; ddelimages ; dvolprune ; dsysprune'
 alias docprune='ddelimages ; dvolprune ; dsysprune'
-alias dexec='docker exec -ti'
-alias docps='docker ps -a'
-alias docdf='docker system df'
+alias dexec='sudo docker exec -ti'
+alias docps='sudo docker ps -a'
+alias docdf='sudo docker system df'
 
 # Docker Compose
-alias dccmd="docker compose --file $docker_dir/docker-compose.yml --env-file $docker_dir/.env"
+alias dccmd="sudo docker compose --file $docker_dir/docker-compose.yml --env-file $docker_dir/.env"
 alias dcdown='dccmd down'
 alias dclogs='dccmd logs -tf --tail="50"'
 alias dcpull='dccmd pull'
