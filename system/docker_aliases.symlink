@@ -27,7 +27,7 @@ alias docps='docker ps -a'
 alias docdf='docker system df'
 
 # Docker Compose
-alias dccmd="docker-compose --file $docker_dir/docker-compose.yml --env-file $docker_dir/.env"
+alias dccmd="docker compose --file $docker_dir/docker-compose.yml --env-file $docker_dir/.env"
 alias dcdown='dccmd down'
 alias dclogs='dccmd logs -tf --tail="50"'
 alias dcpull='dccmd pull'
