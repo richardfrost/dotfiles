@@ -8,18 +8,18 @@ alias ddir="cd $docker_dir"
 ##
 # Source: https://github.com/htpcBeginner/docker-traefik/blob/master/.bash_aliases.example
 
-# DOCKER
-alias dstopcont='sudo docker stop $(docker ps -a -q)'
-alias dstopall='sudo docker stop $(sudo docker ps -aq)'
-alias drmcont='sudo docker rm $(docker ps -a -q)'
-alias dvolprune='sudo docker volume prune'
-alias dsysprune='sudo docker system prune -a'
+# Docker
 alias ddelimages='sudo docker rmi $(docker images -q)'
+alias dexec='sudo docker exec -ti'
+alias docdf='sudo docker system df'
 alias docerase='dstopcont ; drmcont ; ddelimages ; dvolprune ; dsysprune'
 alias docprune='ddelimages ; dvolprune ; dsysprune'
-alias dexec='sudo docker exec -ti'
 alias docps='sudo docker ps -a'
-alias docdf='sudo docker system df'
+alias drmcont='sudo docker rm $(docker ps -a -q)'
+alias dstopall='sudo docker stop $(sudo docker ps -aq)'
+alias dstopcont='sudo docker stop $(docker ps -a -q)'
+alias dsysprune='sudo docker system prune -a'
+alias dvolprune='sudo docker volume prune'
 
 # Docker Compose
 alias dccmd="sudo docker compose --file $docker_dir/docker-compose.yml --env-file $docker_dir/.env"
