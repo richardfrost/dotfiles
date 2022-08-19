@@ -50,7 +50,9 @@ alias gabortmerge='git reset --hard HEAD'
 alias git_protect_master='ln -s $HOME/.dotfiles/git/hooks/pre-commit ./.git/hooks'
 alias gpushu='git push -u origin $(current_branch)'
 alias gundo='git reset --soft HEAD~1'
+alias grebase='git rebase -i --ignore-date'
 alias gredo='git commit -c ORIG_HEAD'
+alias grebaseabort='git rebase --abort'
 
 # Git Stash
 alias gsl='git stash list'
