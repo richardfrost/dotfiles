@@ -40,6 +40,7 @@ $expanded = @(
     "Disable-Quick_Access_Show_Frequent_Folders",
     "Disable-Quick_Access_Show_Recent_Files",
     "Disable-Shortcut_Text",
+    "Disable-Show_snap_groups_in_taskbar_Alt-Tab_Task-View"
     "Disable-Start_Menu_Recommended",
     "Enable-Context_Menu_Actions-Additional",
     "Enable-Explorer_This_PC",
@@ -56,6 +57,7 @@ $revert = @(
     "Default-Quick_Access_Show_Frequent_Folders",
     "Default-Quick_Access_Show_Recent_Files",
     "Default-Shortcut_Text",
+    "Default-Show_snap_groups_in_taskbar_Alt-Tab_Task-View",
     "Default-Start_Menu_Recommended",
     "Remove-Copy_TXT_To_Clipboard",
     "Remove-Desktop_Power_Sub_Menu",
