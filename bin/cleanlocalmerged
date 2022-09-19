@@ -1,6 +1,6 @@
 #/bin/bash
 git remote update
-msg=$(git branch --merged master | egrep -v " master$" | xargs -n 1 git branch -D)
+msg=$(git branch --merged master | grep -Ev " master$" | xargs -n 1 git branch -D)
 if ! [ "${msg}" ]; then
   echo "No local merged branches to clean up"
 else
