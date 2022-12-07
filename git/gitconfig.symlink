@@ -36,3 +36,5 @@
         default = simple
 [commit]
         gpgsign = true
+[init]
+	defaultBranch = main
