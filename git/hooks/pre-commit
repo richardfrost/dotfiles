@@ -1,10 +1,10 @@
 #!/bin/bash
-protected_branch='master'
+protected_branch='main'
 # current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 current_branch=$(git symbolic-ref --short HEAD)
 
 if [[ $protected_branch == $current_branch ]]; then
-  echo "Direct commits to the branch master are not allowed"
+  echo "Direct commits to the branch main are not allowed"
   exit 1
 fi
 

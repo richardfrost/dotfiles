@@ -59,14 +59,14 @@ function branch-revisions {
 }
 
 # https://stackoverflow.com/questions/3334475/git-how-to-update-checkout-a-single-file-from-remote-origin-master
-function checkout-file-from-master {
-  git checkout origin/master -- "$1"
+function checkout-file-from-main {
+  git checkout origin/main -- "$1"
 }
 
-# Switch branch to master branch, pull, and merge in current branch
-function merge-master {
+# Switch branch to main branch, pull, and merge in current branch
+function merge-main {
   branch=$(current_branch)
-  git checkout master && git pull && git checkout "$branch" && git merge master
+  git checkout main && git pull && git checkout "$branch" && git merge main
 }
 
 # Generate Password

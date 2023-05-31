@@ -31,32 +31,32 @@ function gb { & git branch $args }
 # Set-Alias -Name 'gp' -Value 'git pull' # Get-ItemProperty
 function gco { & git checkout $args }
 function gcob { & git checkout -b $args }
-function Get-GitCheckoutMaster { & git checkout master }
-Set-Alias -Name gcom -Value Get-GitCheckoutMaster
+function Get-GitCheckoutMain { & git checkout main }
+Set-Alias -Name gcom -Value Get-GitCheckoutMain
 function Get-GitPullOrigin { & git pull origin }
 Set-Alias -Name 'gpo' -Value Get-GitPullOrigin
-function Get-GitPullOriginMaster { & git pull origin master }
-Set-Alias -Name 'gpom' -Value Get-GitPullOriginMaster
+function Get-GitPullOriginMain { & git pull origin main }
+Set-Alias -Name 'gpom' -Value Get-GitPullOriginMain
 function gd { & git diff $args }
 function gcommit { & git commit -v $args } # gc
 function gcn { & git commit -v --no-verify $args }
 function ga { & git add $args }
 function gadd { & git add . }
 function gr { & git reset $args }
-function gcomp { & git diff master..$(Get-GitCurrentBranch) }
+function gcomp { & git diff main..$(Get-GitCurrentBranch) }
 function gpusho { & git push origin $args }
 function gpushb { & git push origin $(Get-GitCurrentBranch) }
 # alias gpubb='git-publish-branch' # Not needed?
 function gf { & git fetch $args }
 function glog { & git log --oneline --all --graph --decorate $args }
 function glogp { & git log --pretty=format:"%h %s" --graph $args }
-function gcleanmerged { & git branch --merged | Where-Object {-not ($_ -like "*master")} | ForEach-Object { & git branch -d $_.trim() } }
+function gcleanmerged { & git branch --merged | Where-Object {-not ($_ -like "*main")} | ForEach-Object { & git branch -d $_.trim() } }
 function gcleanremote { & git remote prune origin } # Added
 function gforget { & git rm --cached }
 
 # Git - Advanced
 function gabortmerge { & git reset --hard HEAD }
-function git_protect_master { New-Item -Type SymbolicLink -Path '.git/hooks/pre-commit' -Target "$dotfiles/git/hooks/pre-commit" }
+function git_protect_main { New-Item -Type SymbolicLink -Path '.git/hooks/pre-commit' -Target "$dotfiles/git/hooks/pre-commit" }
 function gpushu { & git push -u origin $(Get-GitCurrentBranch) }
 function gundo { & git reset --soft HEAD~1 }
 function gredo { & git commit -c ORIG_HEAD }
