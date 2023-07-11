@@ -44,6 +44,7 @@ $expanded = @(
     "Disable-Start_Menu_Recommended",
     "Enable-Context_Menu_Actions-Additional",
     "Enable-Explorer_This_PC",
+    "Enable-Show_Seconds_On_System_Tray_Clock",
     "Run"
 )
 
@@ -54,6 +55,7 @@ $revert = @(
     "Default-Explorer_Quick_Access",
     "Default-Hide_File_Extensions",
     "Default-Internet_Open_With",
+    "Default-No_Seconds_On_System_Tray_Clock",
     "Default-Quick_Access_Show_Frequent_Folders",
     "Default-Quick_Access_Show_Recent_Files",
     "Default-Shortcut_Text",
