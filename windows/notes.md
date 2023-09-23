@@ -33,7 +33,12 @@
 # WSL
 ### Enable WSL
 ```shell
-Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+# Recommended install:
+# TODO: Figure out how to not install Ubuntu
+wsl --install -d Ubuntu
+
+# Deprecated: Use "Windows Subsystem for Linux" From the Microsoft Store to get WSLg
+# Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 ```
 
 ### Download Arch Linux
@@ -45,23 +50,35 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 ```shell
 pacman-key --init
 pacman-key --populate
-pacman -Syu
+pacman-key --refresh-keys
+pacman -Sy archlinux-keyring
+pacman -Syuu
 
-# Create user
-useradd richard --create-home
-passwd richard
-visudo
-# richard ALL=(ALL) ALL
-
+##
 # Packages
 sudo pacman -S git htop openssh p7zip tig tmux zsh
 
 # Node
-sudo pacman -S nodejs npm
+# sudo pacman -S nodejs npm
+
+##
+# Create user
+useradd richard --create-home
+passwd richard
+
+# Interactively edit sudoers
+# richard ALL=(ALL) ALL
+EDITOR=vim visudo
+
+# Windows: Set default WSL user
+./Arch.exe config --default-user richard
 
 # SSH
 su - richard
+
+# Interactively run commands as user
 mkdir $HOME/.ssh ; chmod 700 $HOME/.ssh
+# Only if you already have SSH keys in Windows
 cp /mnt/c/users/richard.frost/.ssh/id_rsa* $HOME/.ssh
 chmod 600 $HOME/.ssh/id_rsa
 chmod 644 $HOME/.ssh/id_rsa.pub
@@ -71,22 +88,25 @@ git clone git@github.com:richardfrost/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 script/bootstrap
 
-# Setup
-ln -s /mnt/d/code ~/code
+## Dev
+# NVM - https://github.com/nvm-sh/nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+nvm install stable
 
-# Windows: Set default WSL user
-./Arch.exe config --default-user richard
+# Install gitmoji-cli
+npm i -g gitmoji-cli
 
+# Windows Terminal
+# Powerline Font
+```~/.dotfiles/fonts/Windows/Roboto Mono for Powerline```
+# Settings
+```~/.dotfiles/Windows/terminal/settings.json```
+
+##
 # Git config
 Source: https://github.com/Microsoft/WSL/issues/2318#issuecomment-314631096
 Windows: git config --global core.autocrlf true
 WSL: git config --global core.autocrlf input
-
-# NVM
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-
-# Install gitmoji-cli
-npm i -g gitmoji-cli
 ```
 
 ### Fix WSL Permissions (Optional)
@@ -102,6 +122,16 @@ options = "metadata,umask=22,fmask=11"
 [network]
 generateHosts = true
 generateResolvConf = true
+```
+
+### Fix for slow network (Windows 11)
+```sh
+# https://github.com/microsoft/WSL/issues/4901#issuecomment-909723742
+sudo rm /etc/resolv.conf
+sudo bash -c 'echo "nameserver 8.8.8.8" > /etc/resolv.conf'
+sudo bash -c 'echo "[network]" > /etc/wsl.conf'
+sudo bash -c 'echo "generateResolvConf = false" >> /etc/wsl.conf'
+sudo chattr +i /etc/resolv.conf
 ```
 
 # GPG
