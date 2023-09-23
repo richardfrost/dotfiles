@@ -16,7 +16,11 @@
             "keys": "ctrl+c"
         },
         {
-            "command": "unbound"
+            "command": 
+            {
+                "action": "globalSummon"
+            },
+            "keys": "ctrl+`"
         },
         {
             "command": "find",
@@ -70,7 +74,7 @@
                 "name": "Command Prompt"
             },
             {
-                "colorScheme": "Solarized Dark",
+                "colorScheme": "Flat-UI",
                 "font": 
                 {
                     "face": "Roboto Mono for Powerline",
@@ -79,7 +83,9 @@
                 "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
                 "hidden": false,
                 "name": "Arch",
-                "source": "Windows.Terminal.Wsl"
+                "opacity": 80,
+                "source": "Windows.Terminal.Wsl",
+                "useAcrylic": true
             },
             {
                 "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
