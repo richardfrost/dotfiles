@@ -10,9 +10,6 @@
 # Import docker aliases and functions
 . "$HOME/.docker_aliases"
 
-# Import system-related settings
-. "$HOME/.system"
-
 # Import any custom vars/functions
 if [[ -f "$HOME/.custom" ]]; then
   . "$HOME/.custom"
