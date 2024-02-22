@@ -105,7 +105,7 @@ DEFAULT_USER="$USERNAME"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # common-aliases git-extras history-substring-search jsontools systemadmin tmux
-plugins=(git history npm nvm)
+plugins=(fnm git history npm)
 
 ##
 # User configuration

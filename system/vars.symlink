@@ -53,6 +53,15 @@ if [[ "$SYSTEM_TYPE" == "mac" ]]; then
   export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
+# FNM (Fast Node Manager)
+if [[ -d "$HOME/.local/share/fnm" ]]; then
+  export PATH="$PATH:$HOME/.local/share/fnm"
+  eval "`fnm env`"
+
+  # Auto-switch node version when .nvmrc or .node-version file is present. (Supports bash & zsh)
+  eval "$(fnm env --use-on-cd)"
+fi
+
 ##
 # Ruby
 # Add system ruby bin to path
