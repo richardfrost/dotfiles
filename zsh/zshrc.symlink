@@ -1,3 +1,7 @@
+# Debugging/profiling
+# Uncomment below line and then run `zprof` after loading the shell
+# zmodload zsh/zprof
+
 ##
 # Dotfiles
 #
