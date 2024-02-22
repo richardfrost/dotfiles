@@ -72,3 +72,6 @@ complete -F _c c
 
 # Import aliases, functions, and variables
 source "$HOME/.imports"
+
+# Import bash-specific loaders
+source "$HOME/.bash_loaders"

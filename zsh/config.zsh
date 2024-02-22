@@ -41,3 +41,7 @@ bindkey '^[[5D' beginning-of-line
 bindkey '^[[5C' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^?' backward-delete-char
+
+# Lazy-load NVM
+zstyle ':omz:plugins:nvm' lazy yes
+zstyle ':omz:plugins:nvm' eslint mocha tsc typescript webpack
