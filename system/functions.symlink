@@ -63,6 +63,11 @@ function checkout-file-from-main {
   git checkout origin/main -- "$1"
 }
 
+function debugshelltime() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 5); do time $shell -i -c exit; done
+}
+
 # Switch branch to main branch, pull, and merge in current branch
 function merge-main {
   branch=$(current_branch)
