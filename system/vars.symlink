@@ -49,7 +49,7 @@ ssh-add -l | grep "The agent has no identities" && ssh-add
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:./bin:$DOTFILES/bin:/usr/bin:/sbin:/bin:$PATH"
 export MANPATH="/usr/local/man:/usr/local/git/man:$MANPATH"
 
-if [[ "$(uname -s)" == "Darwin" ]]; then
+if [[ "$SYSTEM_TYPE" == "mac" ]]; then
   export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 fi
 
