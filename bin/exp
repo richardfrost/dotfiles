@@ -7,7 +7,7 @@ path="${1}"
 if [[ -z "$SYSTEM_TYPE" ]]; then
   echo '$SYSTEM_TYPE not found.'
   . "$HOME/.functions"
-  set_system_type
+  _set_system_type
 fi
 
 if [[ "$SYSTEM_TYPE" == "mac" ]]; then
