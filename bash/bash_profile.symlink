@@ -30,8 +30,6 @@ shopt -s histappend
 ##
 # Richard's Aliases
 #
-# Aliases
-alias aliases="less $HOME/.bash_profile"
 alias reload_aliases="source $HOME/.bash_profile"
 
 # Go to code folder
