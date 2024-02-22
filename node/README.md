@@ -6,7 +6,7 @@
 # Override install directory
 # curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "./.fnm" --skip-shell
 
-# Install to default location ($HOME/.local/share/fnm)
+# Install to default location using $XDG_DATA_HOME/fnm or $HOME/.local/share/fnm
 curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 ```
 
