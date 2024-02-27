@@ -31,6 +31,10 @@ if [[ "$(uname -s)" == "Darwin" ]]; then
     "$DOTFILES/homebrew/links.sh" 2>&1
     "$DOTFILES/homebrew/services.sh" 2>&1
   fi
+
+  # Run Homebrew through the Brewfile
+  echo "› brew bundle"
+  brew bundle
 fi
 
 # TODO: Check for Homebrew
