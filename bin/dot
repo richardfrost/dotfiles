@@ -7,13 +7,13 @@
 export DOTFILES=$HOME/.dotfiles
 
 if [[ "$(uname -s)" == "Darwin" ]]; then
-  read -e -p "Set macOS Defaults?: (y/n) " -i "n" setMacOSDefaults
+  read -e -p "Set macOS Defaults?: (y/n) " setMacOSDefaults
   if [[ "${setMacOSDefaults}" == "y" || "${setMacOSDefaults}" == 'Y' ]]; then
     echo "› OSX defaults"
     "$DOTFILES/macos/set-defaults.sh"
   fi
 
-  read -e -p "Install Homebrew?: (y/n) " -i "n" installHomebrew
+  read -e -p "Install Homebrew?: (y/n) " installHomebrew
   if [[ "${installHomebrew}" == "y" || "${installHomebrew}" == 'Y' ]]; then
     # Install homebrew
     "$DOTFILES/homebrew/install.sh" 2>&1
