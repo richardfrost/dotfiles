@@ -3,6 +3,9 @@
 
 ## Installation
 ```sh
+# Arch pre-requisites
+sudo pacman -S unzip
+
 # Override install directory
 # curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "./.fnm" --skip-shell
 
