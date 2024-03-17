@@ -66,6 +66,10 @@ alias gspop='git stash pop'
 # Use `git diff` without a repo
 alias diff='git diff --no-index'
 
+# Node
+alias noded='fnm use default'
+alias nodels='fnm ls'
+
 # Ruby
 alias b='bundle'
 alias be='bundle exec'
