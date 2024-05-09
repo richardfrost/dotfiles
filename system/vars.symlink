@@ -54,7 +54,7 @@ if [[ "$SYSTEM_TYPE" == "mac" ]]; then
 fi
 
 # FNM (Fast Node Manager)
-if [[ -d "$HOME/.local/share/fnm" ]]; then
+if [[ -d "$HOME/.local/share/fnm" ]] || [[ -f "/opt/homebrew/bin/fnm" ]]; then
   export PATH="$PATH:$HOME/.local/share/fnm"
   eval "`fnm env`"
 
