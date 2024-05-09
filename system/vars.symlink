@@ -50,7 +50,7 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:./bin:$DOTFILES/b
 export MANPATH="/usr/local/man:/usr/local/git/man:$MANPATH"
 
 if [[ "$SYSTEM_TYPE" == "mac" ]]; then
-  export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  export PATH="$PATH:/usr/local/opt/coreutils/libexec/gnubin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/opt/homebrew/bin"
 fi
 
 # FNM (Fast Node Manager)
