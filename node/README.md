@@ -1,7 +1,9 @@
 # FNM (Fast Node Manager)
+
 [FNM Github Page](https://github.com/Schniz/fnm)
 
 ## Installation
+
 ```sh
 # Arch pre-requisites
 sudo pacman -S unzip
@@ -14,6 +16,7 @@ curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
 ```
 
 ### Setup default node
+
 ```sh
 # List available versions to install
 fnm list-remote

@@ -1,5 +1,7 @@
 # Richard's dotfiles
+
 ## System Settings
+
 Go to System Preferences > Keyboard > Keyboard Shortcuts > Mission Control and change the settings for "Move left a space" and "Move right a space" or disable them completely.
 
 Keyboard -> Key Repeat: 8/8, Delay: 4/6
@@ -52,7 +54,8 @@ time to time to keep your environment fresh and up-to-date. You can find
 this script in `bin/`.
 
 ### Setup Upstream
-```
+
+```sh
 git remote add upstream https://github.com/holman/dotfiles.git
 ```
 
@@ -70,13 +73,16 @@ to zsh a bit later. A decent amount of the code in these dotfiles stem or are
 inspired from Ryan's original project.
 
 ### macOS
-##### RBENV
-```
+
+#### RBENV
+
+```sh
 brew uninstall --force rbenv
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv && git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 ```
 
 ### Cleanup Removed Items
+
 ```sh
 rm ~/.atom; rm ~/.hyper.js
 ```
