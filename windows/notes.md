@@ -1,4 +1,7 @@
-# Programs
+# Dotfiles Notes
+
+## Programs
+
 - [Ninite](https://www.ninite.com) to install basic packages
   - 7-Zip
   - Chrome
@@ -12,16 +15,19 @@
 - [git](https://git-scm.com/download/win)
 - Quicklook (Windows Store)
 
-# Other Settings
+## Other Settings
+
 - SSH keys
 - MyAHK
 
-# Registry Settings
+## Registry Settings
+
 - Standard: **Recommended** registry settings
 - Expanded: Same as standard + more in context menus
 - Revert: Restore to defaults
 
-## Naming
+### Naming
+
 | Verb           | Description                     |
 | -------------- | ------------------------------- |
 | Enable/Disable | Modify default system behavior  |
@@ -30,8 +36,10 @@
 | Desktop        | Adjust Desktop context menu     |
 | Remove         | Remove context menu entries     |
 
-# WSL
+## WSL
+
 ### Enable WSL
+
 ```shell
 # Recommended install:
 # TODO: Figure out how to not install Ubuntu
@@ -42,11 +50,13 @@ wsl --install -d Ubuntu
 ```
 
 ### Download Arch Linux
-- https://github.com/yuk7/ArchWSL/releases/latest
+
+- [Arch WSL](https://github.com/yuk7/ArchWSL/releases/latest)
 - And extract to `%UserProfile%\WSL\Arch`
 - Run `Arch.exe`
 
 ### Setup WSL
+
 ```shell
 pacman-key --init
 pacman-key --populate
@@ -109,7 +119,8 @@ Windows: git config --global core.autocrlf true
 WSL: git config --global core.autocrlf input
 ```
 
-### Fix WSL Permissions (Optional)
+#### Fix WSL Permissions (Optional)
+
 ```conf
 # /etc/wsl.conf
 
@@ -124,7 +135,8 @@ generateHosts = true
 generateResolvConf = true
 ```
 
-### Fix for slow network (Windows 11)
+#### Fix for slow network (Windows 11)
+
 ```sh
 # https://github.com/microsoft/WSL/issues/4901#issuecomment-909723742
 sudo rm /etc/resolv.conf
@@ -134,8 +146,10 @@ sudo bash -c 'echo "generateResolvConf = false" >> /etc/wsl.conf'
 sudo chattr +i /etc/resolv.conf
 ```
 
-# GPG
+## GPG
+
 ### Keybase
+
 ```sh
 sudo pacman -S keybase
 
@@ -164,3 +178,4 @@ git config --global user.signingkey [GPG key ID]
 
 # Auto-sign commits on all local repos:
 git config --global commit.gpgsign true
+```
