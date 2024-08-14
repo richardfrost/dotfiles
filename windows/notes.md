@@ -151,7 +151,13 @@ sudo chattr +i /etc/resolv.conf
 ### Keybase
 
 ```sh
+# Arch
 sudo pacman -S keybase
+
+# macOS
+brew update
+brew upgrade
+brew install gnupg
 
 # Export key from keybase
 keybase login
