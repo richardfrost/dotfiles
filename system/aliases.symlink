@@ -61,8 +61,8 @@ alias gundo='git reset --soft HEAD~1'
 
 # Git Stash
 alias gds='git diff stash'
-# alias gsapply='git stash apply stash@{$1}'
-# alias gsdrop='git stash drop stash@{$1}'
+alias gsapply='git stash apply stash@{$1}'
+alias gsdrop='git stash drop stash@{$1}'
 alias gsl='git stash list'
 alias gspop='git stash pop'
 alias gssave='git stash save'
