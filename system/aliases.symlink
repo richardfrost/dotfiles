@@ -18,54 +18,54 @@ alias zsh='exec zsh -l'
 # Development Aliases
 #
 # Git
-alias g='git'
-alias gca="git commit -a" # Auto stage modified/deleted files and commit
 alias cb="current_branch"
-alias gs="git status -sb" # Show Git status (short)
-alias gsv="git status" # Show Git status (verbose)
+alias g='git'
+alias ga="git add"
+alias gadd="git add ." # Add all files to the staging area
 alias gb="git branch -vv" # Show branches and last commit in one-line format"
-alias gl="git pull" # Pull from the remote branch
-alias gp="git push" # Push the current branch to the remote
+alias gc="git commit -v"
+alias gca="git commit -a" # Auto stage modified/deleted files and commit
+alias gcleanmerged='git branch --merged main | egrep -v "^\s*main$" | xargs git branch -d'
+alias gcn='git commit -v --no-verify'
 alias gco="git checkout" # Checkout a branch
 alias gcob="git checkout -b" # Create and switch to a new branch
 alias gcom="git checkout main" # Checkout the main branch
-alias gpo="git pull origin"
-alias gpom="git pull origin main"
+alias gcomp='git diff main..$(current_branch)'
 alias gd="git diff"
 alias gds="git diff --cached" # View the difference of staged changes
-alias gc="git commit -v"
-alias gcn='git commit -v --no-verify'
-alias gmc='git diff --cached && gitmoji -c'
-alias ga="git add"
-alias gadd="git add ." # Add all files to the staging area
-alias gr="git reset"
-alias gcomp='git diff main..$(current_branch)'
-alias gpusho='git push origin'
-alias gpushb='git push origin $(current_branch)'
-alias gpubb='git-publish-branch'
 alias gf='git fetch --all' # Fetch all remote branches
+alias gforget='git rm --cached'
+alias gl="git pull" # Pull from the remote branch
 alias glog='git log --oneline --all --graph --decorate' # View Git log in one-line format
 alias glogp='git log --pretty=format:"%h %s" --graph'
-alias gcleanmerged='git branch --merged main | egrep -v "^\s*main$" | xargs git branch -d'
-alias gforget='git rm --cached'
+alias gmc='git diff --cached && gitmoji -c'
+alias gp="git push" # Push the current branch to the remote
+alias gpo="git pull origin"
+alias gpom="git pull origin main"
+alias gpubb='git-publish-branch'
+alias gpushb='git push origin $(current_branch)'
+alias gpusho='git push origin'
+alias gr="git reset"
+alias gs="git status -sb" # Show Git status (short)
+alias gsv="git status" # Show Git status (verbose)
 
 # Git - Advanced
-alias grhard='git reset --hard HEAD' # Hard reset to the latest commit
 alias git_protect_main='ln -s $HOME/.dotfiles/git/hooks/pre-commit ./.git/hooks'
 alias gpushu='git push -u origin $(current_branch)'
-alias gundo='git reset --soft HEAD~1'
 alias grebase='git rebase -i'
+alias grebaseabort='git rebase --abort'
 alias grebasedate='git rebase -i --ignore-date'
 alias gredo='git commit -c ORIG_HEAD'
-alias grebaseabort='git rebase --abort'
+alias grhard='git reset --hard HEAD' # Hard reset to the latest commit
+alias gundo='git reset --soft HEAD~1'
 
 # Git Stash
-alias gsl='git stash list'
-alias gds='git dif stash'
-alias gssave='git stash save'
-alias gspop='git stash pop'
+alias gds='git diff stash'
 # alias gsapply='git stash apply stash@{$1}'
 # alias gsdrop='git stash drop stash@{$1}'
+alias gsl='git stash list'
+alias gspop='git stash pop'
+alias gssave='git stash save'
 
 # Use `git diff` without a repo
 alias diff='git diff --no-index'
