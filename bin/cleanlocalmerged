@@ -1,8 +1,19 @@
-#/bin/bash
-git remote update
-msg=$(git branch --merged main | grep -Ev " main$" | xargs -n 1 git branch -D)
-if ! [ "${msg}" ]; then
+#!/bin/bash
+set -euo pipefail
+
+# Fetches all remotes (like origin, upstream) and updates your remote-tracking branches
+# prunes stale refs that no longer exist on the remote
+git remote update --prune
+
+# Find local branches that are fully merged into main, excluding the current branch and main itself
+# /'^\*|^\s*main$'/ * = current branch, main = main branch
+msg=$(git branch --merged main | grep -vE '^\*|^\s*main$' | xargs -n 1 git branch -d 2>&1 || true)
+
+if [ -z "$msg" ]; then
   echo "No local merged branches to clean up"
 else
-  printf "${msg}\n"
+  echo "Deleted the following merged branches:"
+  while IFS= read -r line; do
+    printf "  - %s\n" "$line"
+  done <<< "$msg"
 fi
