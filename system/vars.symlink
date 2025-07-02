@@ -46,7 +46,7 @@ ssh-add -l | grep "The agent has no identities" && ssh-add
 ##
 # PATH:
 #
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:./bin:$DOTFILES/bin:/usr/bin:/sbin:/bin:$PATH"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:$DOTFILES/bin:/usr/bin:/sbin:/bin:$PATH"
 export MANPATH="/usr/local/man:/usr/local/git/man:$MANPATH"
 
 if [[ "$SYSTEM_TYPE" == "mac" ]]; then
