@@ -82,5 +82,16 @@ if [[ -d "$HOME/.rbenv" ]]; then
   rbenv global 3.0.1 # Default unless .ruby-version file is present
 fi
 
+##
+# python
+# To install: sudo pacman -S pyenv
+# To install python 3.12: pyenv install 3.12
+# To use: pyenv global 3.12
+if [[ -d "$HOME/.pyenv" ]]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+fi
+
 # Remove duplicates in PATH
 export PATH=`printf %s "$PATH" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}'`
