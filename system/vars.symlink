@@ -95,3 +95,9 @@ fi
 
 # Remove duplicates in PATH
 export PATH=`printf %s "$PATH" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!ln++?"":":",$0)}}'`
+
+# Remove relative paths from PATH
+sanitize_path() {
+  export PATH=$(echo "$PATH" | tr ':' '\n' | grep -vE '^\./|\.$' | paste -sd:)
+}
+sanitize_path
