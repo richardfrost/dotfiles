@@ -98,6 +98,11 @@ export PATH=`printf %s "$PATH" | awk -v RS=: '{ if (!arr[$0]++) {printf("%s%s",!
 
 # Remove relative paths from PATH
 sanitize_path() {
-  export PATH=$(echo "$PATH" | tr ':' '\n' | grep -vE '^\./|\.$' | paste -sd:)
+  new_path=$(/usr/bin/printf '%s' "$PATH" \
+    | /usr/bin/tr ':' '\n' \
+    | /usr/bin/awk '$0 ~ "^/" && !seen[$0]++' \
+    | /usr/bin/paste -sd:)
+  [ -n "$new_path" ] && PATH="$new_path"
+  export PATH
 }
 sanitize_path
