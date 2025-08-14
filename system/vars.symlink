@@ -5,7 +5,7 @@ _set_system_type
 export DOTFILES=$HOME/.dotfiles
 
 # Set editor for both BASH and ZSH
-export EDITOR='vscode'
+export EDITOR='cursor'
 
 # Setup locale
 export LANG=en_US.UTF-8
