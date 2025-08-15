@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Flush filesystem buffers
+sync
+
+# Drop pagecache, dentries, and inodes (requires root)
+sudo sh -c 'echo 2 > /proc/sys/vm/drop_caches'
