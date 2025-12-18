@@ -17,6 +17,10 @@
 # o - Mouse On (Pre 2.1)
 # O - Mouse Off (Pre 2.1)
 
+# Set socket path to use the user's home directory
+# Create directory: mkdir -p ~/.tmux-sock && chmod 700 ~/.tmux-sock
+# set -g socket-path "$HOME/.tmux-sock/default"
+
 # Set default prefix - (usually don't need this)
 set -g prefix C-b
 bind-key C-b send-prefix
