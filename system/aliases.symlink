@@ -96,3 +96,11 @@ alias readlink=greadlink
 alias dmesgw='watch -n 0.1 "dmesg | tail -n $((LINES-6))"'
 alias Syu='sudo pacman -Syu'
 alias Syuu='sudo pacman -Syuu'
+
+
+##
+# Media Aliases
+#
+alias beet='sudo docker exec -it --user $(id -u):$(id -g) beets beet'
+alias beetshell='sudo docker exec -it --user $(id -u):$(id -g) beets bash'
+alias staging='cd /mnt/media/_Staging'
