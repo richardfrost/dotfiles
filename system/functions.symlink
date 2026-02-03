@@ -3,6 +3,12 @@
 #
 function current_branch { git symbolic-ref --short HEAD; }
 
+# Stash: apply/drop/pop/show by index (0=top, 1=stash@{1}, …). No arg = use 0.
+function gsapply { git stash apply stash@{${1:-0}}; }
+function gsdrop { git stash drop stash@{$1}; }
+function gspop { git stash pop stash@{${1:-0}}; }
+function gsshow { if (( $# )); then git stash show stash@{$1}; else git stash show; fi; }
+
 ##
 # System
 #

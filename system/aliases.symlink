@@ -18,54 +18,121 @@ alias zsh='exec zsh -l'
 # Development Aliases
 #
 # Git
+# cb   - show current branch name
 alias cb="current_branch"
+# g    - git
 alias g='git'
+# ga   - add file(s) by name/path/pattern
 alias ga="git add"
-alias gadd="git add ." # Add all files to the staging area
-alias gb="git branch -vv" # Show branches and last commit in one-line format"
-alias gc="git commit -v"
-alias gca="git commit -a" # Auto stage modified/deleted files and commit
-alias gcleanmerged='git branch --merged main | egrep -v "^\s*main$" | xargs git branch -d'
-alias gcn='git commit -v --no-verify'
-alias gco="git checkout" # Checkout a branch
-alias gcob="git checkout -b" # Create and switch to a new branch
-alias gcom="git checkout main" # Checkout the main branch
-alias gcomp='git diff main..$(current_branch)'
-alias gd="git diff"
-alias gds="git diff --cached" # View the difference of staged changes
-alias gf='git fetch --all' # Fetch all remote branches
-alias gforget='git rm --cached'
-alias gl="git pull" # Pull from the remote branch
-alias glog='git log --oneline --all --graph --decorate' # View Git log in one-line format
-alias glogp='git log --pretty=format:"%h %s" --graph'
-alias gmc='git diff --cached && gitmoji -c'
-alias gp="git push" # Push the current branch to the remote
-alias gpo="git pull origin"
-alias gpom="git pull origin main"
-alias gpubb='git-publish-branch'
-alias gpushb='git push origin $(current_branch)'
-alias gpusho='git push origin'
+# gadd - add all files to the staging area
+alias gadd="git add ."
+# gl   - pull from the remote branch
+alias gl="git pull"
+# gp   - push the current branch to the remote
+alias gp="git push"
+# gr   - move HEAD (branch-level); use grss to unstage a file
 alias gr="git reset"
-alias gs="git status -sb" # Show Git status (short)
-alias gsv="git status" # Show Git status (verbose)
 
-# Git - Advanced
+## Branches
+# gsw  - switch to a branch
+alias gsw='git switch'
+# gswc - create a new branch and switch to it
+alias gswc='git switch -c'
+# gswm - switch to the main branch
+alias gswm='git switch main'
+# gswp - switch to previous branch
+alias gswp='git switch -'
+
+## Staging/Working Tree
+# grs  - discard working tree changes for file(s)
+alias grs='git restore'
+# grss - unstage file(s); keep changes in working tree
+alias grss='git restore --staged'
+
+## Status / Diff
+# gb   - list branches with last commit (one-line)
+alias gb="git branch -vv"
+# gcomp - diff current branch vs main
+alias gcomp='git diff main..$(current_branch)'
+# gd   - diff working tree vs index
+alias gd="git diff"
+# gds  - diff staged changes (index vs HEAD)
+alias gds="git diff --cached"
+# glog - log all branches, oneline, graph, decorate
+alias glog='git log --oneline --all --graph --decorate'
+# glogp - log current branch, pretty format, graph
+alias glogp='git log --pretty=format:"%h %s" --graph'
+# gs   - status short
+alias gs="git status -sb"
+# gsv  - status verbose
+alias gsv="git status"
+
+## Commits
+# gmc  - show staged diff then run gitmoji commit
+alias gmc='gds && gitmoji -c'
+# gc   - commit with editor for message (-v shows diff)
+alias gc="git commit -v"
+# gca  - stage all modified/deleted and commit
+alias gca="git commit -a"
+# gcnov - commit with -v, skip hooks (--no-verify)
+alias gcnov='git commit -v --no-verify'
+
+## Advanced
+# gcleanmerged - delete local branches already merged into main
+alias gcleanmerged='git branch --merged main | grep -E -v "^\s*main$" | xargs git branch -d'
+# git_protect_main - link pre-commit hook (run once per repo)
 alias git_protect_main='ln -s $HOME/.dotfiles/git/hooks/pre-commit ./.git/hooks'
-alias gpushu='git push -u origin $(current_branch)'
+# grebase - interactive rebase
 alias grebase='git rebase -i'
+# grebaseabort - abort rebase in progress
 alias grebaseabort='git rebase --abort'
+# grebasedate - interactive rebase, ignore date
 alias grebasedate='git rebase -i --ignore-date'
+# gredo - redo last commit (same message, new commit)
 alias gredo='git commit -c ORIG_HEAD'
-alias grhard='git reset --hard HEAD' # Hard reset to the latest commit
+# grhard - reset working tree and index to HEAD (discard all uncommitted)
+alias grhard='git reset --hard HEAD'
+# gundo - undo last commit, keep changes staged
 alias gundo='git reset --soft HEAD~1'
 
-# Git Stash
-alias gds='git diff stash'
-alias gsapply='git stash apply stash@{$1}'
-alias gsdrop='git stash drop stash@{$1}'
+## Git Stash
+# gsd   - diff working tree vs top stash
+alias gsd='git diff stash'
+# gsl   - list all stashes
 alias gsl='git stash list'
-alias gspop='git stash pop'
-alias gssave='git stash save'
+# gspush - save current changes to stash (push onto stash list)
+alias gspush='git stash push'
+# (functions in functions.symlink; optional index: 0=top, 1=stash@{1}, …)
+# gsapply - apply a stash (keep in list); e.g. gsapply 0, gsapply 1
+# gsdrop  - remove a stash from the list; e.g. gsdrop 0, gsdrop 1
+# gspop   - apply and remove a stash; e.g. gspop, gspop 1
+# gsshow  - show summary of a stash; e.g. gsshow, gsshow 1
+
+## less-used aliases
+# gf    - fetch all remotes
+alias gf='git fetch --all'
+# gforget - unstage file from index (keep in working tree)
+alias gforget='git rm --cached'
+# gpo   - pull from origin (branch as arg)
+alias gpo="git pull origin"
+# gpom  - pull origin main
+alias gpom="git pull origin main"
+# gpubb - publish branch (create remote, set upstream)
+alias gpubb='git-publish-branch'
+# gpushb - push current branch to origin
+alias gpushb='git push origin $(current_branch)'
+# gpusho - push to origin (branch as arg)
+alias gpusho='git push origin'
+# gpushu - push and set upstream (redundant if push.autoSetupRemote true)
+alias gpushu='git push -u origin $(current_branch)'
+
+## Deprecated (prefer gsw*; remove once new aliases are habit)
+# gco   - was: checkout branch; use gsw
+alias gco="echo 'Deprecated: use gsw to switch branches, or grs to discard file changes in the working tree'"
+# gcob  - was: checkout -b; use gswc
+alias gcob="echo 'Deprecated: use gswc to create a new branch and switch to it' && gswc"
+# gcom  - was: checkout main; use gswm
+alias gcom="echo 'Deprecated: use gswm to switch to the main branch' && gswm"
 
 # Use `git diff` without a repo
 alias diff='git diff --no-index'
