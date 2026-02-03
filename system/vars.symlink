@@ -19,11 +19,11 @@ export GPG_TTY=$(tty)
 # SSH Agent
 #
 # Search for ssh agent
-# source ~/.dotfiles/bin/ssh_find_agent
+# source ~/.dotfiles/bin/ssh-find-agent
 # if ! test $SSH_AUTH_SOCK; then
 #   set_ssh_agent_socket
 # fi
-# ssh_find_agent -a || eval $(ssh-agent) > /dev/null
+# ssh-find-agent -a || eval $(ssh-agent) > /dev/null
 # ssh-add -l | grep -q "$HOME/.ssh/id_rsa" || ssh-add $HOME/.ssh/id_rsa
 
 export SSH_AUTH_SOCK="$HOME/.ssh/ssh-agent.socket"

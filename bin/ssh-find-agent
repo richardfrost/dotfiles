@@ -197,7 +197,7 @@ set_ssh_agent_socket() {
 	return 0
 }
 
-ssh_find_agent() {
+ssh-find-agent() {
 	if [ "$1" = "-c" -o "$1" = "--choose" ]
 	then
 		set_ssh_agent_socket -c
