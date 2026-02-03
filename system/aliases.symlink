@@ -78,8 +78,6 @@ alias gca="git commit -a"
 alias gcnov='git commit -v --no-verify'
 
 ## Advanced
-# gcleanmerged - delete local branches already merged into main
-alias gcleanmerged='git branch --merged main | grep -E -v "^\s*main$" | xargs git branch -d'
 # git_protect_main - link pre-commit hook (run once per repo)
 alias git_protect_main='ln -s $HOME/.dotfiles/git/hooks/pre-commit ./.git/hooks'
 # grebase - interactive rebase
