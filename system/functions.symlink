@@ -28,6 +28,36 @@ function _set_system_type {
   fi
 }
 
+# Requires sudoers:
+# sudo visudo -f /etc/sudoers.d/drop_caches
+# user ALL=(root) NOPASSWD: /usr/bin/tee /proc/sys/vm/drop_caches
+# Optional: complete -W "1 2 3 -v --verbose -h --help" drop_caches
+# Useful for refreshing virtiofs cache after updates.
+drop_caches() {
+  local mode=2 verbose=0
+
+  for arg in "$@"; do
+    case "$arg" in
+      1|2|3) mode="$arg" ;;
+      -v|--verbose) verbose=1 ;;
+      -h|--help)
+        printf "Usage: drop_caches [1|2|3] [-v]\n"
+        printf "  1=pagecache, 2=dentries+inodes, 3=all\n"
+        printf "Note: affects ALL filesystems.\n"
+        return 0
+        ;;
+      *)
+        printf "drop_caches: invalid arg: %s\n" "$arg" >&2
+        return 2
+        ;;
+    esac
+  done
+
+  command sync
+  (( verbose )) && printf "Dropping caches (mode=%s)...\n" "$mode" >&2
+  printf "%s\n" "$mode" | sudo /usr/bin/tee /proc/sys/vm/drop_caches >/dev/null
+}
+
 ##
 # Other functions
 #
