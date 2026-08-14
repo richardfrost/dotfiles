@@ -135,6 +135,9 @@ alias gcom="echo 'Deprecated: use gswm to switch to the main branch' && gswm"
 # Use `git diff` without a repo
 alias diff='git diff --no-index'
 
+# GPG
+alias gpgtest='echo test | gpg --clearsign -o /dev/null'
+
 # Node
 alias noded='fnm use default'
 alias nodels='fnm ls'
