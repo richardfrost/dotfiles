@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Not recursive, ignores hidden files
+
+# Get the current year
+CURRENT_YEAR=$(date +%Y)
+
+# Loop through all files in the current directory
+for file in *; do
+    # Skip if it is a directory
+    [ -d "$file" ] && continue
+
+    # Get the file's modification year
+    FILE_YEAR=$(date -r "$file" +%Y)
+
+    # Skip if the file is from the current year
+    [ "$FILE_YEAR" -eq "$CURRENT_YEAR" ] && continue
+
+    # Create the year folder if it does not exist
+    mkdir -p "$FILE_YEAR"
+
+    # Move the file into the year folder
+    mv "$file" "$FILE_YEAR/"
+done
