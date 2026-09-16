@@ -69,6 +69,7 @@ alias gsv="git status"
 
 ## Commits
 # gmc  - show staged diff then run gitmoji commit
+# To install gitmoji: npm i -g gitmoji-cli
 alias gmc='gds && gitmoji -c'
 # gc   - commit with editor for message (-v shows diff)
 alias gc="git commit -v"
