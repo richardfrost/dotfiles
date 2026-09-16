@@ -173,3 +173,4 @@ alias Syuu='sudo pacman -Syuu'
 alias beet='sudo docker exec -it --user $(id -u):$(id -g) beets beet'
 alias beetshell='sudo docker exec -it --user $(id -u):$(id -g) beets bash'
 alias staging='cd /mnt/media/_Staging'
+[[ -f "$HOME/code/media-scripts/music/beets/aliases.sh" ]] && source "$HOME/code/media-scripts/music/beets/aliases.sh"
