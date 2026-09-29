@@ -44,5 +44,5 @@ alias dcrec='dccmd up -d --force-recreate'
 alias dcrm='dccmd rm'
 
 # Images / logs
-alias dcpull='dccmd pull'
+alias dcpull='dccmd --parallel 8 pull'
 alias dclogs='dccmd logs -tf --tail="50"'
