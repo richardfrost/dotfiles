@@ -170,6 +170,7 @@ alias Syuu='sudo pacman -Syuu'
 ##
 # Media Aliases
 #
+# Beets
 alias beet='sudo docker exec -it --user $(id -u):$(id -g) beets beet'
 alias beetshell='sudo docker exec -it --user $(id -u):$(id -g) beets bash'
 alias staging='cd /mnt/media/_Staging'
