@@ -12,7 +12,7 @@ alias ddir="cd $docker_dir"
 # Docker
 # -----------------------------------------------------------------------------
 
-# Status / disk usage
+# Status
 alias ddf='sudo docker system df'
 alias ddfv='sudo docker system df -v'
 alias dps='sudo docker ps -a'
@@ -25,7 +25,7 @@ alias dprunea='sudo docker image prune -a'
 alias dsysprune='sudo docker system prune'
 alias dsysprunea='sudo docker system prune -a'
 
-# Container shells / utilities
+# Utilities
 alias dexec='sudo docker exec -it'
 dbash() { sudo docker exec -it "$1" /bin/bash; }
 dsh()   { sudo docker exec -it "$1" /bin/sh; }
