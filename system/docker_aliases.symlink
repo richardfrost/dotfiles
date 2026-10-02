@@ -50,3 +50,8 @@ alias dcrm='dccmd rm'
 # Images / logs
 alias dcpull='dccmd --parallel 8 pull'
 alias dclogs='dccmd logs -tf --tail="50"'
+
+# Backup
+alias dbackup='sudo systemctl start docker_backup && sudo journalctl -fu docker_backup -n 20'
+alias dbackuplog='sudo journalctl -fu docker_backup -n 50'
+alias dbackupstatus='sudo systemctl status docker_backup'
