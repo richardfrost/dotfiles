@@ -38,6 +38,9 @@ dsh()   { sudo docker exec -it "$1" /bin/sh; }
 # Base Compose command
 alias dccmd="sudo docker compose --file $docker_dir/docker-compose.yml --env-file $docker_dir/.env"
 
+# Status
+alias dccfg='dccmd config'
+
 # Stack lifecycle
 alias dcup='dccmd up -d'
 alias dcdown='dccmd down'
