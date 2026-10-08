@@ -178,3 +178,24 @@ alias staging='cd /mnt/media/_Staging'
 
 # Libation
 alias LibationCli='sudo docker exec -it --user $(id -u):$(id -g) libation LibationCli'
+alias libation-search-absent='LibationCli search "absent AND -IsLiberated" -n 0'
+function libation-recently-failed {
+  local sql="
+SELECT
+  b.AudibleProductId AS asin,
+  b.Title,
+  CASE f.Kind
+    WHEN 0 THEN 'license denied'
+    WHEN 1 THEN 'no audio yet'
+    WHEN 2 THEN 'service interruption'
+    ELSE f.Kind
+  END AS kind,
+  f.Reason,
+  datetime(f.RetryAfterUtcTicks / 10000000 - 62135596800, 'unixepoch', 'localtime') AS retry_after
+FROM DownloadAttemptFailures f
+LEFT JOIN Books b ON b.AudibleProductId = f.AudibleProductId
+ORDER BY f.RetryAfterUtcTicks;
+"
+  sudo docker run --rm --volumes-from libation alpine:3 \
+    sh -c 'apk add --no-cache sqlite >/dev/null && sqlite3 -header -column /config/LibationContext.db "$1"' _ "$sql"
+}
